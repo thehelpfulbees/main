@@ -113,7 +113,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + commandTextField.getText());
+            logger.warning("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }
