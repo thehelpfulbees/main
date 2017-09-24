@@ -96,7 +96,6 @@ public class ParserUtil {
      */
     public static Tag parseTag(String tag) throws IllegalValueException {
         requireNonNull(tag);
-        final Tag t = new Tag(tag.trim());
-        return t;
+        return new Tag(tag.trim());
     }
 }
