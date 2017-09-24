@@ -103,6 +103,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void removeTag(Tag target) throws UniqueTagList.TagNotFoundException {
         addressBook.removeTag(target);
+        indicateAddressBookChanged();
     }
 
     @Override
