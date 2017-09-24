@@ -49,7 +49,8 @@ public class RemoveTagCommand extends UndoableCommand {
             if (person.getTags().contains(target)) {
                 Set<Tag> updatedTags = new HashSet<Tag>(person.getTags());
                 updatedTags.remove(target);
-                Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), updatedTags);
+                Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
+                        person.getAddress(), updatedTags);
 
                 try {
                     model.updatePerson(person, editedPerson);
