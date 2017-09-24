@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -7,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import org.controlsfx.control.textfield.TextFields;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
@@ -29,6 +32,7 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
+    private ArrayList<String> prevText = new ArrayList<String>();
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -36,6 +40,10 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        String[] possibleSuggestion = {"add","clear","list",
+                "edit","find","delete","select","history","undo","redo","exit"};
+        TextFields.bindAutoCompletion(commandTextField, possibleSuggestion);
+
     }
 
     /**
@@ -48,13 +56,28 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
+
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
             break;
+
+        case LEFT:
+            keyEvent.consume();
+            prevText.add(commandTextField.getText());
+            commandTextField.setText("");
+            break;
+
+        case RIGHT:
+            keyEvent.consume();
+            if(!prevText.isEmpty()) {
+                int lastIndex = prevText.size()-1;
+                commandTextField.setText(prevText.remove(lastIndex));
+            }
+            break;
+
         default:
             // let JavaFx handle the keypress
         }
