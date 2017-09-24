@@ -2,10 +2,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -20,7 +16,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
      * and returns an RemoveCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public RemoveTagCommand parse(String arg) throws ParseException{
+    public RemoveTagCommand parse(String arg) throws ParseException {
         try {
             Tag t = ParserUtil.parseTag(arg);
             return new RemoveTagCommand(t);

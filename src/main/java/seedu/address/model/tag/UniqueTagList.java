@@ -3,7 +3,6 @@ package seedu.address.model.tag;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -100,7 +99,7 @@ public class UniqueTagList implements Iterable<Tag> {
      */
     public void remove(Tag toRemove) throws TagNotFoundException {
         requireNonNull(toRemove);
-        if(!contains(toRemove)) {
+        if (!contains(toRemove)) {
             throw new TagNotFoundException();
         }
         internalList.remove(toRemove);
@@ -159,7 +158,9 @@ public class UniqueTagList implements Iterable<Tag> {
      * Signals that the specified tag is not found
      */
     public static class TagNotFoundException extends Exception {
-        protected TagNotFoundException() { super("Specified tag not found");}
+        protected TagNotFoundException() {
+            super("Specified tag not found");
+        }
     }
 
 }

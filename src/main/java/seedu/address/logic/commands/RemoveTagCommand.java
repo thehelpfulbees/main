@@ -27,11 +27,11 @@ public class RemoveTagCommand extends UndoableCommand {
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag: %1$s";
 
-    public final Tag target;
-
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     public static final String MESSAGE_TAG_NOT_FOUND = "Specified tag is not found";
+
+    public final Tag target;
 
     public RemoveTagCommand(Tag target) {
         this.target = target;
@@ -45,14 +45,14 @@ public class RemoveTagCommand extends UndoableCommand {
         } catch (UniqueTagList.TagNotFoundException tnf) {
             throw new CommandException(MESSAGE_TAG_NOT_FOUND);
         }
-        for (ReadOnlyPerson E: lastShownList) {
-            if (E.getTags().contains(target)) {
-                Set<Tag> updatedTags = new HashSet<Tag>(E.getTags());
+        for (ReadOnlyPerson person: lastShownList) {
+            if (person.getTags().contains(target)) {
+                Set<Tag> updatedTags = new HashSet<Tag>(person.getTags());
                 updatedTags.remove(target);
-                Person editedPerson = new Person(E.getName(), E.getPhone(), E.getEmail(), E.getAddress(), updatedTags);
+                Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), updatedTags);
 
                 try {
-                    model.updatePerson(E, editedPerson);
+                    model.updatePerson(person, editedPerson);
                 } catch (DuplicatePersonException dpe) {
                     throw new CommandException(MESSAGE_DUPLICATE_PERSON);
                 } catch (PersonNotFoundException pnfe) {
