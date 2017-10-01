@@ -1,22 +1,23 @@
 package seedu.address.ui;
 
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Region;
 import org.controlsfx.control.textfield.TextFields;
+
 import seedu.address.commons.core.LogsCenter;
+
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -25,6 +26,7 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    public static final int ONE_INDEX = 1;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -40,8 +42,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        String[] possibleSuggestion = {"add","clear","list",
-                "edit","find","delete","select","history","undo","redo","exit"};
+        String[] possibleSuggestion = {"add", "clear", "list",
+                "edit", "find", "delete", "select", "history", "undo", "redo", "exit"};
         TextFields.bindAutoCompletion(commandTextField, possibleSuggestion);
 
     }
@@ -72,8 +74,8 @@ public class CommandBox extends UiPart<Region> {
 
         case RIGHT:
             keyEvent.consume();
-            if(!prevText.isEmpty()) {
-                int lastIndex = prevText.size()-1;
+            if (!prevText.isEmpty()) {
+                int lastIndex = prevText.size() - ONE_INDEX;
                 commandTextField.setText(prevText.remove(lastIndex));
             }
             break;

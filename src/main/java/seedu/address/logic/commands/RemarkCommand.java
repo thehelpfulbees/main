@@ -6,6 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+/**
+ * Edits the remark of the person identified by index number in person listing.
+ */
+
 public class RemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "remark";
@@ -29,7 +33,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     public CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(index + " " +remark);
+        throw new CommandException(index + " " + remark);
     }
 
     @Override
