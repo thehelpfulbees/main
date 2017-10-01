@@ -5,13 +5,12 @@ import java.util.logging.Logger;
 
 import org.controlsfx.control.textfield.TextFields;
 
-import seedu.address.commons.core.LogsCenter;
-
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
-import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
