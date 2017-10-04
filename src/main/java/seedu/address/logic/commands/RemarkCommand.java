@@ -42,7 +42,7 @@ public class RemarkCommand extends UndoableCommand {
         try {
             this.remark = new Remark(remark);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("remark is invalid");
+            throw new AssertionError("Input data invalid", ive);
         }
     }
 

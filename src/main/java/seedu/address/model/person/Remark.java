@@ -13,12 +13,6 @@ public class Remark {
     public static final String MESSAGE_REMARKS_CONSTRAINTS =
             "Person remarks can take any values, and it can be blank";
 
-    /*
-     * The first character of the remark must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String REMARK_VALIDATION_REGEX = "[^\\s].*";
-
     public final String value;
 
     /**
@@ -38,7 +32,7 @@ public class Remark {
      * Returns true if a given string is a valid person remark.
      */
     public static boolean isValidRemark(String test) {
-        return test.matches(REMARK_VALIDATION_REGEX);
+        return test != null;
     }
 
     @Override
