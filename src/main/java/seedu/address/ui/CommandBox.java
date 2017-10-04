@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
+
+import org.controlsfx.control.textfield.TextFields;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,13 +18,16 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+
 /**
  * The UI component that is responsible for receiving user command inputs.
  */
 public class CommandBox extends UiPart<Region> {
 
+    public static final int ONE_INDEX = 1;
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -29,6 +35,7 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
+    private ArrayList<String> prevText = new ArrayList<String>();
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -36,6 +43,10 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        String[] possibleSuggestion = {"add", "clear", "list",
+            "edit", "find", "delete", "select", "history", "undo", "redo", "exit"};
+        TextFields.bindAutoCompletion(commandTextField, possibleSuggestion);
+
     }
 
     /**
@@ -48,13 +59,28 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
+
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
             break;
+
+        case LEFT:
+            keyEvent.consume();
+            prevText.add(commandTextField.getText());
+            commandTextField.setText("");
+            break;
+
+        case RIGHT:
+            keyEvent.consume();
+            if (!prevText.isEmpty()) {
+                int lastIndex = prevText.size() - ONE_INDEX;
+                commandTextField.setText(prevText.remove(lastIndex));
+            }
+            break;
+
         default:
             // let JavaFx handle the keypress
         }
@@ -113,7 +139,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + commandTextField.getText());
+            logger.warning("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }
