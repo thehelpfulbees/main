@@ -9,10 +9,6 @@ public class RemarkTest {
 
     @Test
     public void isValidRemark() {
-        // invalid remarks
-        assertFalse(Remark.isValidRemark("")); // empty string
-        assertFalse(Remark.isValidRemark(" ")); // spaces only
-
         // valid addresses
         assertTrue(Remark.isValidRemark("Owes me 10 dollars"));
         assertTrue(Remark.isValidRemark("-")); // one character
