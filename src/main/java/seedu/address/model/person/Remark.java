@@ -6,7 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Remark {
 
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
+    public static final String MESSAGE_REMARKS_CONSTRAINTS =
             "Person remarks can take any values, and it can be blank";
 
     /*
@@ -25,7 +25,7 @@ public class Remark {
     public Remark(String remark) throws IllegalValueException {
         requireNonNull(remark);
         if (!isValidRemark(remark)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_REMARKS_CONSTRAINTS);
         }
         this.value = remark;
     }
