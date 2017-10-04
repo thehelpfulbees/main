@@ -729,10 +729,22 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |include email service | email my contacts through the app directly
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |user |add birthday to each person | "remember" birthdays :P
+
+|`* *` |user |able to create multiple copies of addressbooks | use different addressbooks for different situations
 
 |`*` |user that likes to use tags | remove a specified tag from every person with one command | minimize effort and
  save time
+
+|`*` |user |use google maps to search for the address of person |plan a trip to his/her address easily
+
+|`*` |user |import contacts from another addressbook | reduce repetitive work to save time and effort
+
+|`*` |user |include Instagram link to person |keep track of his/her Instagram status
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
