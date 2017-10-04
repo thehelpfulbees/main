@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Remark;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -19,20 +20,19 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
      *
      * @throws ParseException if the user input does not conform the expected format
      */
-    public RemarkCommand parse(String args) throws ParseException {
+    public RemarkCommand parse(String args) throws ParseException{
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_REMARK);
 
         Index index;
-
+        Remark remark;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            remark = new Remark(argMultimap.getValue(PREFIX_REMARK).orElse(""));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
         }
-
-        String remark = argMultimap.getValue(PREFIX_REMARK).orElse("");
 
         return new RemarkCommand(index, remark);
     }

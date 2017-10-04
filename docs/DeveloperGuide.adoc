@@ -731,6 +731,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`*` |user that likes to use tags | remove a specified tag from every person with one command | minimize effort and
+ save time
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
