@@ -4,6 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Represents a Person's remark in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidRemark(String)}
+ */
 public class Remark {
 
     public static final String MESSAGE_REMARKS_CONSTRAINTS =
