@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Remark;
 
 /**
  * Edits the remark of the person identified by index number in person listing.
@@ -22,14 +24,26 @@ public class RemarkCommand extends UndoableCommand {
             + PREFIX_REMARK + "Likes to swim.";
 
     private final Index index;
-    private final String remark;
+    private final Remark remark;
+
+    public RemarkCommand (Index index, Remark remark) {
+        requireNonNull(index);
+        requireNonNull(remark);
+
+        this.index = index;
+        this.remark = remark;
+    }
 
     public RemarkCommand (Index index, String remark) {
         requireNonNull(index);
         requireNonNull(remark);
 
         this.index = index;
-        this.remark = remark;
+        try {
+            this.remark = new Remark(remark);
+        } catch (IllegalValueException ive) {
+            throw new AssertionError("Input data invalid", ive);
+        }
     }
 
     public CommandResult executeUndoableCommand() throws CommandException {

@@ -11,6 +11,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
@@ -37,7 +38,7 @@ public class SampleDataUtil {
                     new Address("Blk 47 Tampines Street 20, #17-35"),
                     getTagSet("classmates")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"),
+                    new Address("Blk 45 Aljunied Street 85, #11-31"), new Remark("He likes to swim"),
                     getTagSet("colleagues"))
             };
         } catch (IllegalValueException e) {
