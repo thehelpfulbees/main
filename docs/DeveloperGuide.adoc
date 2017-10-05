@@ -780,7 +780,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |let other uses add their data in for me by linking over the web |not have to enter in as much data for every contact
 
-|`*` |user |startup the app with a picture/inspirational quote instead of a blank background | decorate the GUI, make it look better
+|`*` |user |startup the app with a picture/inspirational quote instead of a blank background | decorate the GUI, make it look prettier
 |=======================================================================
 
 {More to be added}
