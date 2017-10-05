@@ -152,6 +152,25 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+
+=== Removing a tag from all persons in addressbook
+
+Removes the tag that you have entered from all the persons in your addressbook. +
+Format: `removetag TAG`
+
+****
+* Finds all the persons with the tag you entered and removes that tag from all persons
+* The tag refers to the tag shown with users
+* The tag *must be a valid tag that is already in the addressbook*
+****
+
+Examples:
+
+* `removetag friends` +
+Removes the tag 'friends' from all persons in addressbook
+* `removetag NUS` +
+Removes the tag 'NUS' from all persons in addressbook
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
