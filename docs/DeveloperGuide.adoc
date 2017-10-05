@@ -759,6 +759,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |include Instagram link to person |keep track of his/her Instagram status
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |choose which data columns are displayed |only see information that I am interested in
+
+|`*` |user |reverse the order data is listed in |quickly see the last item in the sorted list
+
+|`*` |user |rename tags automatically for every person with a tag |change the tag in many places much more easily than changing it for each person
+
+|`*` |user |add relationships between contacts |have the app automatically suggest contacts when I am using it based on which contacts are grouped together
+
+|`*` |user |choose between a light and a dark mode |use a colour scheme that is healthy for my eyes
+
+|`*` |user |let other uses add their data in for me by linking over the web |not have to enter in as much data for every contact
 |=======================================================================
 
 {More to be added}
