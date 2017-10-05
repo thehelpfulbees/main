@@ -35,4 +35,11 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAddressBookChangedEvent(AddressBookChangedEvent abce);
+
+    /**
+     *  Saves a copy of the addressbook given and reserves the filename so that it cannot be overwritten
+     * @param addressBook
+     * @param backupLocationName
+     */
+    void backupAddressBook(ReadOnlyAddressBook addressBook, String backupLocationName) throws IOException;
 }

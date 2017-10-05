@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -23,11 +24,15 @@ public class StorageManager extends ComponentManager implements Storage {
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
+    private HashSet<String> usedBackupLocationNames;
+
 
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+
+        this.usedBackupLocationNames = new HashSet<>();
     }
 
     // ================ UserPrefs methods ==============================
@@ -73,8 +78,22 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+        while (usedBackupLocationNames.contains(filePath)) {
+            logger.fine("File path \"" + filePath + "\"is occupied by a backup");
+            filePath += "-1";
+        }
         logger.fine("Attempting to write to data file: " + filePath);
         addressBookStorage.saveAddressBook(addressBook, filePath);
+    }
+
+    public void backupAddressBook(ReadOnlyAddressBook addressBook, String backupLocationName) throws IOException {
+        while (usedBackupLocationNames.contains(backupLocationName)) {
+            logger.fine("File path \"" + backupLocationName + "\" is occupied by an existing backup");
+            backupLocationName += "-1";
+        }
+        logger.fine("Instead saving backup to: " + backupLocationName);
+        saveAddressBook(addressBook, backupLocationName);
+        usedBackupLocationNames.add(backupLocationName);
     }
 
 
@@ -88,5 +107,6 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
 
 }
