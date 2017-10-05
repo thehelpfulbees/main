@@ -1219,6 +1219,9 @@ Use case resumes at step 2.
 .  Colour contrast should be optimal for even color-blind users.
 .  User should be able to accomplish all task possible by using CommandLine only.
 .  Startup time should be less than 5 seconds.
+.  Database should be easily portable systems or users
+.  Application should not crash and burn from invalid data.
+.  Will back up data during errors to prevent loss of data
 
 {More to be added}
 
