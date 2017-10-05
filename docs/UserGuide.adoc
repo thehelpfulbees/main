@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+﻿= AddressBook Level 4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -54,7 +54,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person: `add`/'a'
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -66,16 +66,18 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `a n/Donald Pua t/friend e/donana@example.com a/Porsche street p/3153357 t/cleaner`
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list`/ 'l'
 
-=== Editing a person : `edit`
+=== Editing a person : `edit`/ 'e'
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+	`e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -91,11 +93,14 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `e 2 n/Donald Pua t/` +
+Edits the name of the 2nd person to be `Donald Pua` and clears all existing tags.
 
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
+	`f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -111,11 +116,14 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `f Alpha Bravo Charlie` +
+Returns any person having names `Alpha`, `Bravo`, or `Charlie`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` 'd'
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
+	`d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -131,12 +139,14 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+`d 3` +
+Deletes the 3rd person in the results of the `find` command.
 
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
-
+	`s INDEX`
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
@@ -150,6 +160,9 @@ Examples:
 Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
+Selects the 1st person in the results of the `find` command.
+* `find Donald` +
+`s 1` +
 Selects the 1st person in the results of the `find` command.
 
 
@@ -175,7 +188,7 @@ Removes the tag 'NUS' from all persons in addressbook
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
-
+	`h`
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
@@ -183,10 +196,11 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
+			       `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
-
+	`u`
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
@@ -206,12 +220,13 @@ The `undo` command fails as there are no undoable commands executed previously.
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`u` (reverses the `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
+	`r`
 
 Examples:
 
@@ -220,7 +235,7 @@ Examples:
 `redo` (reapplies the `delete 1` command) +
 
 * `delete 1` +
-`redo` +
+`r` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
@@ -235,6 +250,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
+	`c`
 
 === Exiting the program : `exit`
 
