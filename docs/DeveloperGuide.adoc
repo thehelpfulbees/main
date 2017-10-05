@@ -855,6 +855,39 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  AddressBook updates the information of person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The new information is in the wrong format.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
 === Use case: Find person
 
 *MSS*
@@ -984,12 +1017,12 @@ Use case ends.
 Use case resumes at step 1.
 
 [discrete]
-=== Use case: Find Random Person
+=== Use case: Removes tag from all persons
 
 *MSS*
 
-1.  User requests to find a random person
-2.  AddressBook shows one random person
+1.  User requests to remove a selected tag
+2.  AddressBook removes selected tag from all persons
 
 +
 Use case ends.
@@ -1004,6 +1037,180 @@ Use case ends.
 +
 Use case resumes at step 1.
 
+[none]
+* 1b. No such tag found in AddressBook
++
+[none]
+** 1b1. AddressBook shows an error message, prompt user to enter a valid tag.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Add Birthday to person
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User requests to create birthday information for a person
+4.  AddressBook updates information on specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given birthday is in the wrong format.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit Birthday of person
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User requests to update birthday information for a person
+4.  AddressBook updates information on specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given birthday is in the wrong format.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Clone AddressBook
+
+*MSS*
+
+1.  User requests to clone AddressBook
+2.  AddressBook asks user to input name for new AddressBook
+3.  User inputs name of new AddressBook
+4.  AddressBook creates a new copy of the current AddressBook with the new name
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given name is invalid (wrong format or duplicate name).
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find Address on person using Google Maps
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User requests to find the location of a person's address
+4.  AddressBook shows the specified person's address on Google Maps API
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Import contacts from another AddressBook
+
+*MSS*
+
+1.  User requests to import AddressBook
+2.  AddressBook asks user to select AddressBook for import
+3.  User inputs name and location of new AddressBook
+4.  AddressBook imports all the contact (persons) listed in the AddressBook specified
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given location or name is invalid (wrong format or duplicate name).
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add Instagram account information to person
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User requests to create Instagram information for a person
+4.  AddressBook updates information on specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given Instagram account link is in the wrong format.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 {More to be added}
 
@@ -1017,13 +1224,16 @@ Use case resumes at step 1.
 .  Should have features to protect data of persons
 .  Should be able to handle long names. (up to 26 characters)
 .  Should be able to change the font type and size easily.
-.  Latest version should be prompted to download every month.
+.  Latest version should be prompted to download when available.
 .  No lag should last more than two seconds for any command given.
 .  All changes in AddressBook should be stored in the log file.
-.  User should be able to inituitively learn the application of AddressBook with ease (No need to refer to helpguide for every usage)
-.  Colour contrast should be optimal for even color-blind patients.
+.  User should be able to intuitively learn the application of AddressBook with ease (No need to refer to helpguide for every usage)
+.  Colour contrast should be optimal for even color-blind users.
 .  User should be able to accomplish all task possible by using CommandLine only.
 .  Startup time should be less than 5 seconds.
+.  Database should be easily portable systems or users
+.  Application should not crash and burn from invalid data.
+.  Will back up data during errors to prevent loss of data
 
 {More to be added}
 
@@ -1076,8 +1286,8 @@ Author: Samsung Galaxy S8+
 Pros:
 
 * Bright colour contrasts - Different buttons have different colours that brings user attention to their specific needs.
-* Inituitive User Interface - No words needed for use to know how to find/ add / delete persons
-* Large amount of contacts storable - Caters for people with alot of Contacts
+* Intuitive User Interface - No words needed for use to know how to find/ add / delete persons
+* Large amount of contacts can be stored - Caters for people with a lot of Contacts
 * Sorted in AlphaNumerical Sequence - Easy to search for person via Name.
 
 Cons:
@@ -1087,3 +1297,24 @@ Cons:
 * Unable to add more fields required for different persons.
 * Unable to sort via other means.
 * Unable to find person via tag
+
+*Contacts*
+
+Author: Xiaomi Redmi Note 4X
+
+Pros:
+
+* Shows recently searched persons
+* Able to pin a contact to the top of the list
+* Scroll bar to select contacts from any alphabet
+* Able to share contact
+* Able to backup contacts on a online server
+* Able to sync between multiple AddressBooks on different devices
+* Able to add picture to contact
+* Able to send email directly
+
+Cons:
+
+* Cannot undo changes made
+* Unable to add tags to persons
+* Unable to sort by other means
