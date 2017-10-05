@@ -86,6 +86,7 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook, String backupLocationName) throws IOException {
         while (usedBackupLocationNames.contains(backupLocationName)) {
             logger.fine("File path \"" + backupLocationName + "\" is occupied by an existing backup");
