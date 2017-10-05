@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -731,6 +731,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |include email service | email my contacts through the app directly
 
+|`* * *` |user |sort the contact list by Name/contact number | make sense of the data
+
+|`* *` |user |get the time where the user is added | find person based on time added
+
+|`* *` |user |use shortcuts for commands | save time and access information easily
+
+|`* *` |user |be able to see the most searched person | find most relevant person
+
+|`* *` |user |be able to complete the command words itself | dont need to remember the command names
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |add birthday to each person | "remember" birthdays :P
@@ -741,6 +751,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
  save time
 
 |`*` |user |use google maps to search for the address of person |plan a trip to his/her address easily
+
+|`*` |user |find a random person |conduct lucky draw winners
 
 |`*` |user |import contacts from another addressbook | reduce repetitive work to save time and effort
 
@@ -782,6 +794,205 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Delete multiple persons simultaneously
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to delete a number of specific person in the list
+4.  AddressBook deletes the persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a person
+2.  AddressBook shows the format to add a person
+3.  User provides relevant details according to format
+4.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find a person
+2.  AddressBook shows the format to find a person
+3.  User provides name of the person according to format
+4.  AddressBook finds and shows the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort person
+
+*MSS*
+
+1.  User requests to sort all person
+2.  AddressBook shows the format to sort a person
+3.  User provides information on the type of sorting needed
+4.  AddressBook sorts all persons and display on list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Email person
+
+*MSS*
+
+1.  User requests a list of all persons
+2.  AddressBook shows the list of all persons
+3.  User provides information the person to Email
+4.  AddressBook opens up in Gmail webpage with the person's relevant details inside
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Change Tag Colour
+
+*MSS*
+
+1.  User requests to change color of tags
+2.  AddressBook changes color of the tag according to the color code provided by user.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Wrong format/ color code provided.
++
+[none]
+** 1a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Change Tag Font
+
+*MSS*
+
+1.  User requests to change font of tags
+2.  AddressBook changes font of the tag according to the font type provided by user.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Wrong format provided.
++
+[none]
+** 1a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Find Random Person
+
+*MSS*
+
+1.  User requests to find a random person
+2.  AddressBook shows one random person
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Wrong format provided.
++
+[none]
+** 1a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Find Random Person
+
+*MSS*
+
+1.  User requests to find a random person
+2.  AddressBook shows one random person
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Wrong format provided.
++
+[none]
+** 1a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 1.
+
+
 {More to be added}
 
 [appendix]
@@ -790,11 +1001,44 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work on both 32 bit and 64 bit environment.
+.  Should have features to protect data of persons
+.  Should be able to handle long names. (up to 26 characters)
+.  Should be able to change the font type and size easily.
+.  Latest version should be prompted to download every month.
+.  No lag should last more than two seconds for any command given.
+.  All changes in AddressBook should be stored in the log file.
+.  User should be able to inituitively learn the application of AddressBook with ease (No need to refer to helpguide for every usage)
+.  Colour contrast should be optimal for even color-blind patients.
+.  User should be able to accomplish all task possible by using CommandLine only.
+.  Startup time should be less than 5 seconds.
 
 {More to be added}
 
 [appendix]
 == Glossary
+
+[[AddressBook]]
+Name of the application
+
+....
+AddressBook
+....
+
+
+[[Format]]
+The specific method for input in the command Line.
+
+....
+sort, list, add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney
+....
+
+[[UI]]
+User Interface
+
+....
+The ways the application look from placement of buttons, to command lines
+....
 
 [[mainstream-os]]
 Mainstream OS
@@ -813,16 +1057,21 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*Contacts*
 
-Author: ...
+Author: Samsung Galaxy S8+
 
 Pros:
 
-* ...
-* ...
+* Bright colour contrasts - Different buttons have different colours that brings user attention to their specific needs.
+* Inituitive User Interface - No words needed for use to know how to find/ add / delete persons
+* Large amount of contacts storable - Caters for people with alot of Contacts
+* Sorted in AlphaNumerical Sequence - Easy to search for person via Name.
 
 Cons:
 
-* ...
-* ...
+* No undo button for last added person
+* No redo button to reverse undo
+* Unable to add more fields required for different persons.
+* Unable to sort via other means.
+* Unable to find person via tag
