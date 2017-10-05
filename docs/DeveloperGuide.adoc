@@ -733,6 +733,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |sort the contact list by Name/contact number | make sense of the data
 
+|`* *` |user |see the next closest search results if search fails | find a person without getting their name exactly correct (fuzzy searching)
+
+|`* *` |user |have a quick reference bar pop up whenever a user enters a single word command (e.g. 'add' will show an example of the full add command structure) | use commands without always having to memorise the command structure or always open the help window
+
 |`* *` |user |get the time where the user is added | find person based on time added
 
 |`* *` |user |use shortcuts for commands | save time and access information easily
@@ -741,11 +745,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |be able to complete the command words itself | dont need to remember the command names
 
+|`* *` |user |see my most recently and commonly used commands when I focus the text entry bar | quickly access my most recent and commonly used commands quickly
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |add birthday to each person | "remember" birthdays :P
 
 |`* *` |user |able to create multiple copies of addressbooks | use different addressbooks for different situations
+
+|`* *` |user |see the most commonly accessed persons on my addressbook when I first startup | quickly access the most commonly used persons without having to manually search
 
 |`*` |user that likes to use tags | remove a specified tag from every person with one command | minimize effort and
  save time
@@ -759,6 +767,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user |include Instagram link to person |keep track of his/her Instagram status
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |toggle privacy status by pressing a hotkey while cursor is over the field | make setting/unsetting privacy easier
+
+|`*` |user |be able to change the colorscheme of the GUI app | choose my favorite colorscheme instead of always being stuck with the dark theme
+
 |=======================================================================
 
 {More to be added}
