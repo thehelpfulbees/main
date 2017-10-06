@@ -51,7 +51,6 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
-
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
@@ -71,6 +70,8 @@ public class MainApp extends Application {
         logic = new LogicManager(model);
 
         ui = new UiManager(logic, config, userPrefs);
+
+        Sound.music();
 
         initEventsCenter();
     }

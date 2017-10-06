@@ -142,6 +142,20 @@ Deletes the 1st person in the results of the `find` command.
 `d 3` +
 Deletes the 3rd person in the results of the `find` command.
 
+=== Changing the Song : `nextsong`
+
+Change the song to the next song on the playlist. +
+Format: `nextsong`
+	`ns`
+****
+* Plays the next song on the playlist
+****
+
+Examples:
+
+* `nextsong`
+Changes to the next Song in the playlist
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -164,6 +178,19 @@ Selects the 1st person in the results of the `find` command.
 * `find Donald` +
 `s 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Sort all persons : `sort`
+
+Sort all the persons according to their names in alphabetical order. +
+Format: `sort`
+****
+* Sorts the storage list of all persons in alphabetical order
+****
+
+Examples:
+
+* `sort` +
+Sorts all the persons in alphabetical order.
 
 === Removing a tag from all persons in addressbook
 
