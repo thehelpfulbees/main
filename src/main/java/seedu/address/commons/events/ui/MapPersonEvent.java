@@ -3,6 +3,9 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * Represents a mapping function call by user
+ */
 public class MapPersonEvent extends BaseEvent {
 
     private final ReadOnlyPerson person;
