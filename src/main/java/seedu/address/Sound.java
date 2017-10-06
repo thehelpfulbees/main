@@ -29,11 +29,14 @@ public class Sound {
         return musicList.get(curr);
     }
 
+    /**
+     * Plays the next Song on the List
+     */
+
     public static void next() {
         if (curr < musicList.size() - ONE_LESS) {
             curr = NEXTSONG;
-        }
-        else {
+        }else {
             curr = FIRSTSONG;
         }
         if (mediaPlayer != null) {
@@ -44,6 +47,10 @@ public class Sound {
             mediaPlayer.play();
         }
     }
+
+    /**
+     * start playing the first music on the playlist.
+     */
 
     public static void music() {
         try {
