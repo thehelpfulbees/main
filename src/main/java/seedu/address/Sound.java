@@ -36,7 +36,7 @@ public class Sound {
     public static void next() {
         if (curr < musicList.size() - ONE_LESS) {
             curr = NEXTSONG;
-        }else {
+        } else {
             curr = FIRSTSONG;
         }
         if (mediaPlayer != null) {
