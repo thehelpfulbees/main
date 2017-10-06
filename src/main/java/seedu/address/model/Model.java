@@ -54,4 +54,9 @@ public interface Model {
      * Deletes the given tag from all persons in addressbook
      */
     void removeTag(Tag target) throws UniqueTagList.TagNotFoundException;
+
+    /**
+     * Shows the map for selected person in browser
+     */
+    void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 }
