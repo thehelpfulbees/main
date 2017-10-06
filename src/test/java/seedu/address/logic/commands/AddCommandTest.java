@@ -139,6 +139,11 @@ public class AddCommandTest {
         public void removeTag(Tag tag) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void mapPerson(ReadOnlyPerson target) {
+            fail("This method should not be called.");
+        }
     }
 
     /**
