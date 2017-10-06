@@ -1,13 +1,17 @@
 package seedu.address.logic.commands;
 
 import java.util.List;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-public class MapCommand extends UndoableCommand{
+/**
+ *  Shows a person's address on Google Maps in browser
+ */
+public class MapCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "map";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the address on Google Maps of the person "
             + "identified by the index number used in the last person listing. "
@@ -20,7 +24,8 @@ public class MapCommand extends UndoableCommand{
     public MapCommand (Index index) {
         this.index = index;
     }
-
+    
+    @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
