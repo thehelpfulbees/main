@@ -2,6 +2,10 @@ package seedu.address.logic.commands;
 
 import seedu.address.Sound;
 
+/**
+ * Change the current playing song to the next song
+ */
+
 public class NextSongCommand extends Command {
 
     public static final String COMMAND_WORD = "nextsong";
