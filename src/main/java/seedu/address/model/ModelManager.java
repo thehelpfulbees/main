@@ -18,7 +18,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.ui.BrowserPanel;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -109,7 +108,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException{
+    public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         raise(new MapPersonEvent(target));
     }
     @Override
