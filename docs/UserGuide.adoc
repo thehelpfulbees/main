@@ -179,6 +179,18 @@ Selects the 1st person in the results of the `find` command.
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Sort all persons : `sort`
+
+Sort all the persons according to their names in alphabetical order. +
+Format: `sort`
+****
+* Sorts the storage list of all persons in alphabetical order
+****
+
+Examples:
+
+* `sort` +
+Sorts all the persons in alphabetical order.
 
 === Removing a tag from all persons in addressbook
 
