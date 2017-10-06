@@ -24,7 +24,7 @@ public class MapCommand extends UndoableCommand {
     public MapCommand (Index index) {
         this.index = index;
     }
-    
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
