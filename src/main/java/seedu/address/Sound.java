@@ -14,7 +14,7 @@ public class Sound {
     public static String name = "Sound";
     private static final Logger logger = LogsCenter.getLogger(name);
     public static ArrayList<String> musicList = new ArrayList<String>(Arrays.asList("FurElise.mp3",
-            "KissTheRain.mp3", "OdeToJoy.mp3"));
+            "KissTheRain.mp3"));
     public static int curr = 0;
     public static final int NEXTSONG = curr + 1;
     public static String bip;
