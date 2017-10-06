@@ -47,8 +47,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
-    
-    
+
     private void loadPersonMap(ReadOnlyPerson person) {
         loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
