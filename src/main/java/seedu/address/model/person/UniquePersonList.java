@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,7 +35,9 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
-
+    public void sort() {
+        Collections.sort(internalList);
+    }
     /**
      * Adds a person to the list.
      *
