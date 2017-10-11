@@ -35,9 +35,11 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
+
     public void sort() {
         Collections.sort(internalList);
     }
+
     /**
      * Adds a person to the list.
      *

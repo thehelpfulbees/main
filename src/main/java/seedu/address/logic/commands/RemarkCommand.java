@@ -39,11 +39,7 @@ public class RemarkCommand extends UndoableCommand {
         requireNonNull(remark);
 
         this.index = index;
-        try {
-            this.remark = new Remark(remark);
-        } catch (IllegalValueException ive) {
-            throw new AssertionError("Input data invalid", ive);
-        }
+        this.remark = new Remark(remark);
     }
 
     public CommandResult executeUndoableCommand() throws CommandException {

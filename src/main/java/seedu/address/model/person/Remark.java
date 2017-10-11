@@ -6,7 +6,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's remark in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidRemark(String)}
  */
 public class Remark {
 
@@ -15,24 +14,9 @@ public class Remark {
 
     public final String value;
 
-    /**
-     * Validates given remark.
-     *
-     * @throws IllegalValueException if given remark string is invalid.
-     */
-    public Remark(String remark) throws IllegalValueException {
+    public Remark(String remark) {
         requireNonNull(remark);
-        if (!isValidRemark(remark)) {
-            throw new IllegalValueException(MESSAGE_REMARKS_CONSTRAINTS);
-        }
         this.value = remark;
-    }
-
-    /**
-     * Returns true if a given string is a valid person remark.
-     */
-    public static boolean isValidRemark(String test) {
-        return test != null;
     }
 
     @Override
