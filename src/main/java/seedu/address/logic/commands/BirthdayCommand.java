@@ -39,7 +39,7 @@ public class BirthdayCommand extends UndoableCommand {
         this.index = index;
         this.birthday = birthday;
     }
-    
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
