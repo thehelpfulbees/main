@@ -15,7 +15,6 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -39,25 +38,25 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
+
+    /**
+     * Sorts the internalList as declared by the arguments
+     */
     public void sort(String sortType) {
         if (sortType.equals(SORTNAME_ARG)) {
             Collections.sort(internalList);
-        }
-        else if(sortType.equals(SORTNUM_ARG)) {
+        } else if (sortType.equals(SORTNUM_ARG)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
-            p1.phone.toString().compareTo(p2.phone.toString()));
-        }
-        else if(sortType.equals(SORTADD_ARG)) {
+                p1.getPhone().toString().compareTo(p2.getPhone().toString()));
+        } else if (sortType.equals(SORTADD_ARG)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
-            p1.address.toString().compareTo(p2.address.toString()));
-        }
-        else if(sortType.equals(SORTEMAIL_ARG)) {
+                p1.getAddress().toString().compareTo(p2.getAddress().toString()));
+        } else if (sortType.equals(SORTEMAIL_ARG)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
-                    p1.email.toString().compareTo(p2.email.toString()));
-        }
-        else if(sortType.equals(SORTREMARK_ARG)) {
+                p1.getEmail().toString().compareTo(p2.getEmail().toString()));
+        } else if (sortType.equals(SORTREMARK_ARG)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
-                    p1.remark.toString().compareTo(p2.remark.toString()));
+                p1.getRemark().toString().compareTo(p2.getRemark().toString()));
         }
     }
     /**

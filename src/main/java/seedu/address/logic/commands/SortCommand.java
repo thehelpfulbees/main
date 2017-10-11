@@ -25,8 +25,8 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() {
-            model.sortPerson(sortType);
-            return new CommandResult(MESSAGE_SORT_SUCCESS + sortType);
+        model.sortPerson(sortType);
+        return new CommandResult(MESSAGE_SORT_SUCCESS + sortType);
 
     }
 }

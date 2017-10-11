@@ -1,6 +1,6 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+//import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -39,15 +39,14 @@ public class AddCommandParser implements Parser<AddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
-//        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
-//            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-//        }
+//      if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
+//          throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+//      }
 
         try {
-            if(args.contains(PREFIX_NAME.toString()) || args.contains(PREFIX_ADDRESS.toString()) ||
-            args.contains(PREFIX_EMAIL.toString()) || args.contains(PREFIX_PHONE.toString()) ||
-            args.contains(PREFIX_REMARK.toString()) || args.contains(PREFIX_TAG.toString())) {
-                System.out.println("WRONG");
+            if (args.contains(PREFIX_NAME.toString()) || args.contains(PREFIX_ADDRESS.toString())
+                || args.contains(PREFIX_EMAIL.toString()) || args.contains(PREFIX_PHONE.toString())
+                || args.contains(PREFIX_REMARK.toString()) || args.contains(PREFIX_TAG.toString())) {
                 Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
                 Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
                 Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
@@ -55,11 +54,10 @@ public class AddCommandParser implements Parser<AddCommand> {
                 Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
                 ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
                 return new AddCommand(person);
-            }
-            else {
+            } else {
                 System.out.println("CORRECT");
                 String[] allArgs = args.split(",");
-                if (allArgs.length<2) {
+                if (allArgs.length < 2) {
                     throw new IllegalValueException("invalid add format");
                 }
                 Name name = new Name(allArgs[0]);

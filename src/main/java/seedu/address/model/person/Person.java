@@ -20,10 +20,10 @@ import seedu.address.model.tag.UniqueTagList;
 public class Person implements ReadOnlyPerson, Comparable<Person> {
 
     private ObjectProperty<Name> name;
-    public ObjectProperty<Phone> phone;
-    public ObjectProperty<Email> email;
-    public ObjectProperty<Address> address;
-    public ObjectProperty<Remark> remark;
+    private ObjectProperty<Phone> phone;
+    private ObjectProperty<Email> email;
+    private ObjectProperty<Address> address;
+    private ObjectProperty<Remark> remark;
     private ObjectProperty<UniqueTagList> tags;
 
     /**

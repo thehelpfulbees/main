@@ -56,8 +56,9 @@ public class ParserUtil {
      */
     public static String parseSortType(String sortType) throws IllegalValueException {
         String toSort = sortType.trim().toLowerCase();
-        if (!toSort.equals(SORTNAME_ARG) && !toSort.equals(SORTNUM_ARG) &&
-            !toSort.equals(SORTADD_ARG) && !toSort.equals(SORTEMAIL_ARG) && !toSort.equals(SORTREMARK_ARG)) {
+        if (!toSort.equals(SORTNAME_ARG) && !toSort.equals(SORTNUM_ARG)
+            && !toSort.equals(SORTADD_ARG) && !toSort.equals(SORTEMAIL_ARG)
+            && !toSort.equals(SORTREMARK_ARG)) {
             throw new IllegalValueException(MESSAGE_INVALID_SORT);
         }
         return toSort;
