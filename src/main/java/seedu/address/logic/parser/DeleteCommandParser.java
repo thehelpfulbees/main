@@ -19,7 +19,12 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
+            String[] arguments = args.trim().split(" ");
+            Index[] index = new Index[arguments.length];
+            int i = 0;
+            for(String E: arguments) {
+                index[i++] = ParserUtil.parseIndex(E);
+            }
             return new DeleteCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
