@@ -5,7 +5,6 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -37,7 +36,7 @@ public class DeleteCommand extends UndoableCommand {
         String personsDeleted = "";
         int i = 0;
 
-        for(Index E : targetIndex) {
+        for (Index e : targetIndex) {
             if (E.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
