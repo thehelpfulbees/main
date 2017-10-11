@@ -52,8 +52,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
     @Override
-    public void sortPerson() {
-        addressBook.sortPersons();
+    public void sortPerson(String sortType) {
+        addressBook.sortPersons(sortType);
     }
     @Override
     public ReadOnlyAddressBook getAddressBook() {

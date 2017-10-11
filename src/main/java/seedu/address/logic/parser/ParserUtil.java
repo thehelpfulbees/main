@@ -29,6 +29,12 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_SORT = "Sort type is not a valid sort type.";
+    public static final String SORTNAME_ARG = "name";
+    public static final String SORTNUM_ARG = "num";
+    public static final String SORTADD_ARG = "address";
+    public static final String SORTEMAIL_ARG = "email";
+    public static final String SORTREMARK_ARG = "remark";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -41,6 +47,20 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses {@code sortType}returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not valid sorting type).
+     */
+    public static String parseSortType(String sortType) throws IllegalValueException {
+        String toSort = sortType.trim().toLowerCase();
+        if (!toSort.equals(SORTNAME_ARG) && !toSort.equals(SORTNUM_ARG) &&
+            !toSort.equals(SORTADD_ARG) && !toSort.equals(SORTEMAIL_ARG) && !toSort.equals(SORTREMARK_ARG)) {
+            throw new IllegalValueException(MESSAGE_INVALID_SORT);
+        }
+        return toSort;
     }
 
     /**

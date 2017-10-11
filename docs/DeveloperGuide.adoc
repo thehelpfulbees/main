@@ -751,6 +751,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |add birthday to each person | "remember" birthdays :P
 
+|`* *` |user |Choose current song to be played | adjust between my favourite songs
+
 |`* *` |user |able to create multiple copies of addressbooks | use different addressbooks for different situations
 
 |`*` |user that likes to use tags | remove a specified tag from every person with one command | minimize effort and

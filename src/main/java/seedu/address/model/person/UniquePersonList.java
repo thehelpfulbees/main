@@ -1,6 +1,11 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.ParserUtil.SORTADD_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTEMAIL_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTNAME_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTNUM_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTREMARK_ARG;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -20,7 +25,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -35,8 +39,26 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
-    public void sort() {
-        Collections.sort(internalList);
+    public void sort(String sortType) {
+        if (sortType.equals(SORTNAME_ARG)) {
+            Collections.sort(internalList);
+        }
+        else if(sortType.equals(SORTNUM_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+            p1.phone.toString().compareTo(p2.phone.toString()));
+        }
+        else if(sortType.equals(SORTADD_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+            p1.address.toString().compareTo(p2.address.toString()));
+        }
+        else if(sortType.equals(SORTEMAIL_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+                    p1.email.toString().compareTo(p2.email.toString()));
+        }
+        else if(sortType.equals(SORTREMARK_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+                    p1.remark.toString().compareTo(p2.remark.toString()));
+        }
     }
     /**
      * Adds a person to the list.
