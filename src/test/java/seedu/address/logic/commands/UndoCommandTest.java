@@ -13,6 +13,7 @@ import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -24,8 +25,8 @@ public class UndoCommandTest {
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private final DeleteCommand deleteCommandOne = new DeleteCommand(new Index[] {INDEX_FIRST_PERSON});
+    private final DeleteCommand deleteCommandTwo = new DeleteCommand(new Index[] {INDEX_FIRST_PERSON});
 
     @Before
     public void setUp() {
