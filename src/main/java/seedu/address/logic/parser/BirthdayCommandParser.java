@@ -9,6 +9,9 @@ import seedu.address.logic.commands.BirthdayCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Birthday;
 
+/**
+ * Parses arguments and returns BirthdayCommand
+ */
 public class BirthdayCommandParser implements Parser<BirthdayCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the BirthdayCommand
