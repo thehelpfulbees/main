@@ -119,7 +119,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortPerson() {
+        public void sortPerson(String target) {
             fail("This method should not be called.");
         }
 

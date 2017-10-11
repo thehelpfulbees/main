@@ -1,6 +1,11 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.ParserUtil.SORTADD_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTEMAIL_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTNAME_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTNUM_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTREMARK_ARG;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -10,7 +15,6 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -20,7 +24,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -35,8 +38,26 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
-    public void sort() {
-        Collections.sort(internalList);
+
+    /**
+     * Sorts the internalList as declared by the arguments
+     */
+    public void sort(String sortType) {
+        if (sortType.equals(SORTNAME_ARG)) {
+            Collections.sort(internalList);
+        } else if (sortType.equals(SORTNUM_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+                p1.getPhone().toString().compareTo(p2.getPhone().toString()));
+        } else if (sortType.equals(SORTADD_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+                p1.getAddress().toString().compareTo(p2.getAddress().toString()));
+        } else if (sortType.equals(SORTEMAIL_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+                p1.getEmail().toString().compareTo(p2.getEmail().toString()));
+        } else if (sortType.equals(SORTREMARK_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+                p1.getRemark().toString().compareTo(p2.getRemark().toString()));
+        }
     }
     /**
      * Adds a person to the list.

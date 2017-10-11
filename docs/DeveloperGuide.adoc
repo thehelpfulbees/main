@@ -731,7 +731,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |include email service | email my contacts through the app directly
 
-|`* * *` |user |sort the contact list by Name/contact number | make sense of the data
+|`* * *` |user |sort the contact list by Name/contact number/email/address | view the people in ascending order of types of data chosen
 
 |`* *` |user |see the next closest search results if search fails | find a person without getting their name exactly correct (fuzzy searching)
 
@@ -750,6 +750,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |add birthday to each person | "remember" birthdays :P
+
+|`* *` |user |Choose current song to be played | adjust between my favourite songs
+
+|`* *` |user |able add another user without following strict format | not have to remember/ refer to help for adding a person
 
 |`* *` |user |able to create multiple copies of addressbooks | use different addressbooks for different situations
 
