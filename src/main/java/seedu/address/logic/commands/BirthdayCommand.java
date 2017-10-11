@@ -13,7 +13,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-public class BirthdayCommand extends UndoableCommand{
+/**
+ * Adds or Edits birthday field of selected person
+ */
+public class BirthdayCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "birthday";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds/Edits the birthday of the person identified "
             + "by the index number used in the last person listing. "
@@ -36,7 +39,8 @@ public class BirthdayCommand extends UndoableCommand{
         this.index = index;
         this.birthday = birthday;
     }
-
+    
+    @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
