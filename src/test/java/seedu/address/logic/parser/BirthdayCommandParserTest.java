@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.BirthdayCommand;
 
 /**
@@ -18,9 +19,8 @@ public class BirthdayCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsBirthdayCommand() {
-        assertParseSuccess(parser, " 1 " + "30-03-2002", new BirthdayCommand
-                (INDEX_FIRST_PERSON,
-                BIRTHDAY_BOB));
+        assertParseSuccess(parser, " 1 " + "30-03-2002",
+                new BirthdayCommand(INDEX_FIRST_PERSON, BIRTHDAY_BOB));
     }
 
     @Test
@@ -33,10 +33,10 @@ public class BirthdayCommandParserTest {
     public void parse_invalidValue_failure() {
         // invalid birthday
         assertParseFailure(parser, BirthdayCommand.COMMAND_WORD + " 1 " + "0000",
-                "Invalid command format! \n" +BirthdayCommand.MESSAGE_USAGE);
+                "Invalid command format! \n" + BirthdayCommand.MESSAGE_USAGE);
 
         // invalid index
         assertParseFailure(parser, BirthdayCommand.COMMAND_WORD + " -1 " + "12-12-2012",
-                "Invalid command format! \n" +BirthdayCommand.MESSAGE_USAGE);
+                "Invalid command format! \n" + BirthdayCommand.MESSAGE_USAGE);
     }
 }

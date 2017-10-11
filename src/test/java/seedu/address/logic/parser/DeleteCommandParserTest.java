@@ -2,12 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -26,9 +23,11 @@ public class DeleteCommandParserTest {
     public void parse_validArgs_returnsDeleteCommand() {
         try {
             DeleteCommand newCommand = parser.parse("1");
-            if(newCommand.equals(new DeleteCommand(newCommand.targetIndex))) {
+            if (newCommand.equals(new DeleteCommand(newCommand.targetIndex))) {
                 assert true;
-            } else assert false;
+            } else {
+                assert false;
+            }
         } catch (ParseException pe) {
             assert false;
         }
