@@ -59,11 +59,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             else {
                 System.out.println("CORRECT");
                 String[] allArgs = args.split(",");
-                Name name = new Name(allArgs[0]);
-                Address address = new Address(allArgs[1]);
                 if (allArgs.length<2) {
                     throw new IllegalValueException("invalid add format");
                 }
+                Name name = new Name(allArgs[0]);
+                Address address = new Address(allArgs[1]);
                 Email email;
                 Phone phone;
                 Pattern emailpattern = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+");
