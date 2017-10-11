@@ -38,7 +38,7 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toCheck);
         return internalList.contains(toCheck);
     }
-  
+
     /**
      * Sorts the internalList as declared by the arguments
      */
