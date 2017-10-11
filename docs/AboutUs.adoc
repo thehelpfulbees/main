@@ -54,3 +54,7 @@ Role: Developer +
 Responsibilities: UI
 
 '''
+
+=== Chua Bok Woon
+image::bokwoon_resized.jpg[width:"150", align="left"]
+{empty}[https://github.com/bokwoon95[github]] [<<johndoe#, portfolio>>]
