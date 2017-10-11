@@ -22,7 +22,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             String[] arguments = args.trim().split(" ");
             Index[] index = new Index[arguments.length];
             int i = 0;
-            for(String E: arguments) {
+            for (String e: arguments) {
                 index[i++] = ParserUtil.parseIndex(E);
             }
             return new DeleteCommand(index);
