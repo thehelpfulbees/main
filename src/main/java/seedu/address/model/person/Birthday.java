@@ -21,7 +21,7 @@ public class Birthday {
     public final int day; //Not implemented yet
     public final int month;
     public final int year;
-    
+
     /**
      * Validates given birthday.
      *
