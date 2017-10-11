@@ -55,7 +55,7 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case SortCommand.COMMAND_WORD:
-            return new SortCommand();
+            return new SortCommandParser().parse(arguments);
 
         case NextSongCommand.COMMAND_WORD:
             return new NextSongCommand();

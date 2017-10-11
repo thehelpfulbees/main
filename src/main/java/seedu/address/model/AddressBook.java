@@ -50,8 +50,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// list overwrite operations
-    public void sortPersons() {
-        persons.sort();
+    public void sortPersons(String sortType) {
+        persons.sort(sortType);
     }
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {

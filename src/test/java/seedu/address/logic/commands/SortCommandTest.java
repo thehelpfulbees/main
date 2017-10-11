@@ -23,7 +23,7 @@ public class SortCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        sortCommand = new SortCommand();
+        sortCommand = new SortCommand("");
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 

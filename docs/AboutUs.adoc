@@ -6,9 +6,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 AddressBook - Level 4 was developed by the https://github.com/orgs/CS2103AUG2017-F09-B3/teams/developers/members[F09-B3]
 team. +
-This project was deveopled in AY17/18 Semester 1 for CS2103. +
+This project was developed in AY17/18 Semester 1 for CS2103. +
 {empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a group of students in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
@@ -32,6 +32,15 @@ Responsibilities:
 
 '''
 
+=== Justin Tan
+image::justintkj.jpg[width="150", align="left"]
+{empty}[https://github.com/justintkj[github]] [<<justintkj#, portfolio>>]
+
+Role: Developer +
+Responsibilities: Logic + Documentation + Code Quality
+
+'''
+
 === John Roe
 image::lejolly.jpg[width="150", align="left"]
 {empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
@@ -41,29 +50,6 @@ Responsibilities: UI
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
-
-'''
+=== Chua Bok Woon
+image::bokwoon_resized.jpg[width:"150", align="left"]
+{empty}[https://github.com/bokwoon95[github]] [<<johndoe#, portfolio>>]
