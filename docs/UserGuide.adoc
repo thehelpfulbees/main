@@ -119,16 +119,16 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 * `f Alpha Bravo Charlie` +
 Returns any person having names `Alpha`, `Bravo`, or `Charlie`
 
-=== Deleting a person : `delete` 'd'
+=== Deleting one or more person(s) : `delete` 'd'
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-	`d INDEX`
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX(ES)`
+	`d INDEX(ES)`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* Deletes the person at the specified `INDEX(ES)`.
+* The index(es) refers to the index numbers shown in the most recent listing.
+* The index(es) *must be a positive integers* 1, 2, 3, ...
 ****
 
 Examples:
@@ -137,8 +137,8 @@ Examples:
 `delete 2` +
 Deletes the 2nd person in the address book.
 * `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+`delete 1 2 3` +
+Deletes the 1st, 2nd and 3rd persons in the results of the `find` command.
 `d 3` +
 Deletes the 3rd person in the results of the `find` command.
 

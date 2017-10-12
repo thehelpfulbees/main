@@ -59,6 +59,7 @@ public class UniquePersonList implements Iterable<Person> {
                 p1.getRemark().toString().compareTo(p2.getRemark().toString()));
         }
     }
+
     /**
      * Adds a person to the list.
      *

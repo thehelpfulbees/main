@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Remark;
 
@@ -39,11 +38,7 @@ public class RemarkCommand extends UndoableCommand {
         requireNonNull(remark);
 
         this.index = index;
-        try {
-            this.remark = new Remark(remark);
-        } catch (IllegalValueException ive) {
-            throw new AssertionError("Input data invalid", ive);
-        }
+        this.remark = new Remark(remark);
     }
 
     public CommandResult executeUndoableCommand() throws CommandException {
