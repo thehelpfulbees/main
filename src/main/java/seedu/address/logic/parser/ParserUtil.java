@@ -35,6 +35,7 @@ public class ParserUtil {
     public static final String SORTADD_ARG = "address";
     public static final String SORTEMAIL_ARG = "email";
     public static final String SORTREMARK_ARG = "remark";
+    public static final String SORTBIRTHDAY_ARG = "birthday";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -58,7 +59,7 @@ public class ParserUtil {
         String toSort = sortType.trim().toLowerCase();
         if (!toSort.equals(SORTNAME_ARG) && !toSort.equals(SORTNUM_ARG)
             && !toSort.equals(SORTADD_ARG) && !toSort.equals(SORTEMAIL_ARG)
-            && !toSort.equals(SORTREMARK_ARG)) {
+            && !toSort.equals(SORTREMARK_ARG) && !toSort.equals(SORTBIRTHDAY_ARG)) {
             throw new IllegalValueException(MESSAGE_INVALID_SORT);
         }
         return toSort;

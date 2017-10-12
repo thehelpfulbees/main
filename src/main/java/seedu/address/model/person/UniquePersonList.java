@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.ParserUtil.SORTADD_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTBIRTHDAY_ARG;
 import static seedu.address.logic.parser.ParserUtil.SORTEMAIL_ARG;
 import static seedu.address.logic.parser.ParserUtil.SORTNAME_ARG;
 import static seedu.address.logic.parser.ParserUtil.SORTNUM_ARG;
@@ -57,6 +58,9 @@ public class UniquePersonList implements Iterable<Person> {
         } else if (sortType.equals(SORTREMARK_ARG)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
                 p1.getRemark().toString().compareTo(p2.getRemark().toString()));
+        } else if (sortType.equals(SORTBIRTHDAY_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+                p1.getBirthday().toString().compareTo(p2.getBirthday().toString()));
         }
     }
 
