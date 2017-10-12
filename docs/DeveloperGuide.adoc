@@ -739,6 +739,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |get the time where the user is added | find person based on time added
 
+|`* *` |user |show all contacts within a certain tag | scan everyone relevant to one topic
+
 |`* *` |user |use shortcuts for commands | save time and access information easily
 
 |`* *` |user |be able to see the most searched person | find most relevant person
