@@ -36,25 +36,25 @@ public class SortCommandTest {
         //Sort name -> command parsed successful
         sortCommand = new SortCommand(SORT_NAME_ARG);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SORT_SUCCESS+SORT_NAME_ARG, expectedModel);
+        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SORT_SUCCESS + SORT_NAME_ARG, expectedModel);
 
         //Sort email -> command parsed successful
         expectedModel = new ModelManager(getSortedEmailAddressBook(), new UserPrefs());
         sortCommand = new SortCommand(SORT_EMAIL_ARG);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SORT_SUCCESS+SORT_EMAIL_ARG, expectedModel);
+        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SORT_SUCCESS + SORT_EMAIL_ARG, expectedModel);
 
         //Sort address -> command parsed successful
         expectedModel = new ModelManager(getSortedAddressAddressBook(), new UserPrefs());
         sortCommand = new SortCommand(SORT_ADDRESS_ARG);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SORT_SUCCESS+SORT_ADDRESS_ARG, expectedModel);
+        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SORT_SUCCESS + SORT_ADDRESS_ARG, expectedModel);
 
         //Sort num -> command parsed successful
         expectedModel = new ModelManager(getSortedNumAddressBook(), new UserPrefs());
         sortCommand = new SortCommand(SORT_NUM_ARG);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SORT_SUCCESS+SORT_NUM_ARG, expectedModel);
+        assertCommandSuccess(sortCommand, model, SortCommand.MESSAGE_SORT_SUCCESS + SORT_NUM_ARG, expectedModel);
     }
 }
 
