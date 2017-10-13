@@ -60,6 +60,3 @@ image::bokwoon_resized.jpg[width:"150", align="left"]
 === Jo Brough
 image::jobrough.jpg[width:"150", align="left"]
 {empty}[https://github.com/thehelpfulbees[github]] [<<jobrough#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Storage + Documentation
