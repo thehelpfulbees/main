@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.commands.exceptions.CommandException;
+
 /**
  * Sorts a the list of persons in alphabetical order
  */
@@ -14,7 +16,8 @@ public class SortCommand extends Command {
             + "Example: " + COMMAND_WORD + " num"
             + "Example: " + COMMAND_WORD + " address"
             + "Example: " + COMMAND_WORD + " remark"
-            + "Example: " + COMMAND_WORD + " email";
+            + "Example: " + COMMAND_WORD + " email"
+            + "Example: " + COMMAND_WORD + " birthday";
 
 
     private String sortType;
@@ -24,9 +27,16 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         model.sortPerson(sortType);
         return new CommandResult(MESSAGE_SORT_SUCCESS + sortType);
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortCommand // instanceof handles nulls
+                && this.sortType.equals(((SortCommand) other).sortType)); // state check
     }
 }
