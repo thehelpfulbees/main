@@ -53,3 +53,9 @@ Responsibilities: UI
 === Chua Bok Woon
 image::bokwoon_resized.jpg[width:"150", align="left"]
 {empty}[https://github.com/bokwoon95[github]] [<<johndoe#, portfolio>>]
+
+'''
+
+=== Jo Brough
+image::jobrough.jpg[width:"150", align="left"]
+{empty}[https://github.com/thehelpfulbees[github]] [<<johndoe#, portfolio>>]
