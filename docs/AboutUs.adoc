@@ -36,7 +36,7 @@ image::justintkj.jpg[width="150", align="left"]
 {empty}[https://github.com/justintkj[github]] [<<justintkj#, portfolio>>]
 
 Role: Developer +
-Responsibilities: 
+Responsibilities:
 
 * Logic
 * Documentation
