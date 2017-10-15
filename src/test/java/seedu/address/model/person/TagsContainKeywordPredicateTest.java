@@ -1,0 +1,70 @@
+package seedu.address.model.person;
+
+import org.junit.Test;
+import seedu.address.testutil.PersonBuilder;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.Assert.*;
+
+public class TagsContainKeywordPredicateTest {
+
+    @Test
+    public void test_tagsContainKeyword_returnsTrue() {
+        // One tag
+        TagsContainKeywordPredicate predicate = new TagsContainKeywordPredicate("first");
+        assertTrue(predicate.test(new PersonBuilder().withTags("first").build()));
+
+        // Multiple tags
+        predicate = new TagsContainKeywordPredicate("first");
+        assertTrue(predicate.test(new PersonBuilder().withTags("first", "second").build()));
+
+        // Mixed-case tags
+        predicate = new TagsContainKeywordPredicate("first");
+        assertTrue(predicate.test(new PersonBuilder().withTags("First").build()));
+    }
+
+    @Test
+    public void test_tagsDoNotContainKeyword_returnsFalse() {
+        // One tag
+        TagsContainKeywordPredicate predicate = new TagsContainKeywordPredicate("wrong");
+        assertFalse(predicate.test(new PersonBuilder().withTags("first").build()));
+
+        // Multiple tags
+        predicate = new TagsContainKeywordPredicate("wrong");
+        assertFalse(predicate.test(new PersonBuilder().withTags("first", "second").build()));
+
+        // Keyword is inside one of the tags but doesn't match
+        predicate = new TagsContainKeywordPredicate("wrong");
+        assertFalse(predicate.test(new PersonBuilder().withTags("this is wrong").build()));
+    }
+
+    @Test
+    public void equals() {
+        String firstPredicateKeyword = "first";
+        String secondPredicateKeyword = "second";
+
+
+        TagsContainKeywordPredicate firstPredicate = new TagsContainKeywordPredicate(firstPredicateKeyword);
+        TagsContainKeywordPredicate secondPredicate = new TagsContainKeywordPredicate(secondPredicateKeyword);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        TagsContainKeywordPredicate firstPredicateCopy = new TagsContainKeywordPredicate(firstPredicateKeyword);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+}
