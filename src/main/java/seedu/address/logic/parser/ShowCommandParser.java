@@ -1,11 +1,8 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ShowCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-
-import java.util.Arrays;
+import seedu.address.model.person.TagsContainKeywordPredicate;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -23,14 +20,12 @@ public class ShowCommandParser implements Parser<ShowCommand> {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
         }
 
-        String[] tagKeywords = trimmedArgs.split("\\s+");
+        String tagKeyword = trimmedArgs;
 
-
-
-        return new ShowCommand(new NameContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
+        return new ShowCommand(new TagsContainKeywordPredicate(tagKeyword));
     }
 
 }
