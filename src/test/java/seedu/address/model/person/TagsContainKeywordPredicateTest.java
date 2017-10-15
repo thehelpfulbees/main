@@ -21,9 +21,6 @@ public class TagsContainKeywordPredicateTest {
         predicate = new TagsContainKeywordPredicate("first");
         assertTrue(predicate.test(new PersonBuilder().withTags("first", "second").build()));
 
-        // Mixed-case tags
-        predicate = new TagsContainKeywordPredicate("first");
-        assertTrue(predicate.test(new PersonBuilder().withTags("First").build()));
     }
 
     @Test
@@ -38,7 +35,11 @@ public class TagsContainKeywordPredicateTest {
 
         // Keyword is inside one of the tags but doesn't match
         predicate = new TagsContainKeywordPredicate("wrong");
-        assertFalse(predicate.test(new PersonBuilder().withTags("this is wrong").build()));
+        assertFalse(predicate.test(new PersonBuilder().withTags("thisiswrong").build()));
+
+        // Mixed-case tags
+        predicate = new TagsContainKeywordPredicate("wrong");
+        assertFalse(predicate.test(new PersonBuilder().withTags("Wrong").build()));
     }
 
     @Test

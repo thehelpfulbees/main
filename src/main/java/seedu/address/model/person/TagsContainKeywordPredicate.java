@@ -18,20 +18,15 @@ public class TagsContainKeywordPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
 
-        return false;
+        //return false;
 
-        //to do
-
-        /*
         Iterator<Tag> tags = person.getTags().iterator();
 
         while (tags.hasNext()) {
-            if (tags.next().tagName.equals(keyword)) return true;
-            else tags.remove();
+            if (tags.next().toString().equals("["+keyword+"]")) return true;
+            //else tags.remove();
         }
         return false;
-
-        */
 
 
         //return keywords.stream()
