@@ -18,7 +18,7 @@ public class TagsContainKeywordPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
 
-        return true;
+        return false;
 
         //to do
 
