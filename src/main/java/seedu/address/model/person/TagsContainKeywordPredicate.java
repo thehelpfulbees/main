@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import java.util.Iterator;
 import java.util.function.Predicate;
+
 import seedu.address.model.tag.Tag;
 
 /**
