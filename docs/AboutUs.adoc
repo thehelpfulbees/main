@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-PocketBook V1.1 was developed by the https://github.com/orgs/CS2103AUG2017-F09-B3/teams/developers/members[F09-B3]
+PocketBook was developed by the https://github.com/orgs/CS2103AUG2017-F09-B3/teams/developers/members[F09-B3]
 team. +
 This project was developed in AY17/18 Semester 1 for CS2103. +
 {empty} +
