@@ -1,9 +1,8 @@
 package seedu.address.model.person;
 
-import seedu.address.model.tag.Tag;
-
 import java.util.Iterator;
 import java.util.function.Predicate;
+import seedu.address.model.tag.Tag;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
@@ -23,7 +22,9 @@ public class TagsContainKeywordPredicate implements Predicate<ReadOnlyPerson> {
         Iterator<Tag> tags = person.getTags().iterator();
 
         while (tags.hasNext()) {
-            if (tags.next().toString().equals("["+keyword+"]")) return true;
+            if (tags.next().toString().equals("[" + keyword + "]")) {
+                return true;
+            }
             //else tags.remove();
         }
         return false;

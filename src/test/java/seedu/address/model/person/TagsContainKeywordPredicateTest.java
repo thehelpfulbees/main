@@ -3,10 +3,6 @@ package seedu.address.model.person;
 import org.junit.Test;
 import seedu.address.testutil.PersonBuilder;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class TagsContainKeywordPredicateTest {
