@@ -926,6 +926,28 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
+=== Use case: Show people in tag
+
+*MSS*
+
+1.  User requests to show a tag
+2.  AddressBook shows the format to show a tag
+3.  User provides name of the tag according to format
+4.  AddressBook finds and lists all people in tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Wrong format provided.
++
+[none]
+** 3a1. AddressBook shows an error message, prompt with correct format again.
++
+Use case resumes at step 2.
+
+[discrete]
 === Use case: Sort person
 
 *MSS*
