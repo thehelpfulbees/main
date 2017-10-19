@@ -345,6 +345,114 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Birthday and Birthday Notifier mechanism
+
+The birthday notifier mechanism is facilitated by a `BirthdayNotifier`, which resides within the `Model` component.
+It creates a pop-up every time the app is run to inform the user of any birthdays that happen to fall on that day.
+This mechanism works side by side with the `Birthday` field of each `Person`.
+
+`BirthdayNotifier` is created and run in the `MainApp` every time the app is run. `BirthdayNotifier` will then check
+through the `Birthday` of the list of `Person` that was passed in from `MainApp`. It will then create a
+`BirthdayPopup` to show the list of `Person` with birthdays on that day. These relationships are illustrated in the
+diagram below.
+
+image::BirthdayNotifierDiagram.png[width = "800"]
+
+Implementation of checking through all the `Person` in `BirthdayNotifier`:
+[source,java]
+----
+for (ReadOnlyPerson e: list) {
+    if (e.getDay() == date && e.getMonth() == month) {
+        people.add(e.getName().toString());
+    }
+}
+
+if(people.size() > 0) {
+    createPopup(people.toArray(new String[people.size()]));
+}
+----
+
+The popup creation is implemented this way:
+[source,java]
+----
+private JDialog frame = new JDialog();
+private GridBagConstraints constraints = new GridBagConstraints();
+
+public BirthdayPopup(String[] person) {
+    createFrame(person.length);
+    createIcon();
+    createCloseButton();
+    createMessage(person);
+    createPopup();
+}
+----
+
+Suppose that the user has just launched the application. The `MainApp` will create `BirthdayNotifier` to check
+through the `Birthday` s.
+
+If there is at least one `Person` with a birthday on that day, `BirthdayNotifier` will create a new `BirthdayPopup`
+at the bottom right hand corner to inform the user. An example is shown below.
+
+image::BirthdayPopup.png[width = "400"]
+
+[NOTE]
+If the `Person` 's birthday is not set, it'll not affect `BirthdayNotifier`.
+
+The following sequence diagram shows how the `BirthdayNotifier` works:
+
+image::BirthdayNotifierSequenceDiagram.png[width = "800"]
+
+[NOTE]
+If there are no birthdays on that day or if the address book is empty, no popup will be shown.
+
+The following activity diagram summarize what happens when a user runs the application:
+
+image::BirthdayNotifierActivityDiagram.png[width = "200"]
+
+==== Design Considerations
+
+**Aspect:** When to show popup +
+**Alternative 1 (current choice):** Show popup during startup of application +
+**Pros:** User will most likely see the popup since the user just started the application +
+**Cons:** Popup may not show when the date has changed +
+**Alternative 2:** Show popup when the date changes +
+**Pros:** The birthday list is constantly updated and shown to user +
+**Cons:** The user may not be paying attention and will miss the popup +
+**Additional Information:** planning to implement both options
+
+---
+
+**Aspect:** Implementation of `BirthdayPopup` frame +
+**Alternative 1 (current choice):** Using JDialog +
+**Pros:** JDialog does not create an application bar in the task bar +
+**Cons:** JDialog does not come with default buttons for maximizing or minimizing +
+**Alternative 2:** Using JFrame +
+**Pros:** JFrame comes with default buttons to close, maximize and minimize etc. +
+**Cons:** JFrame will create an application bar in the task bar (ugly)
+
+---
+
+**Aspect:** Implementation of `BirthdayPopup` timer +
+**Alternative 1 (current choice):** Use a timer to close the popup after 5 seconds +
+**Pros:** Closes the dialog automatically and duration of pause can be changed +
+**Cons:** The user may not get a chance to see the popup +
+**Alternative 2:** Don't use a timer +
+**Pros:** The user determines when to close it and gets a chance to see the popup +
+**Cons:** The user has to manually close it. Maybe be troublesome. +
+**Additional Information:** Planning to implement a timer reset when the mouse hovers above the popup
+
+---
+
+**Aspect:** Size of popup +
+**Alternative 1 (current choice):** Size of popup depends on the number of birthdays +
+**Pros:** The message will not be lost and it can contain any amount of names +
+**Cons:** The popup may get very large +
+**Alternative 2:** Fixed size for popup +
+**Pros:** Very neat and consistent +
+**Cons:** If the list of names gets too big, some names will not be shown +
+
+---
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
