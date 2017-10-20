@@ -22,7 +22,7 @@ public class BirthdayNotifier {
                 people.add(e.getName().toString());
             }
         }
-        if(people.size() > 0) {
+        if (people.size() > 0) {
             createPopup(people.toArray(new String[people.size()]));
         }
     }
