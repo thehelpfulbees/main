@@ -17,6 +17,7 @@ public class ImageCommandParser implements Parser<ImageCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ImageCommand parse(String args) throws ParseException {
+        String[] splitArgs = args.split(" ");
         try {
             Index index = ParserUtil.parseIndex(args);
             return new ImageCommand(index);

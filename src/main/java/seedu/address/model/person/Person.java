@@ -180,6 +180,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     public void setImage(String img) {
         image.set(new ProfilePicture(img));
     }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
