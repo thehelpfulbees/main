@@ -1,11 +1,13 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -32,6 +34,8 @@ public class PersonInfoPanel extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView profileImage;
 
     public PersonInfoPanel(ReadOnlyPerson person) {
         super(FXML);
@@ -50,6 +54,8 @@ public class PersonInfoPanel extends UiPart<Region> {
     }
 
     private void setDefaultConnections() {
+        File file = new File("/");
+        Image defaultImage = new Image(getClass().getResourceAsStream("/profile_images/default.png"));
         name.setText("");
         phone.setText("");
         address.setText("");
@@ -57,6 +63,7 @@ public class PersonInfoPanel extends UiPart<Region> {
         birthday.setText("");
         remark.setText("");
         tags.setAccessibleText("");
+        profileImage = new ImageView(defaultImage);
     }
 
     private void setConnections(ReadOnlyPerson person) {
@@ -66,7 +73,6 @@ public class PersonInfoPanel extends UiPart<Region> {
         email.setText(person.getEmail().value);
         birthday.setText(person.getBirthday().value);
         remark.setText(person.getRemark().value);
-        //tags.setAccessibleText(person.getTags().toString());
         tags.getChildren().clear();
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }

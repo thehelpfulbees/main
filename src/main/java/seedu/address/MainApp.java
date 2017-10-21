@@ -261,8 +261,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
-        //ui.start(primaryStage);
-        ui.start(new Stage(StageStyle.UNDECORATED));
+        ui.start(primaryStage);
         new BirthdayNotifier(model.getFilteredPersonList());
     }
 
