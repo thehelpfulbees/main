@@ -24,6 +24,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
@@ -46,6 +47,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         try {
             Remark remark = new Remark("");
             Birthday birthday = new Birthday("");
+            ProfilePicture picture = new ProfilePicture("src/main/resources/profiles/default.png");
             if (args.contains(PREFIX_NAME.toString()) || args.contains(PREFIX_ADDRESS.toString())
                 || args.contains(PREFIX_EMAIL.toString()) || args.contains(PREFIX_PHONE.toString())
                 || args.contains(PREFIX_REMARK.toString()) || args.contains(PREFIX_TAG.toString())) {
@@ -57,7 +59,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
                 Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
                 Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-                ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList);
+                ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture);
                 return new AddCommand(person);
             } else {
                 System.out.println("CORRECT");
@@ -87,7 +89,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 }
 
                 Set<Tag> tagList = new HashSet<>();
-                ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList);
+                ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture);
                 return new AddCommand(person);
             }
         } catch (IllegalValueException ive) {

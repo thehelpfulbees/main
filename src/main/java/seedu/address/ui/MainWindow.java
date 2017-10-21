@@ -1,6 +1,14 @@
 package seedu.address.ui;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.logging.Logger;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -9,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -17,6 +26,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeImageEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
@@ -218,6 +228,29 @@ public class MainWindow extends UiPart<Region> {
         mapWindow.show();
     }
 
+    /**
+     * Opens file browser.
+     */
+    private void handleImageEvent(ReadOnlyPerson person) {
+        JDialog parent = new JDialog();
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Any Image files", "jpg", "png", "jpeg");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setCurrentDirectory(new File("src/main/resources/profiles"));
+        int result = fileChooser.showDialog(parent, "Select Image");
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            File newFile = new File("src/main/resources/profiles",person.getName().toString() + ".png");
+            try {
+                Files.copy(selectedFile.toPath(), newFile.toPath(), REPLACE_EXISTING);
+            } catch (IOException io){
+                logger.warning("failed to copy image");
+            }
+            person.setImage("profiles/" + person.getName().toString() + ".png");
+        }
+    }
+
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
@@ -232,5 +265,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleMapPanelEvent(MapPersonEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleMapEvent(event.getPerson());
+    }
+
+    @Subscribe
+    private void handleChangeImageEvent(ChangeImageEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleImageEvent(event.getPerson());
     }
 }

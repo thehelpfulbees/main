@@ -9,8 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <ImageView id="profileImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-    <GridPane styleClass="grid-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <ImageView fx:id="profileImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+    <GridPane fx:id = "personInfoPanel" styleClass="grid-pane" xmlns="http://javafx.com/javafx/8"
+    xmlns:fx="http://javafx.com/fxml/1">
         <Label text="Name:" GridPane.columnIndex="0" />
         <Label fx:id="name" styleClass="cell_small_label" text="\$name" GridPane.columnIndex="1" />
         <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="1" />

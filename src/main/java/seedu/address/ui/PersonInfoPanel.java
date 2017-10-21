@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -19,7 +18,8 @@ public class PersonInfoPanel extends UiPart<Region> {
     private static final String FXML = "PersonInfoPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonInfoPanel.class);
 
-
+    @FXML
+    private ImageView profileImage;
     @FXML
     private Label name;
     @FXML
@@ -34,8 +34,6 @@ public class PersonInfoPanel extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
-    @FXML
-    private ImageView profileImage;
 
     public PersonInfoPanel(ReadOnlyPerson person) {
         super(FXML);
@@ -54,8 +52,6 @@ public class PersonInfoPanel extends UiPart<Region> {
     }
 
     private void setDefaultConnections() {
-        File file = new File("/");
-        Image defaultImage = new Image(getClass().getResourceAsStream("/profile_images/default.png"));
         name.setText("");
         phone.setText("");
         address.setText("");
@@ -63,7 +59,7 @@ public class PersonInfoPanel extends UiPart<Region> {
         birthday.setText("");
         remark.setText("");
         tags.setAccessibleText("");
-        profileImage = new ImageView(defaultImage);
+        profileImage.setImage(new Image("profiles/default.png"));
     }
 
     private void setConnections(ReadOnlyPerson person) {
@@ -75,6 +71,11 @@ public class PersonInfoPanel extends UiPart<Region> {
         remark.setText(person.getRemark().value);
         tags.getChildren().clear();
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        try {
+            profileImage.setImage(new Image(person.getPicture().getLocation()));
+        } catch (IllegalArgumentException iae) {
+            profileImage.setImage(new Image("profiles/default.png"));
+        }
     }
 
     @Subscribe
