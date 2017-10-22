@@ -17,10 +17,14 @@ public class ImageCommandParser implements Parser<ImageCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ImageCommand parse(String args) throws ParseException {
-        String[] splitArgs = args.split(" ");
+        String[] splitArgs = args.trim().split(" ");
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new ImageCommand(index);
+            Index index = ParserUtil.parseIndex(splitArgs[0]);
+            if(splitArgs.length > 1 && splitArgs[1].equals("remove")) {
+                return new ImageCommand(index, true);
+            } else {
+                return new ImageCommand(index, false);
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImageCommand.MESSAGE_USAGE));
