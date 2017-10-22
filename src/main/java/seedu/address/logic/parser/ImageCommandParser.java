@@ -20,7 +20,7 @@ public class ImageCommandParser implements Parser<ImageCommand> {
         String[] splitArgs = args.trim().split(" ");
         try {
             Index index = ParserUtil.parseIndex(splitArgs[0]);
-            if(splitArgs.length > 1 && splitArgs[1].equals("remove")) {
+            if (splitArgs.length > 1 && splitArgs[1].equals("remove")) {
                 return new ImageCommand(index, true);
             } else {
                 return new ImageCommand(index, false);

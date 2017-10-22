@@ -47,6 +47,11 @@ public class Birthday {
 
     }
 
+    /**
+     * Determines if date entered by user is correct and ensures that it is not after current date
+     * @param birthday
+     * @return
+     */
     public static boolean isDateCorrect(String[] birthday) {
         LocalDateTime now = LocalDateTime.now();
         int day = now.getDayOfMonth();
@@ -57,11 +62,11 @@ public class Birthday {
         int inputMonth = Integer.parseInt(birthday[1]);
         int inputYear = Integer.parseInt(birthday[2]);
 
-        if(inputYear > year) {
+        if (inputYear > year) {
             return false;
-        } else if(inputYear == year && inputMonth > month) {
+        } else if (inputYear == year && inputMonth > month) {
             return false;
-        } else if(inputYear == year && inputMonth == month && inputDay > day) {
+        } else if (inputYear == year && inputMonth == month && inputDay > day) {
             return false;
         } else {
             return true;

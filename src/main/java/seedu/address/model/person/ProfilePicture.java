@@ -2,11 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.File;
-
-import javax.swing.*;
-
-import javafx.scene.image.Image;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**

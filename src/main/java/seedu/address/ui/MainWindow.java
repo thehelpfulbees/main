@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.logging.Logger;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.google.common.eventbus.Subscribe;
@@ -17,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -241,10 +241,10 @@ public class MainWindow extends UiPart<Region> {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            File newFile = new File("src/main/resources/profiles",person.getName().toString() + ".png");
+            File newFile = new File("src/main/resources/profiles", person.getName().toString() + ".png");
             try {
                 Files.copy(selectedFile.toPath(), newFile.toPath(), REPLACE_EXISTING);
-            } catch (IOException io){
+            } catch (IOException io) {
                 logger.warning("failed to copy image");
             }
             person.setImage("profiles/" + person.getName().toString() + ".png");

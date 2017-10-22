@@ -13,6 +13,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+/**
+ * Command to add/edit/remove image of Person
+ */
 public class ImageCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "image";
 
@@ -42,8 +45,8 @@ public class ImageCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         if (remove) {
-            Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail()
-                    , personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
+            Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                    personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
                     personToEdit.getTags(), new ProfilePicture(DEFAULT));
             try {
                 model.updatePerson(personToEdit, editedPerson);

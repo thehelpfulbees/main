@@ -11,6 +11,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * Shows the map in a pop-up browser
+ */
 public class MapWindow extends UiPart<Region> {
 
     public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
