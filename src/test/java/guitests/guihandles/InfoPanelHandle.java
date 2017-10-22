@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 /**
