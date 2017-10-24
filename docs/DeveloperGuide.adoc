@@ -528,6 +528,49 @@ image::BirthdayNotifierActivityDiagram.png[width = "200"]
 ---
 // end::BirthdayNotifier[]
 
+// tag::ShowCommand[]
+=== Show command
+
+The 'show' command is used to display all members of a single tag. An example of its use is shown below:
+
+    AddressBook contains: Alfred (tagged as friend), Bruce (tagged as colleague), Richard (tagged as both friend and colleague)
+    User enters the command: show friend
+    ---------------------
+    The program returns by listing: Alfred and Richard
+
+This is implemented as a new command and includes a parser, ShowCommandParser just like other commands. This parser is called by AddressBookParser when the command is identified, and the parser extracts the keyword and gives it to a new ShowCommand instance.
+
+Its design was based on the 'find' command, and so includes the TagsContainKeywordPredicate in the same way that that 'find' uses a predicate class to sort through the addressbook and find persons that satisfy the predicate.
+
+image::ShowCommandArchitecture.png[width="800"]
+_ Structure of the Show Command _
+
+
+
+==== Design Considerations
+
+**Aspect:** Specificity of user input +
+**Alternative 1 (current choice):** Users are required to enter the full and exact tag name, including case +
+**Pros:** System will not output persons not in the intended tag +
+**Cons:** Inconvenient for users who forget or misinput the exact names of tags +
+**Alternative 2:** System searches all tags that contain the given keyword +
+**Pros:** More convenient to users who do not wish to remember the exact name of every tag +
+**Cons:** May return output that is unintended by the user (e.g. listing members of "girlfriend" when the user searches for "friend") +
+
+---
+
+**Aspect:** Distinctness from 'find' command +
+**Alternative 1 (current choice):** Users use the 'show' command to search by tag and the 'find' command to search by name +
+**Pros:** Users input is more natural, e.g. users can type 'find John' without having to specify that John is a name +
+**Cons:** Users have to memorise two different command names and the difference between them +
+**Alternative 2:** 'show' functionality is folded into 'find' command (e.g. users type 'find t/friends' instead of 'show friends') +
+**Pros:** Users may find it more intuitive that both of these search functions can be remembered as a single keyword 'find' +
+**Cons:** Usage of the 'find' command is less intuitive as users must learn how to specify that a parameter is either a name or a tag +
+
+---
+
+// end::ShowCommand[]
+
 // tag::Fuzzyfinder[]
 === Fuzzyfinder
 
