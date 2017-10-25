@@ -529,22 +529,20 @@ image::BirthdayNotifierActivityDiagram.png[width = "200"]
 // end::BirthdayNotifier[]
 
 // tag::ShowCommand[]
-=== Show command
+=== Find command
 
-The 'show' command is used to display all members of a single tag. An example of its use is shown below:
+The 'find' command was originally used only to search for users by name. Now it can be used to display all members of a single tag. An example of its use is shown below:
 
     AddressBook contains: Alfred (tagged as friend), Bruce (tagged as colleague), Richard (tagged as both friend and colleague)
-    User enters the command: show friend
+    User enters the command: find t\friend
     ---------------------
     The program returns by listing: Alfred and Richard
 
-This is implemented as a new command and includes a parser, ShowCommandParser just like other commands. This parser is called by AddressBookParser when the command is identified, and the parser extracts the keyword and gives it to a new ShowCommand instance.
+The FindCommand class itself relies on having a search predicate passed to the constructor as input, so that class required fairly minimal modification to take a predicate of type TagContainsKeywordPredicate as well as NameContainsKeywordsPredicate.
 
-Its design was based on the 'find' command, and so includes the TagsContainKeywordPredicate in the same way that that 'find' uses a predicate class to sort through the addressbook and find persons that satisfy the predicate.
+The FindCommandParser includes code to differentiate between a search by name and by tag, and produces either a TagContainsKeywordPredicate or NameContainsKeywordsPredicate as appropriate.
 
-image::ShowCommandArchitecture.png[width="800"]
-_ Structure of the Show Command _
-
+image::FindCommandArchitecture.png[width="800"]
 
 
 ==== Design Considerations
@@ -559,13 +557,15 @@ _ Structure of the Show Command _
 
 ---
 
-**Aspect:** Distinctness from 'find' command +
-**Alternative 1 (current choice):** Users use the 'show' command to search by tag and the 'find' command to search by name +
-**Pros:** Users input is more natural, e.g. users can type 'find John' without having to specify that John is a name +
-**Cons:** Users have to memorise two different command names and the difference between them +
-**Alternative 2:** 'show' functionality is folded into 'find' command (e.g. users type 'find t/friends' instead of 'show friends') +
-**Pros:** Users may find it more intuitive that both of these search functions can be remembered as a single keyword 'find' +
-**Cons:** Usage of the 'find' command is less intuitive as users must learn how to specify that a parameter is either a name or a tag +
+**Aspect:** Can only search by a single tag at a time +
+**Alternative 1 (current choice):** Users may enter one tag as a keyword by which to search by +
+**Cons:** Users may wish to search for the intersection of a tag and another tag, or a tag and a name (e.g. all friends named John) +
+**Alternative 2:** Searching for multiple tags returns the intersection of those tags +
+**Pros:** Allows users to very easily track down individuals by specifying which groups they are in +
+**Cons:** Makes it difficult to construct complex large subsets of the addressbook +
+**Alternative 3:** Searching for multiple tags returns the union of those tags +
+**Pros:** Useful when one 'category' of persons might be split across multiple tags +
+**Cons:** Makes it difficult to track down individuals by inputting all tags that they are in +
 
 ---
 
