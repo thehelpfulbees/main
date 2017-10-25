@@ -22,7 +22,7 @@ public class FindCommand extends Command {
             + "Also allows for finding all persons in a specified tag, using the identifier \\t.\n"
             + "Parameters: [KEYWORD [MORE_KEYWORDS]]|[t\\TAG_KEYWORD]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie \n"
-            + "Example: " + COMMAND_WORD + " t\\friends";
+            + "Example: " + COMMAND_WORD + " t\\friend";
 
     private final Predicate<ReadOnlyPerson> predicate;
 
