@@ -7,8 +7,10 @@ import seedu.address.model.person.TagsContainKeywordPredicate;
 import java.util.function.Predicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Finds and lists all persons in address book whose name contains any of the argument keywords,
+ * or are included in a specified tag.
  * Keyword matching is case sensitive.
+ * At present, only one tag can be searched for at a time
  */
 public class FindCommand extends Command {
 
@@ -17,8 +19,10 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "Also allows for finding all persons in a specified tag, using the identifier \\t.\n"
+            + "Parameters: [KEYWORD [MORE_KEYWORDS]]|[t\\TAG_KEYWORD]...\n"
+            + "Example: " + COMMAND_WORD + " alice bob charlie \n"
+            + "Example: " + COMMAND_WORD + " t\\friends";
 
     private final Predicate<ReadOnlyPerson> predicate;
 
