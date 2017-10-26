@@ -1,6 +1,5 @@
 package seedu.address;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -28,7 +27,7 @@ public class Sound {
     public static void music() {
         try {
             bip = musicList.get(curr);
-            hit = new Media(new File(bip).toURI().toString());
+            hit = new Media(Thread.currentThread().getContextClassLoader().getResource(bip).toURI().toString());
             mediaPlayer = new MediaPlayer(hit);
             mediaPlayer.play();
         } catch (Exception ex) {

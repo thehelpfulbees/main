@@ -3,8 +3,10 @@ package seedu.address.ui;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -62,7 +64,12 @@ public class CommandBox extends UiPart<Region> {
             mainPossibleSuggestion = ((ArrayList<String>) e.readObject());
             e.close();
         } catch (Exception ex) {
-            raise(new DataSavingExceptionEvent(ex));
+            try {
+                File file = new File("Autocomplete.xml");
+                file.createNewFile();
+            } catch (IOException ioe) {
+                raise(new DataSavingExceptionEvent(ex));
+            }
         }
         autocompletionbinding = TextFields.bindAutoCompletion(commandTextField, mainPossibleSuggestion);
     }
@@ -110,10 +117,9 @@ public class CommandBox extends UiPart<Region> {
                 System.out.println(commandWord);
                 XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream("Autocomplete.xml")));
                 e.writeObject(mainPossibleSuggestion);
-                System.out.println("correct");
                 e.close();
             } catch (Exception ex) {
-                System.out.println("wrong");
+
             }
         }
     }

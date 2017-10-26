@@ -65,7 +65,6 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 Remark remark = new Remark("");
                 Birthday birthday = new Birthday("");
-                System.out.println("CORRECT");
                 String[] allArgs = args.split(",");
                 if (allArgs.length < 2) {
                     throw new IllegalValueException("invalid add format");
