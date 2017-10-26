@@ -29,7 +29,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
         //command is used to search by tag
-        if (nameKeywords[0].startsWith("t\\")) {
+        if (nameKeywords[0].startsWith("t/")) {
             return new FindCommand(new TagsContainKeywordPredicate(nameKeywords[0].substring(2)));
         }
 
