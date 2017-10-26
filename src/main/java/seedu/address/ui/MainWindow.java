@@ -1,8 +1,8 @@
 package seedu.address.ui;
 
-
 import java.io.File;
 import java.io.IOException;
+
 import java.util.logging.Logger;
 
 import javax.swing.JDialog;
@@ -21,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
