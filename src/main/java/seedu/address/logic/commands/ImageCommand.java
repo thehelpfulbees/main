@@ -12,7 +12,6 @@ import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.storage.XmlImageStorage;
 
 /**
  * Command to add/edit/remove image of Person

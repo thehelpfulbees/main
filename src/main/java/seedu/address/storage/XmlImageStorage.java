@@ -19,7 +19,6 @@ public class XmlImageStorage {
 
     /**
      * Save selected image to image folder
-     * @param image, name
      * @throws IOException
      */
     public void saveImage(File image, String name) throws IOException {
@@ -42,7 +41,7 @@ public class XmlImageStorage {
                 .listFiles();
 
         for (int i = 0; i < files.length; i++) {
-            if(files[i].getName().equals(image.getName())) {
+            if (files[i].getName().equals(image.getName())) {
                 files[i].delete();
             }
         }

@@ -1,10 +1,8 @@
 package seedu.address.ui;
 
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.logging.Logger;
 
 import javax.swing.JDialog;
@@ -58,6 +56,9 @@ public class MainWindow extends UiPart<Region> {
     private Config config;
     private UserPrefs prefs;
 
+    // Storage organizer for image command
+    private XmlImageStorage imageStorage;
+
     @FXML
     private StackPane infoPlaceholder;
 
@@ -75,8 +76,6 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
-
-    public XmlImageStorage imageStorage;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
