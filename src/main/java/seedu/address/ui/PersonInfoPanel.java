@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -77,7 +78,15 @@ public class PersonInfoPanel extends UiPart<Region> {
         tags.getChildren().clear();
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         try {
-            profileImage.setImage(new Image(person.getPicture().getLocation()));
+            String loc = person.getPicture().getLocation();
+            Image image;
+            if (loc.equals("default")) {
+                image = new Image("profiles/default.png");
+            } else {
+                File img = new File(loc);
+                image = new Image(img.toURI().toString());
+            }
+            profileImage.setImage(image);
         } catch (IllegalArgumentException iae) {
             profileImage.setImage(new Image("profiles/default.png"));
         }

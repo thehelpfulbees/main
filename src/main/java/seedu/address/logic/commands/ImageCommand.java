@@ -12,6 +12,7 @@ import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.storage.XmlImageStorage;
 
 /**
  * Command to add/edit/remove image of Person
@@ -26,7 +27,7 @@ public class ImageCommand extends UndoableCommand {
 
     public static final String MESSAGE_IMAGE_SUCCESS = "Changed Profile Picture: %1$s";
 
-    public static final String DEFAULT = "profiles/default.png";
+    public static final String DEFAULT = "default";
 
     public final Index index;
     public final boolean remove;

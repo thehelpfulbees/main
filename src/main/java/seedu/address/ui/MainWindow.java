@@ -34,6 +34,7 @@ import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.XmlImageStorage;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -75,6 +76,8 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    public XmlImageStorage imageStorage;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -94,6 +97,8 @@ public class MainWindow extends UiPart<Region> {
 
         setAccelerators();
         registerAsAnEventHandler(this);
+
+        imageStorage = new XmlImageStorage();
     }
 
     public Stage getPrimaryStage() {
@@ -236,18 +241,17 @@ public class MainWindow extends UiPart<Region> {
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Any Image files", "jpg", "png", "jpeg");
         fileChooser.setFileFilter(filter);
-        fileChooser.setCurrentDirectory(new File("src/main/resources/profiles"));
+        fileChooser.setCurrentDirectory(new File("data"));
         int result = fileChooser.showDialog(parent, "Select Image");
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            File newFile = new File("src/main/resources/profiles", person.getName().toString() + ".png");
             try {
-                Files.copy(selectedFile.toPath(), newFile.toPath(), REPLACE_EXISTING);
+                imageStorage.saveImage(selectedFile, person.getName().toString());
             } catch (IOException io) {
                 logger.warning("failed to copy image");
             }
-            person.setImage("profiles/" + person.getName().toString() + ".png");
+            person.setImage(person.getName().toString() + ".png");
         }
     }
 
