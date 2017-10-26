@@ -242,6 +242,8 @@ public class MainWindow extends UiPart<Region> {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Any Image files", "jpg", "png", "jpeg");
         fileChooser.setFileFilter(filter);
         fileChooser.setCurrentDirectory(new File("data"));
+        parent.setAlwaysOnTop(true);
+        parent.setAutoRequestFocus(true);
         int result = fileChooser.showDialog(parent, "Select Image");
 
         if (result == JFileChooser.APPROVE_OPTION) {
