@@ -114,12 +114,11 @@ public class CommandBox extends UiPart<Region> {
         if (!mainPossibleSuggestion.contains(commandWord)) {
             try {
                 mainPossibleSuggestion.add(commandWord);
-                System.out.println(commandWord);
                 XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream("Autocomplete.xml")));
                 e.writeObject(mainPossibleSuggestion);
                 e.close();
             } catch (Exception ex) {
-
+                System.out.println("error"); //to be updated
             }
         }
     }
