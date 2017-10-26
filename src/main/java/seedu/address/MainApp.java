@@ -86,8 +86,6 @@ public class MainApp extends Application {
 
         startTray();
 
-        Sound.music();
-
         initEventsCenter();
     }
 
