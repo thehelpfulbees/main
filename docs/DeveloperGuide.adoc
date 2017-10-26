@@ -591,7 +591,6 @@ Note that a substring match can return a lot more unexpected results than a stri
 ---
 // end::Fuzzyfinder[]
 
-
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -1000,7 +999,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |add birthday to each person | "remember" birthdays :P
 
-|`* *` |user |Choose current song to be played | adjust between my favourite songs
+|`* *` |user |Have a prompt beep when an incorrect command is entered | a sound reminder that i typed a wrong command
 
 |`* *` |user |able add another user without following strict format | not have to remember/ refer to help for adding a person
 
