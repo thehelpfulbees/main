@@ -45,6 +45,21 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Override
+    public void show() {
+        mainWindow.show();
+    }
+
+    @Override
+    public void hide() {
+        mainWindow.hide();
+    }
+
+    @Override
+    public boolean isShowing() {
+        return mainWindow.isShowing();
+    }
+
+    @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
         primaryStage.setTitle(config.getAppTitle());
@@ -67,7 +82,6 @@ public class UiManager extends ComponentManager implements Ui {
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
         mainWindow.hide();
-        mainWindow.releaseResources();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
