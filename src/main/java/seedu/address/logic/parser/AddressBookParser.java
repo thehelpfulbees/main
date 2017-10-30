@@ -154,7 +154,8 @@ public class AddressBookParser {
 
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
+            Command undoCommand = new UndoCommandParser().parse(arguments);
+            return undoCommand;
 
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:

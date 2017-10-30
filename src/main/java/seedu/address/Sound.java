@@ -1,6 +1,7 @@
 package seedu.address;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 import javafx.scene.media.Media;
@@ -9,44 +10,30 @@ import seedu.address.commons.core.LogsCenter;
 
 //author @@justintkj
 /**
- * The Playlist for the background music.
+ * Plays the errorSound.
  */
 public class Sound {
-    public static final String EMPTY_MESSAGE = "";
-    public static final String ERRORSOUND_PATH = "src/main/resources/ErrorSound.mp3";
-    public static final String ERRORSOUND_MISSING_MESSAGE = "ErrorSound.mp3 missing,\n";
-    public static final String SOUND_ERROR = "Error with playing sound.";
     private static final Logger logger = LogsCenter.getLogger("Error Sound");
-
-    private static Boolean Validpath;
+    private static ArrayList<String> musicList = new ArrayList<String>(Arrays.asList("ErrorSound.mp3"));
+    private static int curr = 0;
+    private static String bip;
     private static Media hit;
     private static MediaPlayer mediaPlayer;
+
 
     /**
      * start playing the first error music on the playlist.
      */
+
     public static void music() {
         try {
-            hit = new Media(new File(ERRORSOUND_PATH).toURI().toString());
+            bip = musicList.get(curr);
+            hit = new Media(Thread.currentThread().getContextClassLoader().getResource(bip).toURI().toString());
             mediaPlayer = new MediaPlayer(hit);
             mediaPlayer.play();
         } catch (Exception ex) {
-            logger.info(SOUND_ERROR);
+            logger.info("Error with playing sound.");
             ex.printStackTrace();
-        }
-    }
-
-    /**
-     * Checks for validity of Autocomplee.xml
-     * @return message for user if file is mipossing
-     */
-    public static String exist() {
-        File file = new File(ERRORSOUND_PATH);
-        Validpath = file.exists();
-        if (!Validpath) {
-            return ERRORSOUND_MISSING_MESSAGE;
-        } else {
-            return EMPTY_MESSAGE;
         }
     }
 }

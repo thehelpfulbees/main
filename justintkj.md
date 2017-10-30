@@ -75,7 +75,6 @@ public class EmailCommand extends Command {
             transport.connect(host, user, pass);
             transport.sendMessage(msg, msg.getAllRecipients());
             transport.close();
-            System.out.println("message send successfully");
 
         } catch (Exception ex) {
             throw new CommandException("Incorrect Email format");
@@ -97,20 +96,6 @@ public class EmailCommand extends Command {
         // state check
         EmailCommand e = (EmailCommand) other;
         return index.equals(e.index) && subject.equals(e.subject) && message.equals(e.message);
-    }
-}
-```
-###### \main\java\seedu\address\logic\commands\exceptions\CommandException.java
-``` java
-/**
- * Represents an error which occurs during execution of a {@link Command}.
- */
-public class CommandException extends Exception {
-    public CommandException(String message) {
-        super(Sound.FileExist() + message);
-        if(!Sound.FileExist().equals(MESSAGE_MISSING_SOUND)) {
-            Sound.music();
-        }
     }
 }
 ```
@@ -176,7 +161,7 @@ public class RemarkCommand extends UndoableCommand {
 /**
  * Sorts a the list of persons in ascending alphabetical order
  */
-public class SortCommand extends Command {
+public class SortCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_SORT_SUCCESS = "Sorted in ascending order: ";
     public static final String MESSAGE_SORT_FAILURE = "Invalid command format!";
@@ -199,7 +184,7 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.sortPerson(sortType);
         return new CommandResult(MESSAGE_SORT_SUCCESS + sortType);
     }
@@ -209,6 +194,33 @@ public class SortCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof SortCommand // instanceof handles nulls
                 && this.sortType.equals(((SortCommand) other).sortType)); // state check
+    }
+}
+```
+###### \main\java\seedu\address\logic\commands\UndoCommand.java
+``` java
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireAllNonNull(model, undoRedoStack);
+
+        if(numUndo.getOneBased() > undoRedoStack.getUndoStackSize()) {
+            throw new CommandException("Maximum undo size: " + undoRedoStack.getUndoStackSize());
+        }
+
+        for(int i = 0; i < numUndo.getOneBased(); i ++) {
+            if (!undoRedoStack.canUndo()) {
+                throw new CommandException(MESSAGE_FAILURE);
+            }
+
+            undoRedoStack.popUndo().undo();
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {
+        this.model = model;
+        this.undoRedoStack = undoRedoStack;
     }
 }
 ```
@@ -315,7 +327,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                     matchFound = matcher.find();
                 }
                 if (matchFound) {
-                    phone = new Phone(matcher.group(0).trim().replace(",",""));
+                    phone = new Phone(matcher.group(0).trim().replace(",", ""));
                 } else {
                     throw new IllegalValueException("invalid phone number,\n Example: 12345678");
                 }
@@ -323,7 +335,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 matcher = birthpattern.matcher(args);
                 matchFound = matcher.find();
                 if (matchFound) {
-                    if(Birthday.isValidBirthday(matcher.group(0))) {
+                    if (Birthday.isValidBirthday(matcher.group(0))) {
                         birthday = new Birthday(matcher.group(0));
                     } else {
                         throw new IllegalValueException("invalid birthday,\n Example: 12-09-1994");
@@ -454,7 +466,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
+            Command undoCommand = new UndoCommandParser().parse(arguments);
+            return undoCommand;
 
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
@@ -512,45 +525,22 @@ public class EmailCommandParser implements Parser<EmailCommand> {
     public EmailCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        String[] splitArgs = args.trim().split(" ");
-
         Index index;
         String subject;
         String message;
         try {
-            index = ParserUtil.parseIndex(splitArgs[0]);
             String[] messages = args.trim().split(",");
             if (messages.length < 3) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
             }
+            String[] splitArgs = messages[0].trim().split(" ");
+            index = ParserUtil.parseIndex(splitArgs[0]);
             subject = (messages[1]);
             message = (messages[2]);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
         }
         return new EmailCommand(index, subject, message);
-    }
-}
-```
-###### \main\java\seedu\address\logic\parser\exceptions\ParseException.java
-``` java
-/**
- * Represents a parse error encountered by a parser.
- */
-public class ParseException extends IllegalValueException {
-
-    public ParseException(String message) {
-        super(Sound.FileExist() + message);
-        if(!Sound.FileExist().equals(MESSAGE_MISSING_SOUND)) {
-            Sound.music();
-        }
-    }
-
-    public ParseException(String message, Throwable cause) {
-        super(Sound.FileExist() + message, cause);
-        if(!Sound.FileExist().equals(MESSAGE_MISSING_SOUND)) {
-            Sound.music();
-        }
     }
 }
 ```
@@ -605,6 +595,33 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 }
 ```
+###### \main\java\seedu\address\logic\parser\UndoCommandParser.java
+``` java
+    /**
+     * Parses the given {@code String} of arguments in the context of the UndoCommand
+     * and returns an DeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public UndoCommand parse(String args) throws ParseException {
+
+        String[] splitArgs = args.trim().split(" ");
+
+        Index index;
+        try {
+            if (splitArgs[0].trim().equals("")) {
+                index = ParserUtil.parseIndex("1");
+            } else {
+                index = ParserUtil.parseIndex(splitArgs[0]);
+            }
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE), ive);
+        }
+
+        return new UndoCommand(index);
+    }
+
+}
+```
 ###### \main\java\seedu\address\model\AddressBook.java
 ``` java
     //// list overwrite operations
@@ -651,9 +668,9 @@ public class SortCommandParser implements Parser<SortCommand> {
  */
 public class CommandBox extends UiPart<Region> {
 
+    public static final String AUTOCOMPLETE_FILE_NAME = "Autocomplete.xml";
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    public static final String AUTOCOMPLETE_FILE_NAME = "Autocomplete.xml";
     private static String[] possibleSuggestion = {"add", "clear", "list",
         "edit", "find", "delete", "select", "history", "undo", "redo", "exit", "sort", "sort name",
         "sort num", "sort email", "sort address", "sort remark", "exit"};
@@ -831,7 +848,7 @@ public class SortCommandParserTest {
 
     //Tests for valid argument, sort number
     @Test
-    public void parse_Number_returnsSortCommand() {
+    public void parseNumber_returnsSortCommand() {
         try {
             SortCommand newCommand = parser.parse("number");
             if (newCommand.equals(new SortCommand("number"))) {
@@ -845,7 +862,7 @@ public class SortCommandParserTest {
     }
     //Tests for valid argument, sort name
     @Test
-    public void parse_Name_returnsSortCommand() {
+    public void parseName_returnsSortCommand() {
         try {
             SortCommand newCommand = parser.parse("name");
             if (newCommand.equals(new SortCommand("name"))) {
@@ -859,7 +876,7 @@ public class SortCommandParserTest {
     }
     //Tests for valid argument, sort address
     @Test
-    public void parse_Address_returnsSortCommand() {
+    public void parseAddress_returnsSortCommand() {
         try {
             SortCommand newCommand = parser.parse("address");
             if (newCommand.equals(new SortCommand("address"))) {
@@ -873,7 +890,7 @@ public class SortCommandParserTest {
     }
     //Tests for valid argument, sort email
     @Test
-    public void parse_Email_returnsSortCommand() {
+    public void parseEmail_returnsSortCommand() {
         try {
             SortCommand newCommand = parser.parse("email");
             if (newCommand.equals(new SortCommand("email"))) {
@@ -887,7 +904,7 @@ public class SortCommandParserTest {
     }
     //Tests for valid argument, sort birthday
     @Test
-    public void parse_Birthday_returnsSortCommand() {
+    public void parseBirthday_returnsSortCommand() {
         try {
             SortCommand newCommand = parser.parse("birthday");
             if (newCommand.equals(new SortCommand("birthday"))) {
@@ -901,7 +918,7 @@ public class SortCommandParserTest {
     }
     //Tests for valid argument, sort remark
     @Test
-    public void parse_Remark_returnsSortCommand() {
+    public void parseRemark_returnsSortCommand() {
         try {
             SortCommand newCommand = parser.parse("remark");
             if (newCommand.equals(new SortCommand("remark"))) {
@@ -915,7 +932,7 @@ public class SortCommandParserTest {
     }
     //Tests for valid argument, sort number with CamelCase
     @Test
-    public void parse_CamelCase_returnsSortCommand() {
+    public void parseCamelCase_returnsSortCommand() {
         try {
             SortCommand newCommand = parser.parse("NuMbEr");
             if (newCommand.equals(new SortCommand("number"))) {
@@ -943,7 +960,8 @@ public class SortCommandParserTest {
     //Tests for invalid Argument , multiple valid argument
     @Test
     public void parse_multipleInvalidArgs_throwsParseException() {
-        assertParseFailure(parser, "number name", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "number name", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                SortCommand.MESSAGE_USAGE));
     }
 }
 ```

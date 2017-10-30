@@ -6,7 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Sorts a the list of persons in ascending alphabetical order
  */
-public class SortCommand extends Command {
+public class SortCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_SORT_SUCCESS = "Sorted in ascending order: ";
     public static final String MESSAGE_SORT_FAILURE = "Invalid command format!";
@@ -29,7 +29,7 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.sortPerson(sortType);
         return new CommandResult(MESSAGE_SORT_SUCCESS + sortType);
     }
