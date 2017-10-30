@@ -93,13 +93,7 @@ public class AddressBookParser {
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
-            Command selectCommand = new SelectCommandParser().parse(arguments);
-            try {
-                CommandBox.setAddSuggestion(userInput);
-            } catch (Exception ex) {
-                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
-            }
-            return selectCommand;
+            return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
@@ -126,13 +120,7 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_WORD:
         case FindCommand.COMMAND_ALIAS:
-            Command findCommand = new FindCommandParser().parse(arguments);
-            try {
-                CommandBox.setAddSuggestion(userInput);
-            } catch (Exception ex) {
-                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
-            }
-            return findCommand;
+            return new FindCommandParser().parse(arguments);
 
         case FuzzyfindCommand.COMMAND_WORD:
         case FuzzyfindCommand.COMMAND_ALIAS:
