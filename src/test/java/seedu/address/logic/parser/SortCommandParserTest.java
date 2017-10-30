@@ -127,6 +127,7 @@ public class SortCommandParserTest {
     //Tests for invalid Argument , multiple valid argument
     @Test
     public void parse_multipleInvalidArgs_throwsParseException() {
-        assertParseFailure(parser, "number name", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "number name", String.format(MESSAGE_INVALID_COMMAND_FORMAT
+                ,SortCommand.MESSAGE_USAGE));
     }
 }
