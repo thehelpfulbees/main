@@ -35,11 +35,11 @@ public class UndoCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireAllNonNull(model, undoRedoStack);
 
-        if(numUndo.getOneBased() > undoRedoStack.getUndoStackSize()) {
+        if (numUndo.getOneBased() > undoRedoStack.getUndoStackSize()) {
             throw new CommandException("Maximum undo size: " + undoRedoStack.getUndoStackSize());
         }
 
-        for(int i = 0; i < numUndo.getOneBased(); i ++) {
+        for (int i = 0; i < numUndo.getOneBased(); i++) {
             if (!undoRedoStack.canUndo()) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
