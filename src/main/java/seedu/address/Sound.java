@@ -12,13 +12,13 @@ import seedu.address.commons.core.LogsCenter;
  * The Playlist for the background music.
  */
 public class Sound {
-    private static final Logger logger = LogsCenter.getLogger("Error Sound");
-    public static final String SOUND_ERROR = "Error with playing sound.";
+    public static final String EMPTY_MESSAGE = "";
     public static final String ERRORSOUND_PATH = "src/main/resources/ErrorSound.mp3";
     public static final String ERRORSOUND_MISSING_MESSAGE = "ErrorSound.mp3 missing,\n";
-    public static final String EMPTY_MESSAGE = "";
+    public static final String SOUND_ERROR = "Error with playing sound.";
+    private static final Logger logger = LogsCenter.getLogger("Error Sound");
 
-    private static Boolean ValidPath;
+    private static Boolean Validpath;
     private static Media hit;
     private static MediaPlayer mediaPlayer;
 
@@ -42,8 +42,8 @@ public class Sound {
      */
     public static String exist() {
         File file = new File(ERRORSOUND_PATH);
-        ValidPath = file.exists();
-        if (!ValidPath) {
+        Validpath = file.exists();
+        if (!Validpath) {
             return ERRORSOUND_MISSING_MESSAGE;
         } else {
             return EMPTY_MESSAGE;
