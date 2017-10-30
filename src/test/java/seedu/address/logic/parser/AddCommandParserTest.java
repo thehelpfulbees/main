@@ -48,8 +48,8 @@ public class AddCommandParserTest {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags().withBirthday("Not Set").build();
         // multiple names - last name accepted
-        assertParseSuccess(parser, "Bob Choo, 22222222 Block 123 Bobby Street 3 #01-123 " +
-                "bob@example.com", new AddCommand(expectedPerson));
+        assertParseSuccess(parser, "Bob Choo, 22222222 Block 123 Bobby Street 3 #01-123 "
+                + "bob@example.com", new AddCommand(expectedPerson));
     }
     //@author
     @Test
