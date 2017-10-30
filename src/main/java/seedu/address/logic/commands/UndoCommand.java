@@ -44,7 +44,7 @@ public class UndoCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireAllNonNull(model, undoRedoStack);
 
-        if (undoRedoStack.getUndoStackSize() ==0) {
+        if (undoRedoStack.getUndoStackSize() == 0) {
             throw new CommandException("No more commands to undo!");
         }
         if (numUndo.getOneBased() > undoRedoStack.getUndoStackSize()) {
