@@ -37,7 +37,7 @@ public class UndoCommand extends Command {
         try {
             numUndo = ParserUtil.parseIndex("1");
         } catch (IllegalValueException ex) {
-
+            System.out.println("Shouldn't reach here");
         }
 
     }
