@@ -8,7 +8,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import seedu.address.commons.core.LogsCenter;
 
-//author @@justintkj
+//@@author justintkj
 /**
  * Plays the errorSound.
  */

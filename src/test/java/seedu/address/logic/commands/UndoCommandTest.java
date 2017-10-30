@@ -52,7 +52,5 @@ public class UndoCommandTest {
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // no command in undoStack
-        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
     }
 }
