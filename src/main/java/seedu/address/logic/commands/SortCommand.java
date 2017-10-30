@@ -2,19 +2,20 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
-
+//@@author justintkj
 /**
- * Sorts a the list of persons in alphabetical order
+ * Sorts a the list of persons in ascending alphabetical order
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_SORT_SUCCESS = "Sorted in ascending order: ";
+    public static final String MESSAGE_SORT_FAILURE = "Invalid command format!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts the person identified by the index number used in the last person listing.\n"
             + "Parameters: name/num/address/email (the type of sort to be executed)\n"
             + "Example: " + COMMAND_WORD + " name"
-            + "Example: " + COMMAND_WORD + " num"
+            + "Example: " + COMMAND_WORD + " number"
             + "Example: " + COMMAND_WORD + " address"
             + "Example: " + COMMAND_WORD + " remark"
             + "Example: " + COMMAND_WORD + " email"

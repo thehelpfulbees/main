@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+﻿= AddressBook Level 4 - User Guide
 PocketBook - User Guide
 :toc:
 :toc-title:
@@ -174,15 +174,29 @@ Selects the 1st person in the results of the `find` command.
 === Sort all persons : `sort`
 
 Sort all the persons according to their names in alphabetical order. +
-Format: `sort`
+Format: `sort ARG`
 ****
-* Sorts the storage list of all persons in alphabetical order
+* Sorts the storage list of all persons in ascending order
+* Valid Arguments are: 'name', 'number', 'address', 'email', 'remark', 'birthday'.
+* CamelCase arguments are allowed 'NamE', 'NuMbEr', 'AddResS, 'EmAIL', 'REMARK', 'BiRtHDAY'
 ****
 
 Examples:
 
-* `sort` +
-Sorts all the persons in alphabetical order.
+* `sort name` +
+Sorts all the persons by name in alphabetical order.
+* `sort NaMe` +
+Sorts all the persons by name in alphabetical order.
+* `sort address` +
+Sorts all the persons by address in alphabetical order.
+* `sort number` +
+Sorts all the persons by number in alphabetical order.
+* `sort email` +
+Sorts all the persons by email in alphabetical order.
+* `sort remark` +
+Sorts all the persons by remark in alphabetical order.
+* `sort birthday` +
+Sorts all the persons by birthday in alphabetical order.
 
 === Removing a tag from all persons in addressbook : `removetag`
 

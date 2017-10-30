@@ -1,5 +1,7 @@
 package seedu.address;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -7,32 +9,43 @@ import java.util.logging.Logger;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 
+//author @@justintkj
 /**
  * The Playlist for the background music.
  */
 public class Sound {
     private static final Logger logger = LogsCenter.getLogger("Error Sound");
-    private static ArrayList<String> musicList = new ArrayList<String>(Arrays.asList("ErrorSound.mp3"));
-    private static int curr = 0;
-    private static String bip;
+    public static final String SOUND_ERROR = "Error with playing sound.";
+    public static final String ERRORSOUND_PATH = "src/main/resources/ErrorSound.mp3";
+    public static final String ERRORSOUND_MISSING_MESSAGE = "ErrorSound.mp3 missing,\n";
+    public static final String EMPTY_MESSAGE = "";
     private static Media hit;
     private static MediaPlayer mediaPlayer;
-
-
+    private static Boolean ValidPath;
     /**
      * start playing the first error music on the playlist.
      */
-
     public static void music() {
         try {
-            bip = musicList.get(curr);
-            hit = new Media(Thread.currentThread().getContextClassLoader().getResource(bip).toURI().toString());
+            hit = new Media(new File(ERRORSOUND_PATH).toURI().toString());
             mediaPlayer = new MediaPlayer(hit);
             mediaPlayer.play();
         } catch (Exception ex) {
-            logger.info("Error with playing sound.");
+            logger.info(SOUND_ERROR);
             ex.printStackTrace();
         }
+    }
+    public static String FileExist() {
+            File file = new File(ERRORSOUND_PATH);
+            ValidPath = file.exists();
+            if (!ValidPath) {
+                return ERRORSOUND_MISSING_MESSAGE;
+            } else {
+                return EMPTY_MESSAGE;
+            }
     }
 }

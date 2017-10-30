@@ -29,6 +29,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
+//@@author justintkj
 /**
  * Parses input arguments and creates a new AddCommand object
  */
@@ -70,7 +71,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                     throw new IllegalValueException("invalid add format");
                 }
                 Name name = new Name(allArgs[0]);
-                //Address address = new Address(allArgs[1]);
                 Email email;
                 Phone phone;
                 String blocknum;
@@ -78,14 +78,13 @@ public class AddCommandParser implements Parser<AddCommand> {
                 String unitnum;
                 String postalnum = "";
 
-
                 Pattern emailpattern = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+");
                 Matcher matcher = emailpattern.matcher(args);
                 boolean matchFound = matcher.find();
                 if (matchFound) {
                     email = new Email(matcher.group(0));
                 } else {
-                    throw new IllegalValueException("invalid email");
+                    throw new IllegalValueException("invalid email\n Example: Jason@example.com");
                 }
                 Pattern block = Pattern.compile("block \\d{1,3}", Pattern.CASE_INSENSITIVE);
                 matcher = block.matcher(args);
@@ -99,7 +98,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     blocknum = matcher.group(0);
                 } else {
-                    throw new IllegalValueException("invalid address");
+                    throw new IllegalValueException("invalid address, Block Number. \nExample: Block 123");
                 }
                 Pattern street = Pattern.compile("[a-zA-z]+ street \\d{1,2}", Pattern.CASE_INSENSITIVE);
                 matcher = street.matcher(args);
@@ -107,7 +106,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     streetnum = matcher.group(0);
                 } else {
-                    throw new IllegalValueException("invalid address");
+                    throw new IllegalValueException("invalid address, Street. \nExample: Jurong Street 11");
                 }
                 Pattern unit = Pattern.compile("#\\d\\d-\\d{1,3}[a-zA-Z]{0,1}", Pattern.CASE_INSENSITIVE);
                 matcher = unit.matcher(args);
@@ -115,7 +114,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     unitnum = matcher.group(0);
                 } else {
-                    throw new IllegalValueException("invalid address");
+                    throw new IllegalValueException("invalid address, Unit. \n Example: #01-12B");
                 }
                 Pattern postal = Pattern.compile("singapore \\d{6,6}", Pattern.CASE_INSENSITIVE);
                 matcher = postal.matcher(args);
@@ -123,14 +122,30 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     postalnum = ", " + matcher.group(0);
                 }
-                Pattern phonepattern = Pattern.compile("(\\D|^)\\d{8}(\\D|$)");
+                Pattern phonepattern = Pattern.compile("\\ {0,1}\\d{8}\\ {0,1}");
                 matcher = phonepattern.matcher(args);
                 matchFound = matcher.find();
-                if (matchFound) {
-                    phone = new Phone(matcher.group(0).trim());
-                } else {
-                    throw new IllegalValueException("invalid phone number");
+                if (!matchFound) {
+                    phonepattern = Pattern.compile("\\,{0,1}\\d{8}\\,{0,1}");
+                    matcher = phonepattern.matcher(args);
+                    matchFound = matcher.find();
                 }
+                if (matchFound) {
+                    phone = new Phone(matcher.group(0).trim().replace(",",""));
+                } else {
+                    throw new IllegalValueException("invalid phone number,\n Example: 12345678");
+                }
+                Pattern birthpattern = Pattern.compile("\\d{1,2}-\\d{1,2}-\\d{4,4}", Pattern.CASE_INSENSITIVE);
+                matcher = birthpattern.matcher(args);
+                matchFound = matcher.find();
+                if (matchFound) {
+                    if(Birthday.isValidBirthday(matcher.group(0))) {
+                        birthday = new Birthday(matcher.group(0));
+                    } else {
+                        throw new IllegalValueException("invalid birthday,\n Example: 12-09-1994");
+                    }
+                }
+
                 Address address = new Address(blocknum + ", " + streetnum + ", " + unitnum + postalnum);
                 Set<Tag> tagList = new HashSet<>();
                 ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture);
@@ -140,7 +155,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
-
+    //@@author
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
      * {@code ArgumentMultimap}.

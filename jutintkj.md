@@ -1,14 +1,6 @@
-package seedu.address.logic.commands;
-
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-
-import org.junit.Test;
-//@@author justintkj
+# jutintkj
+###### \test\java\seedu\address\logic\commands\RemarkCommandTest.java
+``` java
 public class RemarkCommandTest {
 
     @Test
@@ -29,3 +21,4 @@ public class RemarkCommandTest {
         assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, VALID_REMARK_BOB)));
     }
 }
+```
