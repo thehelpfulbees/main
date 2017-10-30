@@ -10,8 +10,8 @@ import seedu.address.Sound;
  */
 public class CommandException extends Exception {
     public CommandException(String message) {
-        super(Sound.FileExist() + message);
-        if(!Sound.FileExist().equals(MESSAGE_MISSING_SOUND)) {
+        super(Sound.exist() + message);
+        if (!Sound.exist().equals(MESSAGE_MISSING_SOUND)) {
             Sound.music();
         }
     }

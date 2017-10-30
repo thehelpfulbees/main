@@ -34,9 +34,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class CommandBox extends UiPart<Region> {
 
+    public static final String AUTOCOMPLETE_FILE_NAME = "Autocomplete.xml";
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    public static final String AUTOCOMPLETE_FILE_NAME = "Autocomplete.xml";
     private static String[] possibleSuggestion = {"add", "clear", "list",
         "edit", "find", "delete", "select", "history", "undo", "redo", "exit", "sort", "sort name",
         "sort num", "sort email", "sort address", "sort remark", "exit"};

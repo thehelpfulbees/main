@@ -131,7 +131,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                     matchFound = matcher.find();
                 }
                 if (matchFound) {
-                    phone = new Phone(matcher.group(0).trim().replace(",",""));
+                    phone = new Phone(matcher.group(0).trim().replace(",", ""));
                 } else {
                     throw new IllegalValueException("invalid phone number,\n Example: 12345678");
                 }
@@ -139,7 +139,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 matcher = birthpattern.matcher(args);
                 matchFound = matcher.find();
                 if (matchFound) {
-                    if(Birthday.isValidBirthday(matcher.group(0))) {
+                    if (Birthday.isValidBirthday(matcher.group(0))) {
                         birthday = new Birthday(matcher.group(0));
                     } else {
                         throw new IllegalValueException("invalid birthday,\n Example: 12-09-1994");

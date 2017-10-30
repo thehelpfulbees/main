@@ -13,7 +13,6 @@ import javax.mail.internet.MimeMessage;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author justintkj
@@ -91,7 +90,6 @@ public class EmailCommand extends Command {
             transport.connect(host, user, pass);
             transport.sendMessage(msg, msg.getAllRecipients());
             transport.close();
-            System.out.println("message send successfully");
 
         } catch (Exception ex) {
             throw new CommandException("Incorrect Email format");
