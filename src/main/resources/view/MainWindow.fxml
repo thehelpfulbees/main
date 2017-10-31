@@ -12,7 +12,7 @@
 <!-- @@author liliwei25 -->
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
   <stylesheets>
-    <URL value="@DarkTheme.css" />
+    <URL value="@BrightTheme.css" />
     <URL value="@Extensions.css" />
   </stylesheets>
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
@@ -41,7 +41,7 @@
       </StackPane>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
     </VBox>
-    <VBox>
+    <VBox minWidth="800" SplitPane.resizableWithParent="false">
       <StackPane fx:id="infoPlaceholder" prefWidth="340" >
         <padding>
           <Insets top="10" right="10" bottom="10" left="10" />
