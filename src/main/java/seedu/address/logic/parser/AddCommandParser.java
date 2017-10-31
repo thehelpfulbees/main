@@ -140,7 +140,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     phone = new Phone(matcher.group(0).trim().replace(",", ""));
                 } else {
-                    throw new IllegalValueException("Number should be 8 digits long!\n"+AddCommand.MESSAGE_USAGE_ALT);
+                    throw new IllegalValueException("Number should be 8 digits long!\n" + AddCommand.MESSAGE_USAGE_ALT);
                 }
                 Pattern birthpattern = Pattern.compile("\\d{1,2}-\\d{1,2}-\\d{4,4}", Pattern.CASE_INSENSITIVE);
                 matcher = birthpattern.matcher(args);
