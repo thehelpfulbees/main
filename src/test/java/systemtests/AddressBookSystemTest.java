@@ -1,11 +1,15 @@
 package systemtests;
 
+import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
@@ -28,6 +32,7 @@ import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 
+import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -45,9 +50,9 @@ public abstract class AddressBookSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
-    private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field");
+    private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field" , "entry-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
-            Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
+            Arrays.asList("text-input", "text-field", "entry-field", CommandBox.ERROR_STYLE_CLASS);
 
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
@@ -64,6 +69,7 @@ public abstract class AddressBookSystemTest {
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
+        waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -71,6 +77,10 @@ public abstract class AddressBookSystemTest {
     public void tearDown() throws Exception {
         setupHelper.tearDownStage();
         EventsCenter.clearSubscribers();
+    }
+
+    public MainWindowHandle getMainWindowHandle() {
+        return mainWindowHandle;
     }
 
     public CommandBoxHandle getCommandBox() {
@@ -83,6 +93,10 @@ public abstract class AddressBookSystemTest {
 
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
+    }
+
+    public BrowserPanelHandle getBrowserPanel() {
+        return mainWindowHandle.getBrowserPanel();
     }
 
     public InfoPanelHandle getInfoPanel() {
@@ -108,6 +122,7 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
+        waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -123,7 +138,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showPersonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
+        assert getModel().getFilteredPersonList().size() <= getModel().getAddressBook().getPersonList().size();
     }
 
     /**
@@ -154,6 +169,7 @@ public abstract class AddressBookSystemTest {
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
+        getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
@@ -165,6 +181,7 @@ public abstract class AddressBookSystemTest {
      * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
+        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
@@ -183,6 +200,7 @@ public abstract class AddressBookSystemTest {
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
+        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
@@ -193,6 +211,7 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
+        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
@@ -239,6 +258,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

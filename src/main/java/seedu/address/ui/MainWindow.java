@@ -52,6 +52,7 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    private BrowserPanel browserPanel;
     private PersonInfoPanel personInfoPanel;
     private PersonListPanel personListPanel;
     private Config config;
@@ -77,6 +78,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane browserPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -145,6 +149,9 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         personInfoPanel = new PersonInfoPanel();
         infoPlaceholder.getChildren().add(personInfoPanel.getRoot());
+
+        browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -225,6 +232,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author liliwei25
     /**
      * Opens the map window.
      */
@@ -256,6 +264,7 @@ public class MainWindow extends UiPart<Region> {
             person.setImage(person.getName().toString() + ".png");
         }
     }
+    //@@author
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
@@ -273,9 +282,15 @@ public class MainWindow extends UiPart<Region> {
         handleMapEvent(event.getPerson());
     }
 
+    void releaseResources() {
+        browserPanel.freeResources();
+    }
+
+    //@@author liliwei25
     @Subscribe
     private void handleChangeImageEvent(ChangeImageEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleImageEvent(event.getPerson());
     }
+    //@@author
 }

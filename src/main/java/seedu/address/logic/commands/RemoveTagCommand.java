@@ -14,6 +14,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
+//@@author liliwei25
 /**
  * Removes the specified tag from all persons in addressbook
  */

@@ -90,7 +90,7 @@ public class EditCommand extends UndoableCommand {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
-
+    //@@author liliwei25
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
@@ -110,7 +110,7 @@ public class EditCommand extends UndoableCommand {
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedBirthday,
                 updatedTags, picture);
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
