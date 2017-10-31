@@ -1,7 +1,4 @@
 /*@@author liliwei25*/
-.profile-Image {
-    -fx-background-radius: 20%;
-}
 .background {
     -fx-background-color: derive(#efefef, 20%);
     background-color: #ffffff; /* Used in the default.html file */
