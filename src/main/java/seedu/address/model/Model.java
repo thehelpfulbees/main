@@ -25,8 +25,10 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    //@@author justintkj
     /**Sorts all the people in the current database*/
     void sortPerson(String sortType);
+    //@@author
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
