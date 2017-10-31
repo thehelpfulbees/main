@@ -13,7 +13,7 @@ public class Favourite {
     public static final String MESSAGE_FAVOURITE_CONSTRAINTS =
             "Person favourite should only be true or false, and it should not be blank";
 
-    public Boolean value = false;
+    private Boolean value = false;
 
     /**
      * Validates given Favourite.
@@ -26,7 +26,7 @@ public class Favourite {
         if (!isValidInput(trimmedinput)) {
             throw new IllegalValueException(MESSAGE_FAVOURITE_CONSTRAINTS);
         }
-        if(trimmedinput.equals("true") && !value) {
+        if (trimmedinput.equals("true") && !value) {
             this.value = true;
         } else {
             this.value = false;
@@ -36,14 +36,14 @@ public class Favourite {
     /**
      * Inverses the current state of Favourite
      */
-    public void Inverse() {
+    public void inverse() {
         value = false;
     }
     /**
      * Returns true if a given string is a valid person name.
      */
     public boolean isValidInput(String input) {
-        if(input.toLowerCase().equals("true") || input.toLowerCase().equals("false")) {
+        if (input.toLowerCase().equals("true") || input.toLowerCase().equals("false")) {
             return true;
         } else {
             return false;
@@ -52,7 +52,7 @@ public class Favourite {
 
     @Override
     public String toString() {
-        if(value) {
+        if (value) {
             return "true";
         } else {
             return "false";

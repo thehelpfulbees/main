@@ -49,8 +49,8 @@ public class FavouriteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
         ReadOnlyPerson editedPerson = personToEdit;
-        if(editedPerson.getFavourite().toString().equals("true")) {
-            favourite.Inverse();
+        if (editedPerson.getFavourite().toString().equals("true")) {
+            favourite.inverse();
         }
         editedPerson.setFavourite(favourite);
 

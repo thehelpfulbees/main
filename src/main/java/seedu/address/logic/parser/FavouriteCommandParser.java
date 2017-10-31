@@ -28,7 +28,8 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
             index = ParserUtil.parseIndex(args);
             favourite = new Favourite("true");
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FavouriteCommand.MESSAGE_USAGE), ive);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FavouriteCommand.MESSAGE_USAGE), ive);
         }
 
         return new FavouriteCommand(index, favourite);

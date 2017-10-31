@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -47,7 +46,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        if(person.getFavourite().toString().equals("true")) {
+        if (person.getFavourite().toString().equals("true")) {
             name.setStyle("-fx-background-color : #ff0000");
         } else if (person.getFavourite().toString().equals("false")) {
             name.setStyle("-fx-background-color : transparent");

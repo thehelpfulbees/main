@@ -49,7 +49,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         resetData(toBeCopied);
     }
     //@@author justintkj
-    // Sort Persons according to sortType
+    /**
+     *     Sort Persons according to sortType
+     */
     public void sortPersons(String sortType) {
         persons.sort(sortType);
         syncMasterTagListWith(persons);
