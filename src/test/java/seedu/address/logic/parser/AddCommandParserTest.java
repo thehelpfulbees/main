@@ -46,7 +46,8 @@ public class AddCommandParserTest {
     @Test
     public void parse_allFieldsPresentAlternative_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags().withBirthday("11-11-2010").build();
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withTags().withBirthday("11-11-2010").build();
         //Valid input format - Accepted
         assertParseSuccess(parser, "Bob Choo, 22222222 Block 123 Bobby Street 3 #01-123 "
                 + "bob@example.com" + " 11-11-2010", new AddCommand(expectedPerson));
