@@ -1,12 +1,12 @@
 package seedu.address.ui;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
 import java.util.logging.Logger;
 
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.google.common.eventbus.Subscribe;
@@ -20,6 +20,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import seedu.address.commons.core.Config;
@@ -245,23 +246,47 @@ public class MainWindow extends UiPart<Region> {
      * Opens file browser.
      */
     private void handleImageEvent(ReadOnlyPerson person) {
-        JDialog parent = new JDialog();
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Any Image files", "jpg", "png", "jpeg");
-        fileChooser.setFileFilter(filter);
-        fileChooser.setCurrentDirectory(new File("data"));
-        parent.setAlwaysOnTop(true);
-        parent.setAutoRequestFocus(true);
-        int result = fileChooser.showDialog(parent, "Select Image");
-
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            try {
-                imageStorage.saveImage(selectedFile, person.getName().toString());
-            } catch (IOException io) {
-                logger.warning("failed to copy image");
+        String os = System.getProperty("os.name");
+        if(os.equals("Mac OS X")) {
+            FileDialog fileChooser = new FileDialog((Frame) null);
+            fileChooser.setAlwaysOnTop(true);
+            fileChooser.setAutoRequestFocus(true);
+            fileChooser.setFile("*.jpg;*.jpeg;*.png");
+            fileChooser.setDirectory(new File("data").getPath());
+            fileChooser.setVisible(true);
+            String filename = fileChooser.getDirectory() + fileChooser.getFile();
+            if (filename != null) {
+                File selectedFile = new File(filename);
+                try {
+                    imageStorage.saveImage(selectedFile, person.getName().toString());
+                } catch (IOException io) {
+                    logger.warning("failed to copy image");
+                }
+                person.setImage(person.getName().toString() + ".png");
             }
-            person.setImage(person.getName().toString() + ".png");
+        } else {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                logger.warning("Unable to open file chooser");
+            }
+            Frame parent = new Frame();
+            parent.setAlwaysOnTop(true);
+            parent.setAutoRequestFocus(true);
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Any Image files", "jpg", "png", "jpeg");
+            fileChooser.setFileFilter(filter);
+            fileChooser.setCurrentDirectory(new File("data"));
+            int result = fileChooser.showDialog(parent, "Select Image");
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                try {
+                    imageStorage.saveImage(selectedFile, person.getName().toString());
+                } catch (IOException io) {
+                    logger.warning("failed to copy image");
+                }
+                person.setImage(person.getName().toString() + ".png");
+            }
         }
     }
     //@@author
@@ -276,11 +301,13 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author liliwei25
     @Subscribe
     private void handleMapPanelEvent(MapPersonEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleMapEvent(event.getPerson());
     }
+    //@@author
 
     void releaseResources() {
         browserPanel.freeResources();
