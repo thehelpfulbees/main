@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -21,7 +19,7 @@ public class Favourite {
      * @throws IllegalValueException if given favourite string is invalid.
      */
     public Favourite(String input) throws IllegalValueException {
-        if(input == null) {
+        if (input == null) {
             input = "false";
         }
         String trimmedinput = input.trim();
