@@ -56,6 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortPerson(String sortType) {
         addressBook.sortPersons(sortType);
+        indicateAddressBookChanged();
     }
 
     @Override

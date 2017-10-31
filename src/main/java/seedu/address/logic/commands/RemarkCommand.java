@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Remark;
 
+//@@author justintkj
 /**
  * Edits the remark of the person identified by index number in person listing.
  */

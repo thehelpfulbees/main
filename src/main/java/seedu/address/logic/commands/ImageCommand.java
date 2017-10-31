@@ -48,7 +48,7 @@ public class ImageCommand extends UndoableCommand {
         if (remove) {
             Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                     personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
-                    personToEdit.getTags(), new ProfilePicture(DEFAULT));
+                    personToEdit.getTags(), new ProfilePicture(DEFAULT), personToEdit.getFavourite());
             try {
                 model.updatePerson(personToEdit, editedPerson);
             } catch (PersonNotFoundException | DuplicatePersonException pnfe) {

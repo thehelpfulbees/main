@@ -52,7 +52,7 @@ public class RemoveTagCommand extends UndoableCommand {
                 updatedTags.remove(target);
                 Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
                         person.getAddress(), person.getRemark(), person.getBirthday(), updatedTags,
-                        person.getPicture());
+                        person.getPicture(), person.getFavourite());
 
                 try {
                     model.updatePerson(person, editedPerson);
