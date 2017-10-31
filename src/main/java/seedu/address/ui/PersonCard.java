@@ -3,8 +3,10 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -30,6 +32,8 @@ public class PersonCard extends UiPart<Region> {
     private Label name;
     @FXML
     private Label id;
+    @FXML
+    private GridPane cardBackground;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -37,13 +41,17 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         bindListeners(person);
     }
-
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        if(person.getFavourite().toString().equals("true")) {
+            name.setStyle("-fx-background-color : #ff0000");
+        } else if (person.getFavourite().toString().equals("false")) {
+            name.setStyle("-fx-background-color : transparent");
+        }
     }
 
     @Override

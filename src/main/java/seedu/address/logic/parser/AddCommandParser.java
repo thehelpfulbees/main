@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FAVOURITE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
@@ -21,6 +22,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -61,7 +63,9 @@ public class AddCommandParser implements Parser<AddCommand> {
                 Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
                 Birthday birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
                 Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-                ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture);
+                Favourite favourite = ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE)).get();
+                ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture,
+                        favourite);
                 return new AddCommand(person);
             } else {
                 Remark remark = new Remark("");
@@ -77,6 +81,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 String streetnum;
                 String unitnum;
                 String postalnum = "";
+                Favourite favourite = new Favourite("false");
 
                 Pattern emailpattern = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+");
                 Matcher matcher = emailpattern.matcher(args);
@@ -148,7 +153,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
                 Address address = new Address(blocknum + ", " + streetnum + ", " + unitnum + postalnum);
                 Set<Tag> tagList = new HashSet<>();
-                ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture);
+                ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture,
+                        favourite);
                 return new AddCommand(person);
             }
         } catch (IllegalValueException ive) {
