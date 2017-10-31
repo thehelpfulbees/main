@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+
 //@@author justintkj
 /**
  * Represents a person importance in the addressBook
