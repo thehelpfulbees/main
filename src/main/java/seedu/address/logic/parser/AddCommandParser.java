@@ -71,7 +71,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 Birthday birthday = new Birthday("");
                 String[] allArgs = args.split(",");
                 if (allArgs.length < 2) {
-                    throw new IllegalValueException("invalid add format");
+                    throw new IllegalValueException("Missing Name!\n" + AddCommand.MESSAGE_USAGE_ALT);
                 }
                 Name name = new Name(allArgs[0]);
                 Email email;
@@ -102,7 +102,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     blocknum = matcher.group(0);
                 } else {
-                    throw new IllegalValueException("invalid address, Block Number. \nExample: Block 123");
+                    throw new IllegalValueException("invalid address, Block Number. \nExample: Block 123"
+                        + AddCommand.MESSAGE_USAGE_ALT);
                 }
                 Pattern street = Pattern.compile("[a-zA-z]+ street \\d{1,2}", Pattern.CASE_INSENSITIVE);
                 matcher = street.matcher(args);
@@ -110,7 +111,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     streetnum = matcher.group(0);
                 } else {
-                    throw new IllegalValueException("invalid address, Street. \nExample: Jurong Street 11");
+                    throw new IllegalValueException("invalid address, Street. \nExample: Jurong Street 11"
+                        + AddCommand.MESSAGE_USAGE_ALT);
                 }
                 Pattern unit = Pattern.compile("#\\d\\d-\\d{1,3}[a-zA-Z]{0,1}", Pattern.CASE_INSENSITIVE);
                 matcher = unit.matcher(args);
@@ -118,7 +120,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     unitnum = matcher.group(0);
                 } else {
-                    throw new IllegalValueException("invalid address, Unit. \n Example: #01-12B");
+                    throw new IllegalValueException("invalid address, Unit. \n Example: #01-12B"
+                        + AddCommand.MESSAGE_USAGE_ALT);
                 }
                 Pattern postal = Pattern.compile("singapore \\d{6,6}", Pattern.CASE_INSENSITIVE);
                 matcher = postal.matcher(args);
@@ -137,7 +140,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     phone = new Phone(matcher.group(0).trim().replace(",", ""));
                 } else {
-                    throw new IllegalValueException("invalid phone number,\n Example: 12345678");
+                    throw new IllegalValueException("Number should be 8 digits long!\n"+AddCommand.MESSAGE_USAGE_ALT);
                 }
                 Pattern birthpattern = Pattern.compile("\\d{1,2}-\\d{1,2}-\\d{4,4}", Pattern.CASE_INSENSITIVE);
                 matcher = birthpattern.matcher(args);

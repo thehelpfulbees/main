@@ -9,6 +9,7 @@ import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Favourite;
 
+//@@author justintkj
 /**
  * Parses arguments and returns FavouriteCommand
  */

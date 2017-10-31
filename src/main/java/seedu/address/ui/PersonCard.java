@@ -40,9 +40,11 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         bindListeners(person);
     }
+    //@@author justintkj
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
+     * Changes the color code of the person if favourite.
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
@@ -52,6 +54,7 @@ public class PersonCard extends UiPart<Region> {
             name.setStyle("-fx-background-color : transparent");
         }
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
