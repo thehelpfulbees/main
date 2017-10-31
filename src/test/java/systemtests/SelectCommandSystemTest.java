@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAY
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
@@ -88,7 +89,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: select from empty address book -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getPersonList().size() == 0;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased(),
                 MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 

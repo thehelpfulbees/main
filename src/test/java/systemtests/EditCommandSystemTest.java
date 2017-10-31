@@ -26,6 +26,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
@@ -94,7 +95,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: clear tags -> cleared */
         index = INDEX_FIRST_PERSON;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix() + " ";
         editedPerson = new PersonBuilder(personToEdit).withTags().build();
         assertCommandSuccess(command, index, editedPerson);
 
@@ -123,7 +124,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          * browser url changes
          */
         showAllPersons();
-        index = INDEX_FIRST_PERSON;
+        index = INDEX_SECOND_PERSON;
         selectPerson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
@@ -177,7 +178,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: edit a person with new values same as another person's values -> rejected */
         executeCommand(PersonUtil.getAddCommand(BOB));
         assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));
-        index = INDEX_FIRST_PERSON;
+        index = INDEX_SECOND_PERSON;
         assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
