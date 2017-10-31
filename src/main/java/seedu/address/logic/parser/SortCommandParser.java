@@ -19,6 +19,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      */
     public SortCommand parse(String args) throws ParseException {
         try {
+            args = args.toLowerCase();
             String toSort = ParserUtil.parseSortType(args);
             return new SortCommand(toSort);
         } catch (IllegalValueException ive) {

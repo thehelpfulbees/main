@@ -49,9 +49,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         resetData(toBeCopied);
     }
     //@@author justintkj
-    //// list overwrite operations
+    //// Sort Persons according to sortType
     public void sortPersons(String sortType) {
         persons.sort(sortType);
+        syncMasterTagListWith(persons);
     }
     //@@author
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {

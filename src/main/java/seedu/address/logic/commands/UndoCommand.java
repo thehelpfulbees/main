@@ -27,7 +27,7 @@ public class UndoCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     private Index numUndo;
-
+    //@@author justintkj
     public UndoCommand(Index numUndo) {
         this.numUndo = numUndo;
     }
@@ -39,7 +39,7 @@ public class UndoCommand extends Command {
         }
 
     }
-    //@@author justintkj
+
     @Override
     public CommandResult execute() throws CommandException {
         requireAllNonNull(model, undoRedoStack);
@@ -60,7 +60,7 @@ public class UndoCommand extends Command {
         }
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
+    //@@author
     @Override
     public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {
         this.model = model;

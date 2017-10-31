@@ -147,7 +147,8 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
+            Command redoCommand = new RedoCommandParser().parse(arguments);
+            return redoCommand;
 
         case RemarkCommand.COMMAND_WORD:
             Command remarkCommand = new RemarkCommandParser().parse(arguments);

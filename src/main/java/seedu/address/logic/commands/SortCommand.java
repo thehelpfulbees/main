@@ -25,7 +25,7 @@ public class SortCommand extends UndoableCommand {
     private String sortType;
 
     public SortCommand(String sortType) {
-        this.sortType = sortType;
+        this.sortType = sortType.toLowerCase();
     }
 
     @Override
