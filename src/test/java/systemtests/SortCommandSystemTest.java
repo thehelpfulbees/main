@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.testutil.TypicalPersons.AMY;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.Model;
@@ -17,7 +18,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 //@@author justintkj
 public class SortCommandSystemTest extends AddressBookSystemTest {
     @Test
-    public void Sort() throws Exception {
+    public void sort() throws Exception {
         Model model = getModel();
 
         /* Case: Sort all persons by name, CamelCase */
@@ -89,7 +90,22 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
     }
+    /**
+     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)}. Executes {@code command}
+     * instead.
+     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
+     */
+    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
+        Model expectedModel = getModel();
+        try {
+            expectedModel.addPerson(toAdd);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("toAdd already exists in the model.");
+        }
+        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
 
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+    }
     /**
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.
@@ -106,23 +122,6 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)}. Executes {@code command}
-     * instead.
-     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
-     */
-    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
-        Model expectedModel = getModel();
-        try {
-            expectedModel.addPerson(toAdd);
-        } catch (DuplicatePersonException dpe) {
-            throw new IllegalArgumentException("toAdd already exists in the model.");
-        }
-        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
-
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
 
 }
