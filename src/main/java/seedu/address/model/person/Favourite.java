@@ -21,7 +21,9 @@ public class Favourite {
      * @throws IllegalValueException if given favourite string is invalid.
      */
     public Favourite(String input) throws IllegalValueException {
-        requireNonNull(input);
+        if(input == null) {
+            input = "false";
+        }
         String trimmedinput = input.trim();
         if (!isValidInput(trimmedinput)) {
             throw new IllegalValueException(MESSAGE_FAVOURITE_CONSTRAINTS);
