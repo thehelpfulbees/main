@@ -63,7 +63,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 Remark remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
                 Birthday birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
                 Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-                Favourite favourite = ParserUtil.parseFavourite(argMultimap.getValue(PREFIX_FAVOURITE)).get();
+                Favourite favourite = new Favourite("false");
                 ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture,
                         favourite);
                 return new AddCommand(person);
