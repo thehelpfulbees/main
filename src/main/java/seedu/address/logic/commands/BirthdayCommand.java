@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -51,9 +50,9 @@ public class BirthdayCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        ReadOnlyPerson editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRemark(), birthday, personToEdit.getTags(),
-                personToEdit.getPicture(), personToEdit.getFavourite());
+        ReadOnlyPerson editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
+                personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getRemark(), birthday,
+                personToEdit.getTags(), personToEdit.getPicture(), personToEdit.getFavourite());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
