@@ -247,7 +247,7 @@ public class MainWindow extends UiPart<Region> {
      */
     private void handleImageEvent(ReadOnlyPerson person) {
         String os = System.getProperty("os.name");
-        if(os.equals("Mac OS X")) {
+        if(!os.equals("Mac OS X")) {
             FileDialog fileChooser = new FileDialog((Frame) null);
             fileChooser.setAlwaysOnTop(true);
             fileChooser.setAutoRequestFocus(true);
@@ -255,7 +255,7 @@ public class MainWindow extends UiPart<Region> {
             fileChooser.setDirectory(new File("data").getPath());
             fileChooser.setVisible(true);
             String filename = fileChooser.getDirectory() + fileChooser.getFile();
-            if (filename != null) {
+            if (fileChooser.getFile() != null) {
                 File selectedFile = new File(filename);
                 try {
                     imageStorage.saveImage(selectedFile, person.getName().toString());
