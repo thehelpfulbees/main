@@ -77,7 +77,7 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
-    //@@thehelpfulbees
+    //@@author thehelpfulbees
 
     @Test
     public void execute_searchByTag_noPersonFound() {

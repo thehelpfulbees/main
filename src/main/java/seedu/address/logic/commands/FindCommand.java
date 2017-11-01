@@ -6,6 +6,8 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagsContainKeywordPredicate;
 
+//@@author thehelpfulbees
+
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords,
  * or are included in a specified tag.
@@ -26,10 +28,11 @@ public class FindCommand extends Command {
 
     private final Predicate<ReadOnlyPerson> predicate;
 
-    //@@thehelpfulbees
     public FindCommand(Predicate<ReadOnlyPerson> predicate) {
         this.predicate = predicate;
     }
+
+
 
     @Override
     public CommandResult execute() {

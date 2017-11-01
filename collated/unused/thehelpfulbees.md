@@ -1,34 +1,68 @@
-package seedu.address.logic.commands;
+# thehelpfulbees
+###### /ShowCommand.java
+``` java
+/**
+ * Finds and lists all persons in address book whose tags include the argument keyword.
+ * Keyword matching is case sensitive.
+ */
+public class ShowCommand extends Command {
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.GEORGE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+    public static final String COMMAND_WORD = "show";
+    public static final String COMMAND_ALIAS = "sh";
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons in a given tag "
+            + "and displays them as a list with index numbers.\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " friends";
 
-import org.junit.Test;
+    private final TagsContainKeywordPredicate predicate;
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.TagsContainKeywordPredicate;
+    public ShowCommand(TagsContainKeywordPredicate predicate) {
+        this.predicate = predicate;
+    }
 
-//@@author thehelpfulbees
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ShowCommand // instanceof handles nulls
+                && this.predicate.equals(((ShowCommand) other).predicate)); // state check
+    }
+}
+```
+###### /ShowCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ShowCommand object
+ */
+public class ShowCommandParser implements Parser<ShowCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ShowCommand
+     * and returns an ShowCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ShowCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
+        }
+
+        String tagKeyword = trimmedArgs;
+
+        return new ShowCommand(new TagsContainKeywordPredicate(tagKeyword));
+    }
+
+}
+```
+###### /ShowCommandTest.java
+``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code ShowCommand}.
  */
@@ -111,3 +145,4 @@ public class ShowCommandTest {
     }
 
 }
+```

@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.person.TagsContainKeywordPredicate;
 
+//@@author thehelpfulbees
 /**
  * Finds and lists all persons in address book whose tags include the argument keyword.
  * Keyword matching is case sensitive.
@@ -17,8 +18,6 @@ public class ShowCommand extends Command {
             + "Example: " + COMMAND_WORD + " friends";
 
     private final TagsContainKeywordPredicate predicate;
-
-    //@@thehelpfulbees
 
     public ShowCommand(TagsContainKeywordPredicate predicate) {
         this.predicate = predicate;

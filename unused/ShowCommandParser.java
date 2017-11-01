@@ -6,12 +6,11 @@ import seedu.address.logic.commands.ShowCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.TagsContainKeywordPredicate;
 
+//@@author thehelpfulbees
 /**
  * Parses input arguments and creates a new ShowCommand object
  */
 public class ShowCommandParser implements Parser<ShowCommand> {
-
-    //@@thehelpfulbees
 
     /**
      * Parses the given {@code String} of arguments in the context of the ShowCommand

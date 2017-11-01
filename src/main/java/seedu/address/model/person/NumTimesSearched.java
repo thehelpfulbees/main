@@ -3,7 +3,6 @@ package seedu.address.model.person;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author thehelpfulbees
-
 /**
  * Counts number of times a person has been searched for
  * Guarantees: immutable;

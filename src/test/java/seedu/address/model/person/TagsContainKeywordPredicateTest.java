@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import seedu.address.testutil.PersonBuilder;
 
-public class TagsContainKeywordPredicateTest {
+//@@author thehelpfulbees
 
-    //thehelpfulbees
+public class TagsContainKeywordPredicateTest {
 
     @Test
     public void test_tagsContainKeyword_returnsTrue() {
