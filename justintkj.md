@@ -220,8 +220,13 @@ public class RemarkCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_REMARK + "Likes to swim.";
 
+    public static final String MESSAGE_REMARK_SUCCESS = "Remark edited for Person: ";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MISSING_PERSON = "Person cannot be found";
+
     private final Index index;
     private final Remark remark;
+
 
     public RemarkCommand (Index index, Remark remark) {
         requireNonNull(index);
@@ -238,9 +243,27 @@ public class RemarkCommand extends UndoableCommand {
         this.index = index;
         this.remark = new Remark(remark);
     }
-
+    @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(index + " " + remark);
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), remark, personToEdit.getBirthday(), personToEdit.getTags(),
+                personToEdit.getPicture(), personToEdit.getFavourite());
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError(MISSING_PERSON);
+        }
+        return new CommandResult(MESSAGE_REMARK_SUCCESS + personToEdit.getName().toString());
     }
 
     @Override
@@ -447,7 +470,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 if (matchFound) {
                     phone = new Phone(matcher.group(0).trim().replace(",", ""));
                 } else {
-                    throw new IllegalValueException("Number should be 8 digits long!\n"+AddCommand.MESSAGE_USAGE_ALT);
+                    throw new IllegalValueException("Number should be 8 digits long!\n" + AddCommand.MESSAGE_USAGE_ALT);
                 }
                 Pattern birthpattern = Pattern.compile("\\d{1,2}-\\d{1,2}-\\d{4,4}", Pattern.CASE_INSENSITIVE);
                 matcher = birthpattern.matcher(args);
@@ -1036,7 +1059,7 @@ public class CommandBox extends UiPart<Region> {
     public static void setAddSuggestion(String commandWord) throws CommandException {
         if (!mainPossibleSuggestion.contains(commandWord)) {
             try {
-                mainPossibleSuggestion.add(commandWord);
+                mainPossibleSuggestion.add(commandWord.trim());
                 XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(AUTOCOMPLETE_FILE_NAME)));
                 e.writeObject(mainPossibleSuggestion);
                 e.close();
@@ -1332,6 +1355,10 @@ public class SortCommandParserTest {
 ``` java
 public class SortCommandSystemTest extends AddressBookSystemTest {
     @Test
+
+
+
+
     public void sort() throws Exception {
         Model model = getModel();
 
@@ -1341,7 +1368,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: Sort all persons by null*/
-        command = SortCommand.COMMAND_WORD + "";
+        command = SortCommand.COMMAND_WORD + "  ";
         expectedResultMessage = SortCommand.MESSAGE_SORT_FAILURE + " \n" + SortCommand.MESSAGE_USAGE;
         assertCommandFailure(command, expectedResultMessage);
 
