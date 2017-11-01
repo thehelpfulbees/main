@@ -3,7 +3,7 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -32,46 +32,29 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
-    @FXML
-    private Label birthday;
-    @FXML
-    private Label remark;
-    @FXML
-    private FlowPane tags;
+    private GridPane cardBackground;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        initTags(person);
         bindListeners(person);
     }
-
+    //@@author justintkj
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
+     * Changes the color code of the person if favourite.
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        });
-        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        if (person.getFavourite().toString().equals("true")) {
+            name.setStyle("-fx-background-color : #ff0000");
+        } else if (person.getFavourite().toString().equals("false")) {
+            name.setStyle("-fx-background-color : transparent");
+        }
     }
-
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

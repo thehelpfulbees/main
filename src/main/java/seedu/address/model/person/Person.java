@@ -25,12 +25,14 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     private ObjectProperty<Remark> remark;
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<ProfilePicture> image;
+    private ObjectProperty<Favourite> favourite;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Remark remark, Birthday birthday,
-                  Set<Tag> tags) {
+                  Set<Tag> tags, ProfilePicture image, Favourite favourite) {
         requireAllNonNull(name, phone, email, address, remark, birthday, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -40,13 +42,15 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         this.birthday = new SimpleObjectProperty<>(birthday);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.image = new SimpleObjectProperty<>(image);
+        this.favourite = new SimpleObjectProperty<>(favourite);
     }
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getBirthday(), source.getTags());
+                source.getBirthday(), source.getTags(), source.getPicture(), source.getFavourite());
     }
 
     public void setName(Name name) {
@@ -145,6 +149,15 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return birthday.get().getMonth();
     }
 
+    @Override
+    public Favourite getFavourite() {
+        return favourite.get();
+    }
+
+    public void setFavourite(Favourite favourite) {
+        this.favourite.set(requireNonNull(favourite));
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -163,6 +176,20 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    @Override
+    public ObjectProperty<ProfilePicture> imageProperty() {
+        return image;
+    }
+    @Override
+    public ProfilePicture getPicture() {
+        return image.get();
+    }
+
+    @Override
+    public void setImage(String img) {
+        image.set(new ProfilePicture(img));
     }
 
     @Override

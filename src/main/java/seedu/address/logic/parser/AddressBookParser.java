@@ -14,12 +14,14 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FuzzyfindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ImageCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.MapCommand;
-import seedu.address.logic.commands.NextSongCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
@@ -27,6 +29,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.CommandBox;
 
 /**
  * Parses user input.
@@ -36,12 +39,14 @@ public class AddressBookParser {
     /**
      * Used for initial separation of command word and args.
      */
+    public static final String MISSING_AUTOCOMPLETEFILE = "Autocomplete.xml may be missing";
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    //@@author justintkj
     /**
      * Parses user input into command for execution.
      *
-     * @param userInput full user input string
+     * @param userInput full user input string, adds suggestion to Autocomplete.xml if valid command
      * @return the command based on the user input
      * @throws ParseException if the user input does not conform the expected format
      */
@@ -56,32 +61,65 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case EmailCommand.COMMAND_WORD:
-            return new EmailCommandParser().parse(arguments);
+            Command emailCommand = new EmailCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return emailCommand;
 
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);
 
-        case NextSongCommand.COMMAND_WORD:
-            return new NextSongCommand();
-
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
-            return new AddCommandParser().parse(arguments);
+            Command addCommand = new AddCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return addCommand;
 
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
-            return new EditCommandParser().parse(arguments);
+            Command editCommand = new EditCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return editCommand;
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
+            Command selectCommand = new SelectCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return selectCommand;
 
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
-            return new DeleteCommandParser().parse(arguments);
+            Command deleteCommand = new DeleteCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return deleteCommand;
 
         case RemoveTagCommand.COMMAND_WORD:
-            return new RemoveTagCommandParser().parse(arguments);
+            Command removeTagCommand = new RemoveTagCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return removeTagCommand;
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
@@ -89,7 +127,17 @@ public class AddressBookParser {
 
         case FindCommand.COMMAND_WORD:
         case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
+            Command findCommand = new FindCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return findCommand;
+
+        case FuzzyfindCommand.COMMAND_WORD:
+        case FuzzyfindCommand.COMMAND_ALIAS:
+            return new FuzzyfindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
@@ -107,20 +155,62 @@ public class AddressBookParser {
 
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
+            Command undoCommand = new UndoCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return undoCommand;
 
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
+            Command redoCommand = new RedoCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return redoCommand;
 
         case RemarkCommand.COMMAND_WORD:
-            return new RemarkCommandParser().parse(arguments);
+            Command remarkCommand = new RemarkCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return remarkCommand;
 
         case BirthdayCommand.COMMAND_WORD:
-            return new BirthdayCommandParser().parse(arguments);
+            Command birthdayCommand = new BirthdayCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return birthdayCommand;
 
         case MapCommand.COMMAND_WORD:
-            return new MapCommandParser().parse(arguments);
+            Command mapCommand = new MapCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return mapCommand;
+
+        case ImageCommand.COMMAND_WORD:
+            return new ImageCommandParser().parse(arguments);
+
+        case FavouriteCommand.COMMAND_WORD:
+            Command favouriteCommand = new FavouriteCommandParser().parse(arguments);
+            try {
+                CommandBox.setAddSuggestion(userInput);
+            } catch (Exception ex) {
+                throw new ParseException(MISSING_AUTOCOMPLETEFILE);
+            }
+            return favouriteCommand;
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

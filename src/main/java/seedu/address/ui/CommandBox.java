@@ -1,8 +1,17 @@
 package seedu.address.ui;
 
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
 import javafx.collections.ObservableList;
@@ -11,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -18,17 +28,19 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
+//@@author justintkj
 /**
  * The UI component that is responsible for receiving user command inputs.
  */
 public class CommandBox extends UiPart<Region> {
 
-    public static final int ONE_INDEX = 1;
+    public static final String AUTOCOMPLETE_FILE_NAME = "Autocomplete.xml";
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-
-
+    private static String[] possibleSuggestion = {"add", "clear", "list",
+        "edit", "find", "delete", "select", "history", "undo", "redo", "exit", "sort", "sort name",
+        "sort num", "sort email", "sort address", "sort remark", "exit"};
+    private static ArrayList<String> mainPossibleSuggestion = new ArrayList<String>(Arrays.asList(possibleSuggestion));
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
@@ -36,20 +48,28 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private TextField commandTextField;
     private ArrayList<String> prevText = new ArrayList<String>();
-
+    private AutoCompletionBinding autocompletionbinding;
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
-        String[] possibleSuggestion = {"add", "clear", "list",
-            "edit", "find", "delete", "select", "history", "undo", "redo", "exit", "sort name",
-            "sort num", "sort email", "sort address", "sort remark", "nextsong"};
-        TextFields.bindAutoCompletion(commandTextField, possibleSuggestion);
-
+        try {
+            XMLDecoder e = new XMLDecoder(new FileInputStream("Autocomplete.xml"));
+            mainPossibleSuggestion = ((ArrayList<String>) e.readObject());
+            e.close();
+        } catch (Exception ex) {
+            try {
+                File file = new File("Autocomplete.xml");
+                file.createNewFile();
+            } catch (IOException ioe) {
+                raise(new DataSavingExceptionEvent(ex));
+            }
+        }
+        autocompletionbinding = TextFields.bindAutoCompletion(commandTextField, mainPossibleSuggestion);
     }
-
+    //@@author
     /**
      * Handles the key press event, {@code keyEvent}.
      */
@@ -68,25 +88,35 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
 
-        case LEFT:
-            keyEvent.consume();
-            prevText.add(commandTextField.getText());
-            commandTextField.setText("");
-            break;
-
-        case RIGHT:
-            keyEvent.consume();
-            if (!prevText.isEmpty()) {
-                int lastIndex = prevText.size() - ONE_INDEX;
-                commandTextField.setText(prevText.remove(lastIndex));
-            }
-            break;
-
         default:
-            // let JavaFx handle the keypress
+
         }
     }
+    //@@author justintkj
 
+    /**
+     * Adds in a valid command string into autocomplete.xml storage
+     * @param commandWord
+     * @throws CommandException if autocomplete.xml cannot be made.
+     */
+    public static void setAddSuggestion(String commandWord) throws CommandException {
+        if (!mainPossibleSuggestion.contains(commandWord)) {
+            try {
+                mainPossibleSuggestion.add(commandWord);
+                XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(AUTOCOMPLETE_FILE_NAME)));
+                e.writeObject(mainPossibleSuggestion);
+                e.close();
+            } catch (Exception ex) {
+                try {
+                    File file = new File("Autocomplete.xml");
+                    file.createNewFile();
+                } catch (IOException ioe) {
+                    throw new CommandException("Unable to create file Autocomplete.xml");
+                }
+            }
+        }
+    }
+    //@@author
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
@@ -96,6 +126,7 @@ public class CommandBox extends UiPart<Region> {
         if (!historySnapshot.hasPrevious()) {
             return;
         }
+
 
         replaceText(historySnapshot.previous());
     }
@@ -133,6 +164,8 @@ public class CommandBox extends UiPart<Region> {
             historySnapshot.next();
             // process result of the command
             commandTextField.setText("");
+            autocompletionbinding.dispose();
+            autocompletionbinding = TextFields.bindAutoCompletion(commandTextField, mainPossibleSuggestion);
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 

@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ChangeImageEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -54,6 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortPerson(String sortType) {
         addressBook.sortPersons(sortType);
+        indicateAddressBookChanged();
     }
     @Override
     public ReadOnlyAddressBook getAddressBook() {
@@ -114,6 +116,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         raise(new MapPersonEvent(target));
     }
+
+    @Override
+    public void changeImage(ReadOnlyPerson target) throws PersonNotFoundException {
+        raise(new ChangeImageEvent(target));
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
