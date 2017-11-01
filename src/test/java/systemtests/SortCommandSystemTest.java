@@ -18,6 +18,10 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 //@@author justintkj
 public class SortCommandSystemTest extends AddressBookSystemTest {
     @Test
+
+
+
+
     public void sort() throws Exception {
         Model model = getModel();
 
@@ -27,7 +31,7 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: Sort all persons by null*/
-        command = SortCommand.COMMAND_WORD + "";
+        command = SortCommand.COMMAND_WORD + "  ";
         expectedResultMessage = SortCommand.MESSAGE_SORT_FAILURE + " \n" + SortCommand.MESSAGE_USAGE;
         assertCommandFailure(command, expectedResultMessage);
 
