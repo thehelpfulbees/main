@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -52,5 +53,24 @@ public class RedoCommandTest {
 
         // no command in redoStack
         assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    //@@author justintkj
+    @Test
+    public void alternative() throws Exception {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Collections.emptyList(), Arrays.asList(deleteCommandOne, deleteCommandOne));
+        RedoCommand redoCommand = new RedoCommand(INDEX_SECOND_PERSON);
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        // multiple commands in redoStack
+        deleteFirstPerson(expectedModel);
+        deleteFirstPerson(expectedModel);
+        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // no command in redoStack
+        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+        
     }
 }

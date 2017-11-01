@@ -42,7 +42,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
-    //@author justintkj
+    //@@author justintkj
     @Test
     public void parse_allFieldsPresentAlternative_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -69,7 +69,7 @@ public class AddCommandParserTest {
                 + "bob@example.com " + " 11-11-2010" + " 12-12-2012", new AddCommand(expectedPerson));
 
     }
-    //@author
+    //@@author
     @Test
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)

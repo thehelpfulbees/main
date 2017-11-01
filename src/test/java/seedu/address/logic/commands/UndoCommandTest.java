@@ -4,6 +4,7 @@ import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -50,6 +51,28 @@ public class UndoCommandTest {
         // single command in undoStack
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+    //@@author justintkj
+    @Test
+    public void alternative() throws Exception {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
+        UndoCommand undoCommand = new UndoCommand(INDEX_SECOND_PERSON);
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        deleteCommandOne.execute();
+        deleteCommandTwo.execute();
 
+        // multiple commands in undoStack
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // single command in undoStack
+        undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne), Collections.emptyList());
+        undoCommand = new UndoCommand();
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        deleteCommandOne.execute();
+        expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
