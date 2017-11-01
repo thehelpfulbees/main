@@ -89,7 +89,7 @@ public class EmailCommand extends Command {
             return true;
         }
         // instanceof handles nulls
-        if (!(other instanceof BirthdayCommand)) {
+        if (!(other instanceof EmailCommand)) {
             return false;
         }
 
@@ -201,6 +201,13 @@ public class FavouriteCommand extends UndoableCommand {
         }
 
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RedoCommand // instanceof handles nulls
+                && this.numRedo.equals(((RedoCommand) other).numRedo)); // state check
     }
 ```
 ###### \main\java\seedu\address\logic\commands\RemarkCommand.java
@@ -357,6 +364,13 @@ public class SortCommand extends UndoableCommand {
             undoRedoStack.popUndo().undo();
         }
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UndoCommand // instanceof handles nulls
+                && this.numUndo.equals(((UndoCommand) other).numUndo)); // state check
     }
 ```
 ###### \main\java\seedu\address\logic\parser\AddCommandParser.java
@@ -692,7 +706,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
         String message;
         try {
             String[] messages = args.trim().split(",");
-            if (messages.length < 3) {
+            if (messages.length != 3) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
             }
             String[] splitArgs = messages[0].trim().split(" ");
@@ -1090,6 +1104,27 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 ```
+###### \test\java\seedu\address\logic\commands\RedoCommandTest.java
+``` java
+    @Test
+    public void alternative() throws Exception {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Collections.emptyList(), Arrays.asList(deleteCommandOne, deleteCommandOne));
+        RedoCommand redoCommand = new RedoCommand(INDEX_SECOND_PERSON);
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        // multiple commands in redoStack
+        deleteFirstPerson(expectedModel);
+        deleteFirstPerson(expectedModel);
+        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // no command in redoStack
+        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+        
+    }
+}
+```
 ###### \test\java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
@@ -1169,6 +1204,61 @@ public class SortCommandTest {
 }
 
 ```
+###### \test\java\seedu\address\logic\commands\UndoCommandTest.java
+``` java
+    @Test
+    public void alternative() throws Exception {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
+        UndoCommand undoCommand = new UndoCommand(INDEX_SECOND_PERSON);
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        deleteCommandOne.execute();
+        deleteCommandTwo.execute();
+
+        // multiple commands in undoStack
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // single command in undoStack
+        undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne), Collections.emptyList());
+        undoCommand = new UndoCommand();
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        deleteCommandOne.execute();
+        expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+}
+```
+###### \test\java\seedu\address\logic\parser\AddCommandParserTest.java
+``` java
+    @Test
+    public void parse_allFieldsPresentAlternative_success() {
+        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withTags().withBirthday("11-11-2010").build();
+        //Valid input format - Accepted
+        assertParseSuccess(parser, "Bob Choo, 22222222 Block 123 Bobby Street 3 #01-123 "
+                + "bob@example.com" + " 11-11-2010", new AddCommand(expectedPerson));
+
+        //Multiple phone, 1st Phone accepted - Accepted
+        assertParseSuccess(parser, "Bob Choo, 22222222 33333333 Block 123 Bobby Street 3 #01-123 "
+                + "bob@example.com" + " 11-11-2010", new AddCommand(expectedPerson));
+
+        //Multiple Email, 1st Email accepted - Accepted
+        assertParseSuccess(parser, "Bob Choo, 22222222 Block 123 Bobby Street 3 #01-123 "
+                + "bob@example.com  pop@example.com" + " 11-11-2010", new AddCommand(expectedPerson));
+
+        //Multiple Addresses, 1st Address accepted - Accepted
+        assertParseSuccess(parser, "Bob Choo, 22222222 Block 123 Bobby Street 3 #01-123 "
+                + "bob@example.com  Block 122 Poppy Street 88 #11-111" + " 11-11-2010", new AddCommand(expectedPerson));
+
+        //Multiple Birthdays, 1st Birthday accepted - Accepted
+        assertParseSuccess(parser, "Bob Choo, 22222222 Block 123 Bobby Street 3 #01-123 "
+                + "bob@example.com " + " 11-11-2010" + " 12-12-2012", new AddCommand(expectedPerson));
+
+    }
+```
 ###### \test\java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
     @Test
@@ -1195,6 +1285,101 @@ public class SortCommandTest {
                 + "bob@example.com" + " 11-11-2010", "invalid address, Unit. \n Example: #01-12B"
                 + AddCommand.MESSAGE_USAGE_ALT);
     }
+```
+###### \test\java\seedu\address\logic\parser\EmailCommandParserTest.java
+``` java
+/**
+ * Tests for all valid Email types of command.
+ */
+public class EmailCommandParserTest {
+
+    private EmailCommandParser parser = new EmailCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsEmailCommand() {
+        //VALID EMAIL FORMAT
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + "," + "subject" + "," + "body";
+        EmailCommand expectedCommand = new EmailCommand(INDEX_FIRST_PERSON, "subject", "body");
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        //VALID EMAIL FORMAT - extra whitespaces
+        targetIndex = INDEX_FIRST_PERSON;
+        userInput = " " + targetIndex.getOneBased() + "  ," + "subject" + "," + "body";
+        expectedCommand = new EmailCommand(INDEX_FIRST_PERSON, "subject", "body");
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        //No Index selected
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EmailCommand.MESSAGE_USAGE));
+
+        //Too many inputs
+        assertParseFailure(parser, "1,subject,body,extra", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EmailCommand.MESSAGE_USAGE));
+
+        //Too little input
+        assertParseFailure(parser, "1,subject", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EmailCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \test\java\seedu\address\logic\parser\FavouriteCommandParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the FavouriteCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the DeleteCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class FavouriteCommandParserTest {
+
+        private FavouriteCommandParser parser = new FavouriteCommandParser();
+
+        @Test
+        public void parse_validArgs_returnsFavouriteCommand() {
+            try {
+                assertParseSuccess(parser, "1", new FavouriteCommand(INDEX_FIRST_PERSON,
+                        new Favourite("1")));
+            } catch (IllegalValueException ive) {
+                System.out.println("Wouldn't reach here");
+            }
+        }
+
+        @Test
+        public void parse_invalidArgs_throwsParseException() {
+            assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    FavouriteCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \test\java\seedu\address\logic\parser\RedoCommandParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the MapCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the MapCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class RedoCommandParserTest {
+
+    private RedoCommandParser parser = new RedoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsRedoCommand() {
+        assertParseSuccess(parser, "1", new RedoCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                RedoCommand.MESSAGE_USAGE));
+    }
+}
 ```
 ###### \test\java\seedu\address\logic\parser\RemarkCommandParserTest.java
 ``` java
@@ -1229,6 +1414,9 @@ public class RemarkCommandParserTest {
 ```
 ###### \test\java\seedu\address\logic\parser\SortCommandParserTest.java
 ``` java
+/**
+ * Tests for all possible type of arguments possible for sortCommand.
+ */
 public class SortCommandParserTest {
     private SortCommandParser parser = new SortCommandParser();
 
@@ -1351,14 +1539,34 @@ public class SortCommandParserTest {
     }
 }
 ```
+###### \test\java\seedu\address\logic\parser\UndoCommandParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the MapCommand code. For example, inputs "1" and "1 abc" take the
+ * same path through the MapCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class UndoCommandParserTest {
+
+    private UndoCommandParser parser = new UndoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsUndoCommand() {
+        assertParseSuccess(parser, "1", new UndoCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+    }
+}
+```
 ###### \test\java\systemtests\SortCommandSystemTest.java
 ``` java
 public class SortCommandSystemTest extends AddressBookSystemTest {
     @Test
-
-
-
-
     public void sort() throws Exception {
         Model model = getModel();
 
