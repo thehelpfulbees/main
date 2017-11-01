@@ -1,12 +1,14 @@
 package seedu.address.ui;
 
-import java.awt.*;
+import java.awt.FileDialog;
+import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
 
 import java.util.logging.Logger;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.google.common.eventbus.Subscribe;
@@ -20,7 +22,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import seedu.address.commons.core.Config;
@@ -247,7 +248,7 @@ public class MainWindow extends UiPart<Region> {
      */
     private void handleImageEvent(ReadOnlyPerson person) {
         String os = System.getProperty("os.name");
-        if(!os.equals("Mac OS X")) {
+        if (os.equals("Mac OS X")) {
             FileDialog fileChooser = new FileDialog((Frame) null);
             fileChooser.setAlwaysOnTop(true);
             fileChooser.setAutoRequestFocus(true);
