@@ -56,8 +56,12 @@ public class ImageCommand extends UndoableCommand {
             }
         } else {
             try {
+                Person original = new Person(personToEdit);
                 model.changeImage(personToEdit);
                 ReadOnlyPerson edited = lastShownList.get(index.getZeroBased());
+                if(personToEdit.equals(original)) {
+                    return new CommandResult("Cancelled");
+                }
                 model.updatePerson(personToEdit, edited);
             } catch (PersonNotFoundException | DuplicatePersonException pnfe) {
                 assert false : "The target person cannot be missing";
