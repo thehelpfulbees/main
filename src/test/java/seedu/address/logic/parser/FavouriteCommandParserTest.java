@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.model.person.Favourite;
@@ -20,21 +21,21 @@ import seedu.address.model.person.Favourite;
  */
 public class FavouriteCommandParserTest {
 
-        private FavouriteCommandParser parser = new FavouriteCommandParser();
+    private FavouriteCommandParser parser = new FavouriteCommandParser();
 
-        @Test
-        public void parse_validArgs_returnsFavouriteCommand() {
-            try {
-                assertParseSuccess(parser, "1", new FavouriteCommand(INDEX_FIRST_PERSON,
-                        new Favourite("1")));
-            } catch (IllegalValueException ive) {
-                System.out.println("Wouldn't reach here");
-            }
+    @Test
+    public void parse_validArgs_returnsFavouriteCommand() {
+        try {
+            assertParseSuccess(parser, "1", new FavouriteCommand(INDEX_FIRST_PERSON,
+                    new Favourite("1")));
+        } catch (IllegalValueException ive) {
+            System.out.println("Wouldn't reach here");
         }
+    }
 
-        @Test
-        public void parse_invalidArgs_throwsParseException() {
-            assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    FavouriteCommand.MESSAGE_USAGE));
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                FavouriteCommand.MESSAGE_USAGE));
     }
 }

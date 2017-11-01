@@ -74,6 +74,8 @@ public class RemarkCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError(MISSING_PERSON);
         }
+
+        model.updateListToShowAll();
         return new CommandResult(MESSAGE_REMARK_SUCCESS + personToEdit.getName().toString());
     }
 
