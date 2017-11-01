@@ -54,7 +54,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find multiple persons in address book, 2 keywords in reversed order -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " Daniel Benson";
+        command = FindCommand.COMMAND_WORD + " Daniel Benson  ";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -71,12 +71,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: undo previous find command -> rejected */
-        command = UndoCommand.COMMAND_WORD;
+        command = UndoCommand.COMMAND_WORD + "  ";
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: redo previous find command -> rejected */
-        command = RedoCommand.COMMAND_WORD;
+        command = RedoCommand.COMMAND_WORD + "  ";
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 
@@ -151,7 +151,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
-        command = "FiNd Meier  ";
+        command = "      FiNd  Meier  ";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 

@@ -69,12 +69,12 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
-        command = UndoCommand.COMMAND_WORD;
+        command = UndoCommand.COMMAND_WORD + "  ";
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding Amy to the list -> Amy added again */
-        command = RedoCommand.COMMAND_WORD;
+        command = RedoCommand.COMMAND_WORD + "  ";
         model.addPerson(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
@@ -123,7 +123,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
         assert getModel().getFilteredPersonList().size()
-                < getModel().getAddressBook().getPersonList().size();
+                <= getModel().getAddressBook().getPersonList().size();
         assertCommandSuccess(IDA);
 
         /* Case: add to empty address book -> added */
@@ -138,7 +138,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
-        executeCommand(SelectCommand.COMMAND_WORD + " 1");
+        executeCommand(SelectCommand.COMMAND_WORD + " 1  ");
         assert getPersonListPanel().isAnyCardSelected();
         assertCommandSuccess(CARL);
 
@@ -146,7 +146,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(HOON);
 
         /* Case: invalid address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC
+                + " ";
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: missing name -> rejected */
