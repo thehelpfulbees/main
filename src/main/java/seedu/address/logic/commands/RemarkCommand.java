@@ -54,7 +54,8 @@ public class RemarkCommand extends UndoableCommand {
         this.index = index;
         this.remark = new Remark(remark);
     }
-
+    
+    @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
