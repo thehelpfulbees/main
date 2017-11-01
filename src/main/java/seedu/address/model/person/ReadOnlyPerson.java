@@ -35,6 +35,7 @@ public interface ReadOnlyPerson {
     ProfilePicture getPicture();
     void setFavourite(Favourite favourite);
     Favourite getFavourite();
+    NumTimesSearched getSearchHistory();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

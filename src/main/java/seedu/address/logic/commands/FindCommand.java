@@ -26,6 +26,7 @@ public class FindCommand extends Command {
 
     private final Predicate<ReadOnlyPerson> predicate;
 
+    //@@thehelpfulbees
     public FindCommand(Predicate<ReadOnlyPerson> predicate) {
         this.predicate = predicate;
     }

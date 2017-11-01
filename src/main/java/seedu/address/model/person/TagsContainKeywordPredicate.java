@@ -15,6 +15,8 @@ public class TagsContainKeywordPredicate implements Predicate<ReadOnlyPerson> {
         this.keyword = keyword;
     }
 
+    //@@thehelpfulbees
+
     @Override
     public boolean test(ReadOnlyPerson person) {
 
@@ -29,10 +31,6 @@ public class TagsContainKeywordPredicate implements Predicate<ReadOnlyPerson> {
             //else tags.remove();
         }
         return false;
-
-
-        //return keywords.stream()
-        //        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
     }
 
     @Override

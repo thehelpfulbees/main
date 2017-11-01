@@ -27,6 +27,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<ProfilePicture> image;
     private ObjectProperty<Favourite> favourite;
+    private ObjectProperty<NumTimesSearched> searchHistory;
 
     /**
      * Every field must be present and not null.
@@ -44,13 +45,15 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.image = new SimpleObjectProperty<>(image);
         this.favourite = new SimpleObjectProperty<>(favourite);
+        this.searchHistory = new SimpleObjectProperty<>();
     }
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getBirthday(), source.getTags(), source.getPicture(), source.getFavourite());
+                source.getBirthday(), source.getTags(),
+                source.getPicture(), source.getFavourite());
     }
 
     public void setName(Name name) {
@@ -190,6 +193,13 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     @Override
     public void setImage(String img) {
         image.set(new ProfilePicture(img));
+    }
+
+    @Override
+    public NumTimesSearched getSearchHistory() {return searchHistory.get();};
+
+    public void incrementNumTimesSearched() {
+        //todo
     }
 
     @Override
