@@ -52,6 +52,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author liliwei25
     /**
      * Deletes the given tag from all persons in addressbook
      */
@@ -66,4 +67,5 @@ public interface Model {
      * Edits the profile picture for selected person
      */
     void changeImage(ReadOnlyPerson target) throws PersonNotFoundException;
+    //@@author
 }
