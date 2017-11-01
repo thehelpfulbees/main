@@ -70,12 +70,12 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: undo editing the last person in the list -> last person restored */
-        command = UndoCommand.COMMAND_WORD;
+        command = UndoCommand.COMMAND_WORD + "  ";
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo editing the last person in the list -> last person edited again */
-        command = RedoCommand.COMMAND_WORD;
+        command = RedoCommand.COMMAND_WORD + "  ";
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updatePerson(
                 getModel().getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
@@ -114,7 +114,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getPersonList().size();
+        int invalidIndex = getModel().getAddressBook().getPersonList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -135,7 +135,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
         /* Case: missing all fields -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased(),
+        assertCommandFailure(EditCommand.COMMAND_WORD + "  " + INDEX_SECOND_PERSON.getOneBased(),
                 EditCommand.MESSAGE_NOT_EDITED);
 
         /* Case: invalid index (0) -> rejected */
