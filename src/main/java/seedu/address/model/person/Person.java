@@ -191,6 +191,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     public ObjectProperty<ProfilePicture> imageProperty() {
         return image;
     }
+
     @Override
     public ProfilePicture getPicture() {
         return image.get();
@@ -204,7 +205,9 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     //@@author thehelpfulbees
 
     @Override
-    public NumTimesSearched getNumTimesSearched() { return numTimesSearched.get(); }
+    public NumTimesSearched getNumTimesSearched() {
+        return numTimesSearched.get();
+    }
 
     @Override
     public void incrementNumTimesSearched() {
