@@ -9,6 +9,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class NumTimesSearched {
 
+    private static final String MESSAGE_NUMTIMESSEARCHED_CONSTRAINTS = "Initial value of NumTimesSearched should be >= 0";
+
     public static int STARTING_VALUE = 0;
 
     public int value = STARTING_VALUE; //num times searched
@@ -19,7 +21,9 @@ public class NumTimesSearched {
      * @throws IllegalValueException if given favourite string is invalid.
      */
     public NumTimesSearched(int initialValue) throws IllegalValueException {
-
+        if (!isValidValue(initialValue)) {
+            throw new IllegalValueException(MESSAGE_NUMTIMESSEARCHED_CONSTRAINTS);
+        }
         this.value = initialValue;
     }
 
@@ -29,6 +33,13 @@ public class NumTimesSearched {
 
     public void incrementValue() {
         value ++;
+    }
+
+    /**
+     * Returns true if a given string is a valid person name.
+     */
+    public static boolean isValidValue(int value) {
+        return (value >= 0);
     }
 
     @Override

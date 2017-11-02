@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -64,14 +65,14 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() {
+    public void execute_zeroKeywords_noPersonFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void execute_multipleKeywords_multiplePersonsFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
@@ -80,21 +81,21 @@ public class FindCommandTest {
     //@@author thehelpfulbees
 
     @Test
-    public void execute_searchByTag_noPersonFound() {
+    public void execute_searchByTag_noPersonFound() throws Exception{
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand("t\\worstEnemy");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_searchByTag_onePersonFound() {
+    public void execute_searchByTag_onePersonFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         FindCommand command = prepareCommand("t\\owesMoney");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
 
     @Test
-    public void execute_searchByTag_multiplePeopleFound() {
+    public void execute_searchByTag_multiplePeopleFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
         FindCommand command = prepareCommand("t\\friends");
         assertCommandSuccess(command, expectedMessage,
@@ -128,7 +129,7 @@ public class FindCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) throws Exception {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
