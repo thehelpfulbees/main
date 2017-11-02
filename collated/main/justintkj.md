@@ -1037,7 +1037,7 @@ public class CommandBox extends UiPart<Region> {
     public static void setAddSuggestion(String commandWord) throws CommandException {
         if (!mainPossibleSuggestion.contains(commandWord)) {
             try {
-                mainPossibleSuggestion.add(commandWord);
+                mainPossibleSuggestion.add(commandWord.trim());
                 XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(AUTOCOMPLETE_FILE_NAME)));
                 e.writeObject(mainPossibleSuggestion);
                 e.close();

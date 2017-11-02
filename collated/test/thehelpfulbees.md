@@ -3,21 +3,21 @@
 ``` java
 
     @Test
-    public void execute_searchByTag_noPersonFound() {
+    public void execute_searchByTag_noPersonFound() throws Exception{
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand("t\\worstEnemy");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_searchByTag_onePersonFound() {
+    public void execute_searchByTag_onePersonFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         FindCommand command = prepareCommand("t\\owesMoney");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
 
     @Test
-    public void execute_searchByTag_multiplePeopleFound() {
+    public void execute_searchByTag_multiplePeopleFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
         FindCommand command = prepareCommand("t\\friends");
         assertCommandSuccess(command, expectedMessage,
@@ -51,7 +51,7 @@
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
+    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) throws Exception {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
@@ -59,6 +59,27 @@
         assertEquals(expectedList, model.getFilteredPersonList());
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
+}
+```
+###### /java/seedu/address/model/person/NumTimesSearchedTest.java
+``` java
+
+public class NumTimesSearchedTest {
+
+    @Test
+    public void isValidValue() {
+        // invalid name
+        assertFalse(NumTimesSearched.isValidValue((-2)));
+        assertFalse(NumTimesSearched.isValidValue((-1)));
+        assertFalse(NumTimesSearched.isValidValue((-1000)));
+
+        // valid name
+        assertTrue(NumTimesSearched.isValidValue((0)));
+        assertTrue(NumTimesSearched.isValidValue((1)));
+        assertTrue(NumTimesSearched.isValidValue((2)));
+        assertTrue(NumTimesSearched.isValidValue((200)));
+}
+
 }
 ```
 ###### /java/seedu/address/model/person/TagsContainKeywordPredicateTest.java

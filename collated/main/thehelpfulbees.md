@@ -20,6 +20,10 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " alice bob charlie \n"
             + "Example: " + COMMAND_WORD + " t\\friend";
 
+    private static final String MESSAGE_DUPLICATE_PERSON_WHEN_UPDATING = "Duplicate person error when updating num times searched.";
+    private static final String MESSAGE_PERSON_NOT_FOUND_WHEN_UPDATING = "Person not found when updating num times searched.";
+
+
     private final Predicate<ReadOnlyPerson> predicate;
 
     public FindCommand(Predicate<ReadOnlyPerson> predicate) {
@@ -29,9 +33,23 @@ public class FindCommand extends Command {
 
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        ObservableList<ReadOnlyPerson> filteredPersonList = model.getFilteredPersonList();
+
+        for (ReadOnlyPerson personToEdit : filteredPersonList) {
+            ReadOnlyPerson editedPerson = personToEdit;
+            editedPerson.incrementNumTimesSearched();
+            try {
+                model.updatePerson(editedPerson, personToEdit);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON_WHEN_UPDATING);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError(MESSAGE_PERSON_NOT_FOUND_WHEN_UPDATING);
+            }
+        }
+
+        return new CommandResult(getMessageForPersonListShownSummary(filteredPersonList.size()));
     }
 
     @Override
@@ -87,15 +105,37 @@ public class FindCommandParser implements Parser<FindCommand> {
  */
 public class NumTimesSearched {
 
-    public int value = 0; //num times searched
+    private static final String MESSAGE_NUMTIMESSEARCHED_CONSTRAINTS = "Initial value of NumTimesSearched should be >= 0";
+
+    public static int STARTING_VALUE = 0;
+
+    public int value = STARTING_VALUE; //num times searched
 
     /**
      * Validates given Favourite.
      *
      * @throws IllegalValueException if given favourite string is invalid.
      */
-    public NumTimesSearched() throws IllegalValueException {
-        this.value = 0;
+    public NumTimesSearched(int initialValue) throws IllegalValueException {
+        if (!isValidValue(initialValue)) {
+            throw new IllegalValueException(MESSAGE_NUMTIMESSEARCHED_CONSTRAINTS);
+        }
+        this.value = initialValue;
+    }
+
+    public NumTimesSearched() {
+        this.value = STARTING_VALUE;
+    }
+
+    public void incrementValue() {
+        value ++;
+    }
+
+    /**
+     * Returns true if a given string is a valid person name.
+     */
+    public static boolean isValidValue(int value) {
+        return (value >= 0);
     }
 
     @Override
@@ -110,6 +150,18 @@ public class NumTimesSearched {
                 && this.value == ((NumTimesSearched) other).value); // state check
     }
 }
+```
+###### /java/seedu/address/model/person/Person.java
+``` java
+
+    @Override
+    public NumTimesSearched getNumTimesSearched() {return numTimesSearched.get();};
+
+    @Override
+    public void incrementNumTimesSearched() {
+        this.numTimesSearched.get().incrementValue();
+    }
+
 ```
 ###### /java/seedu/address/model/person/TagsContainKeywordPredicate.java
 ``` java

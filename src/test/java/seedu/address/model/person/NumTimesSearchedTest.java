@@ -21,6 +21,6 @@ public class NumTimesSearchedTest {
         assertTrue(NumTimesSearched.isValidValue((1)));
         assertTrue(NumTimesSearched.isValidValue((2)));
         assertTrue(NumTimesSearched.isValidValue((200)));
-}
+    }
 
 }
