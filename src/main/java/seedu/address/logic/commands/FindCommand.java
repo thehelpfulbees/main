@@ -30,8 +30,10 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " alice bob charlie \n"
             + "Example: " + COMMAND_WORD + " t\\friend";
 
-    private static final String MESSAGE_DUPLICATE_PERSON_WHEN_UPDATING = "Duplicate person error when updating num times searched.";
-    private static final String MESSAGE_PERSON_NOT_FOUND_WHEN_UPDATING = "Person not found when updating num times searched.";
+    private static final String MESSAGE_DUPLICATE_PERSON_WHEN_UPDATING =
+            "Duplicate person error when updating num times searched.";
+    private static final String MESSAGE_PERSON_NOT_FOUND_WHEN_UPDATING =
+            "Person not found when updating num times searched.";
 
 
     private final Predicate<ReadOnlyPerson> predicate;

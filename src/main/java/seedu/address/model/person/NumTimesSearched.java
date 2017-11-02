@@ -9,7 +9,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class NumTimesSearched {
 
-    private static final String MESSAGE_NUMTIMESSEARCHED_CONSTRAINTS = "Initial value of NumTimesSearched should be >= 0";
+    public static final String MESSAGE_NUM_TIMES_SEARCHED_CONSTRAINTS =
+            "Initial value of NumTimesSearched should be >= 0";
 
     public static int STARTING_VALUE = 0;
 
@@ -22,7 +23,7 @@ public class NumTimesSearched {
      */
     public NumTimesSearched(int initialValue) throws IllegalValueException {
         if (!isValidValue(initialValue)) {
-            throw new IllegalValueException(MESSAGE_NUMTIMESSEARCHED_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_NUM_TIMES_SEARCHED_CONSTRAINTS);
         }
         this.value = initialValue;
     }
@@ -32,7 +33,7 @@ public class NumTimesSearched {
     }
 
     public void incrementValue() {
-        value ++;
+        value++;
     }
 
     /**
