@@ -52,7 +52,7 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
-//@@author justintkj
+    //@@author justintkj
     /**
      * Parses {@code number} into an {@code Integer} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -80,7 +80,7 @@ public class ParserUtil {
         }
         return toSort;
     }
-//@@author
+    //@@author
 
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<remark>} if {@code remark} is present.
