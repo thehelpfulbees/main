@@ -1,5 +1,5 @@
 # liliwei25
-###### \main\java\seedu\address\commons\events\ui\ChangeImageEvent.java
+###### /java/seedu/address/commons/events/ui/ChangeImageEvent.java
 ``` java
 /**
  * Represents a image changing function call by user
@@ -21,7 +21,7 @@ public class ChangeImageEvent extends BaseEvent {
     }
 }
 ```
-###### \main\java\seedu\address\commons\events\ui\MapPersonEvent.java
+###### /java/seedu/address/commons/events/ui/MapPersonEvent.java
 ``` java
 /**
  * Represents a mapping function call by user
@@ -44,7 +44,7 @@ public class MapPersonEvent extends BaseEvent {
     }
 }
 ```
-###### \main\java\seedu\address\logic\commands\BirthdayCommand.java
+###### /java/seedu/address/logic/commands/BirthdayCommand.java
 ``` java
 /**
  * Adds or Edits birthday field of selected person
@@ -82,9 +82,8 @@ public class BirthdayCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        ReadOnlyPerson editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
-                personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getRemark(), birthday,
-                personToEdit.getTags(), personToEdit.getPicture(), personToEdit.getFavourite());
+        ReadOnlyPerson editedPerson = personToEdit;
+        editedPerson.setBirthday(birthday);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -93,8 +92,7 @@ public class BirthdayCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        //model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateListToShowAll();
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_BIRTHDAY_PERSON_SUCCESS, editedPerson));
     }
 
@@ -115,7 +113,7 @@ public class BirthdayCommand extends UndoableCommand {
     }
 }
 ```
-###### \main\java\seedu\address\logic\commands\DeleteCommand.java
+###### /java/seedu/address/logic/commands/DeleteCommand.java
 ``` java
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -141,7 +139,7 @@ public class BirthdayCommand extends UndoableCommand {
                 personsDeleted.substring(2, personsDeleted.length())));
     }
 ```
-###### \main\java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
@@ -160,11 +158,12 @@ public class BirthdayCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         ProfilePicture picture = personToEdit.getPicture();
         Favourite favourite = personToEdit.getFavourite();
+        NumTimesSearched numTimesSearched = personToEdit.getNumTimesSearched();
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedBirthday,
-                updatedTags, picture, favourite);
+                updatedTags, picture, favourite, numTimesSearched);
     }
 ```
-###### \main\java\seedu\address\logic\commands\ImageCommand.java
+###### /java/seedu/address/logic/commands/ImageCommand.java
 ``` java
 /**
  * Command to add/edit/remove image of Person
@@ -216,7 +215,6 @@ public class ImageCommand extends UndoableCommand {
             }
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateListToShowAll();
         return new CommandResult(String.format(MESSAGE_IMAGE_SUCCESS, personToEdit));
     }
 
@@ -228,7 +226,7 @@ public class ImageCommand extends UndoableCommand {
     }
 }
 ```
-###### \main\java\seedu\address\logic\commands\MapCommand.java
+###### /java/seedu/address/logic/commands/MapCommand.java
 ``` java
 /**
  *  Shows a person's address on Google Maps in browser
@@ -274,7 +272,7 @@ public class MapCommand extends UndoableCommand {
     }
 }
 ```
-###### \main\java\seedu\address\logic\commands\RemoveTagCommand.java
+###### /java/seedu/address/logic/commands/RemoveTagCommand.java
 ``` java
 /**
  * Removes the specified tag from all persons in addressbook
@@ -313,7 +311,7 @@ public class RemoveTagCommand extends UndoableCommand {
                 updatedTags.remove(target);
                 Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
                         person.getAddress(), person.getRemark(), person.getBirthday(), updatedTags,
-                        person.getPicture(), person.getFavourite());
+                        person.getPicture(), person.getFavourite(), person.getNumTimesSearched());
 
                 try {
                     model.updatePerson(person, editedPerson);
@@ -336,7 +334,7 @@ public class RemoveTagCommand extends UndoableCommand {
     }
 }
 ```
-###### \main\java\seedu\address\logic\parser\BirthdayCommandParser.java
+###### /java/seedu/address/logic/parser/BirthdayCommandParser.java
 ``` java
 /**
  * Parses arguments and returns BirthdayCommand
@@ -369,7 +367,7 @@ public class BirthdayCommandParser implements Parser<BirthdayCommand> {
     }
 }
 ```
-###### \main\java\seedu\address\logic\parser\DeleteCommandParser.java
+###### /java/seedu/address/logic/parser/DeleteCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand
@@ -391,7 +389,7 @@ public class BirthdayCommandParser implements Parser<BirthdayCommand> {
         }
     }
 ```
-###### \main\java\seedu\address\logic\parser\ImageCommandParser.java
+###### /java/seedu/address/logic/parser/ImageCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ImageCommand object
@@ -418,7 +416,7 @@ public class ImageCommandParser implements Parser<ImageCommand> {
     }
 }
 ```
-###### \main\java\seedu\address\logic\parser\MapCommandParser.java
+###### /java/seedu/address/logic/parser/MapCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new MapCommand object
@@ -440,7 +438,7 @@ public class MapCommandParser implements Parser<MapCommand> {
     }
 }
 ```
-###### \main\java\seedu\address\logic\parser\RemoveTagCommandParser.java
+###### /java/seedu/address/logic/parser/RemoveTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemoveTagCommand object
@@ -462,7 +460,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
     }
 }
 ```
-###### \main\java\seedu\address\MainApp.java
+###### /java/seedu/address/MainApp.java
 ``` java
     /**
      * Start a tray icon running in background
@@ -526,13 +524,13 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
         }
     }
 ```
-###### \main\java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public void removeTag(Tag t) throws UniqueTagList.TagNotFoundException {
         tags.remove(t);
     }
 ```
-###### \main\java\seedu\address\model\BirthdayNotifier.java
+###### /java/seedu/address/model/BirthdayNotifier.java
 ``` java
 /**
  * Checks current date against birthday of all persons
@@ -558,7 +556,7 @@ public class BirthdayNotifier {
     }
 }
 ```
-###### \main\java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /**
      * Deletes the given tag from all persons in addressbook
@@ -574,8 +572,9 @@ public class BirthdayNotifier {
      * Edits the profile picture for selected person
      */
     void changeImage(ReadOnlyPerson target) throws PersonNotFoundException;
+}
 ```
-###### \main\java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void removeTag(Tag target) throws UniqueTagList.TagNotFoundException {
@@ -592,8 +591,9 @@ public class BirthdayNotifier {
     public void changeImage(ReadOnlyPerson target) throws PersonNotFoundException {
         raise(new ChangeImageEvent(target));
     }
+
 ```
-###### \main\java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
 /**
  * Represents a Person's birthday in the address book.
@@ -695,7 +695,7 @@ public class Birthday {
 
 }
 ```
-###### \main\java\seedu\address\model\person\ProfilePicture.java
+###### /java/seedu/address/model/person/ProfilePicture.java
 ``` java
 /**
  * Represents a profile picture for Person
@@ -735,7 +735,7 @@ public class ProfilePicture {
     }
 }
 ```
-###### \main\java\seedu\address\storage\XmlImageStorage.java
+###### /java/seedu/address/storage/XmlImageStorage.java
 ``` java
 /**
  * Creates folder to store all images saved by user
@@ -775,7 +775,7 @@ public class XmlImageStorage {
     }
 }
 ```
-###### \main\java\seedu\address\ui\BirthdayPopup.java
+###### /java/seedu/address/ui/BirthdayPopup.java
 ``` java
 /**
  * Creates a birthday notification
@@ -887,7 +887,7 @@ public class BirthdayPopup {
     }
 }
 ```
-###### \main\java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * Opens the map window.
@@ -945,7 +945,7 @@ public class BirthdayPopup {
         }
     }
 ```
-###### \main\java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @Subscribe
     private void handleMapPanelEvent(MapPersonEvent event) {
@@ -953,7 +953,7 @@ public class BirthdayPopup {
         handleMapEvent(event.getPerson());
     }
 ```
-###### \main\java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @Subscribe
     private void handleChangeImageEvent(ChangeImageEvent event) {
@@ -961,7 +961,7 @@ public class BirthdayPopup {
         handleImageEvent(event.getPerson());
     }
 ```
-###### \main\java\seedu\address\ui\MapWindow.java
+###### /java/seedu/address/ui/MapWindow.java
 ``` java
 /**
  * Shows the map in a pop-up browser
@@ -1018,7 +1018,7 @@ public class MapWindow extends UiPart<Region> {
     }
 }
 ```
-###### \main\java\seedu\address\ui\PersonInfoPanel.java
+###### /java/seedu/address/ui/PersonInfoPanel.java
 ``` java
 /**
  * Shows the selected Person's info
@@ -1103,7 +1103,7 @@ public class PersonInfoPanel extends UiPart<Region> {
     }
 }
 ```
-###### \main\resources\view\BrightTheme.css
+###### /resources/view/BrightTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#efefef, 20%);
@@ -1476,7 +1476,7 @@ public class PersonInfoPanel extends UiPart<Region> {
 }
 
 ```
-###### \main\resources\view\MainWindow.fxml
+###### /resources/view/MainWindow.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
   <stylesheets>
@@ -1526,13 +1526,13 @@ public class PersonInfoPanel extends UiPart<Region> {
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>
 ```
-###### \main\resources\view\MapWindow.fxml
+###### /resources/view/MapWindow.fxml
 ``` fxml
 <StackPane fx:id="mapWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <WebView fx:id="browser" />
 </StackPane>
 ```
-###### \main\resources\view\PersonInfoPanel.fxml
+###### /resources/view/PersonInfoPanel.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane fx:id="personInfoPanel" styleClass="grid-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -1563,385 +1563,4 @@ public class PersonInfoPanel extends UiPart<Region> {
         </rowConstraints>
     </GridPane>
 </VBox>
-```
-###### \test\java\guitests\guihandles\InfoPanelHandle.java
-``` java
-/**
- * A handler for the {@code InfoPanel} of the UI.
- */
-public class InfoPanelHandle extends NodeHandle<Node> {
-    public static final String INFO_PANEL_ID = "#personInfoPanel";
-
-    private static final String NAME_FIELD_ID = "#name";
-    private static final String ADDRESS_FIELD_ID = "#address";
-    private static final String PHONE_FIELD_ID = "#phone";
-    private static final String EMAIL_FIELD_ID = "#email";
-    private static final String TAGS_FIELD_ID = "#tags";
-
-    private final Label nameLabel;
-    private final Label addressLabel;
-    private final Label phoneLabel;
-    private final Label emailLabel;
-    private final List<Label> tagLabels;
-
-    public InfoPanelHandle(Node cardNode) {
-        super(cardNode);
-
-        this.nameLabel = getChildNode(NAME_FIELD_ID);
-        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
-        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
-        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
-
-        Region tagsContainer = getChildNode(TAGS_FIELD_ID);
-        this.tagLabels = tagsContainer
-                .getChildrenUnmodifiable()
-                .stream()
-                .map(Label.class::cast)
-                .collect(Collectors.toList());
-    }
-
-    public String getName() {
-        return nameLabel.getText();
-    }
-
-    public String getAddress() {
-        return addressLabel.getText();
-    }
-
-    public String getPhone() {
-        return phoneLabel.getText();
-    }
-
-    public String getEmail() {
-        return emailLabel.getText();
-    }
-
-    public List<String> getTags() {
-        return tagLabels
-                .stream()
-                .map(Label::getText)
-                .collect(Collectors.toList());
-    }
-}
-```
-###### \test\java\seedu\address\logic\commands\BirthdayCommandTest.java
-``` java
-/**
- * Test BirthdayCommand
- */
-public class BirthdayCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        BirthdayCommand birthdayCommand = prepareCommand(outOfBoundIndex, BIRTHDAY_BOB);
-
-        assertCommandFailure(birthdayCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    /**
-     * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
-    @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
-        showFirstPersonOnly(model);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        BirthdayCommand birthdayCommand = prepareCommand(outOfBoundIndex, BIRTHDAY_BOB);
-
-        assertCommandFailure(birthdayCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void equals() {
-        final BirthdayCommand standardCommand = new BirthdayCommand(INDEX_FIRST_PERSON, BIRTHDAY_AMY);
-
-        // same values -> returns true
-        BirthdayCommand commandWithSameValues = new BirthdayCommand(INDEX_FIRST_PERSON, BIRTHDAY_AMY);
-        assertTrue(standardCommand.equals(commandWithSameValues));
-
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
-
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
-        // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
-
-        // different index -> returns false
-        assertFalse(standardCommand.equals(new BirthdayCommand(INDEX_SECOND_PERSON, BIRTHDAY_AMY)));
-
-        // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new BirthdayCommand(INDEX_FIRST_PERSON, BIRTHDAY_BOB)));
-    }
-
-    /**
-     * Returns an {@code BirthdayCommand} with parameters {@code index} and {@code birthday}
-     */
-    private BirthdayCommand prepareCommand(Index index, Birthday birthday) {
-        BirthdayCommand birthdayCommand = new BirthdayCommand(index, birthday);
-        birthdayCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return birthdayCommand;
-    }
-}
-```
-###### \test\java\seedu\address\logic\commands\DeleteCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
- */
-public class DeleteCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName());
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
-
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void execute_validIndexFilteredList_success() throws Exception {
-        showFirstPersonOnly(model);
-
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName());
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-        showNoPerson(expectedModel);
-
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showFirstPersonOnly(model);
-
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
-
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void equals() {
-        Index[] firstPersonArray = new Index[] {INDEX_FIRST_PERSON};
-
-        DeleteCommand deleteFirstCommand = new DeleteCommand(firstPersonArray);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(new Index[] {INDEX_SECOND_PERSON});
-
-        // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
-
-        // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(firstPersonArray);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
-
-        // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
-    }
-
-    /**
-     * Returns a {@code DeleteCommand} with the parameter {@code index}.
-     */
-    private DeleteCommand prepareCommand(Index index) {
-        DeleteCommand deleteCommand = new DeleteCommand(new Index[] {index});
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return deleteCommand;
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
-
-        assert model.getFilteredPersonList().isEmpty();
-    }
-}
-```
-###### \test\java\seedu\address\logic\commands\MapCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for {@code MapCommand}.
- */
-public class MapCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute_validIndexUnfilteredList_success() throws Exception {
-        ReadOnlyPerson personToMap = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        MapCommand mapCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(MapCommand.MESSAGE_MAP_SHOWN_SUCCESS, personToMap);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.mapPerson(personToMap);
-
-        assertCommandSuccess(mapCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        MapCommand mapCommand = prepareCommand(outOfBoundIndex);
-
-        assertCommandFailure(mapCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showFirstPersonOnly(model);
-
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        MapCommand mapCommand = prepareCommand(outOfBoundIndex);
-
-        assertCommandFailure(mapCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void equals() {
-        MapCommand mapFirstCommand = new MapCommand(INDEX_FIRST_PERSON);
-        MapCommand mapSecondCommand = new MapCommand(INDEX_SECOND_PERSON);
-
-        // same object -> returns true
-        assertTrue(mapFirstCommand.equals(mapFirstCommand));
-
-        // same values -> returns true
-        MapCommand mapFirstCommandCopy = new MapCommand(INDEX_FIRST_PERSON);
-        assertTrue(mapFirstCommand.equals(mapFirstCommandCopy));
-
-        // different types -> returns false
-        assertFalse(mapFirstCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(mapFirstCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(mapFirstCommand.equals(mapSecondCommand));
-    }
-
-    /**
-     * Returns a {@code MapCommand} with the parameter {@code index}.
-     */
-    private MapCommand prepareCommand(Index index) {
-        MapCommand mapCommand = new MapCommand(index);
-        mapCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return mapCommand;
-    }
-}
-```
-###### \test\java\seedu\address\logic\parser\BirthdayCommandParserTest.java
-``` java
-/**
- * Test BirthdayCommandParser
- */
-public class BirthdayCommandParserTest {
-
-    private BirthdayCommandParser parser = new BirthdayCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsBirthdayCommand() {
-        assertParseSuccess(parser, " 1 " + "30-03-2002",
-                new BirthdayCommand(INDEX_FIRST_PERSON, BIRTHDAY_BOB));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                BirthdayCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_invalidValue_failure() {
-        // invalid birthday
-        assertParseFailure(parser, BirthdayCommand.COMMAND_WORD + " 1 " + "0000",
-                "Invalid command format! \n" + BirthdayCommand.MESSAGE_USAGE);
-
-        // invalid index
-        assertParseFailure(parser, BirthdayCommand.COMMAND_WORD + " -1 " + "12-12-2012",
-                "Invalid command format! \n" + BirthdayCommand.MESSAGE_USAGE);
-    }
-}
-```
-###### \test\java\seedu\address\logic\parser\MapCommandParserTest.java
-``` java
-/**
- * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the MapCommand code. For example, inputs "1" and "1 abc" take the
- * same path through the MapCommand, and therefore we test only one of them.
- * The path variation for those two cases occur inside the ParserUtil, and
- * therefore should be covered by the ParserUtilTest.
- */
-public class MapCommandParserTest {
-
-    private MapCommandParser parser = new MapCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsDeleteCommand() {
-        assertParseSuccess(parser, "1", new MapCommand(INDEX_FIRST_PERSON));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### \test\java\seedu\address\model\person\BirthdayTest.java
-``` java
-/**
- * Test Birthday class
- */
-public class BirthdayTest {
-
-    @Test
-    public void isValidBirthday() {
-        // invalid birthday
-        assertFalse(Birthday.isValidBirthday("1")); // incorrect format
-        assertFalse(Birthday.isValidBirthday("50-03-1995")); // incorrect day
-
-        // valid birthday
-        assertTrue(Birthday.isValidBirthday("01-01-2001"));
-        assertTrue(Birthday.isValidBirthday("06-06-2006"));
-        assertTrue(Birthday.isValidBirthday("12-12-2012"));
-    }
-}
 ```

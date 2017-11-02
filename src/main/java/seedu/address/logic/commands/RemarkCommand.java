@@ -55,6 +55,7 @@ public class RemarkCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
         CommandUtil.checksIndexSmallerThanList(lastShownList, index);
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());

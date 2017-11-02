@@ -1,5 +1,5 @@
 # justintkj
-###### \main\java\seedu\address\logic\commands\EmailCommand.java
+###### /java/seedu/address/logic/commands/EmailCommand.java
 ``` java
 /**
  * Email a person chosen by index
@@ -99,7 +99,7 @@ public class EmailCommand extends Command {
     }
 }
 ```
-###### \main\java\seedu\address\logic\commands\FavouriteCommand.java
+###### /java/seedu/address/logic/commands/FavouriteCommand.java
 ``` java
 /**
  * Favourites a person identified using it's last displayed index from the address book.
@@ -169,7 +169,7 @@ public class FavouriteCommand extends UndoableCommand {
     }
 }
 ```
-###### \main\java\seedu\address\logic\commands\RedoCommand.java
+###### /java/seedu/address/logic/commands/RedoCommand.java
 ``` java
     public RedoCommand(Index numRedo) {
         this.numRedo = numRedo;
@@ -203,7 +203,7 @@ public class FavouriteCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 ```
-###### \main\java\seedu\address\logic\commands\RemarkCommand.java
+###### /java/seedu/address/logic/commands/RemarkCommand.java
 ``` java
 /**
  * Edits the remark of the person identified by index number in person listing.
@@ -260,7 +260,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
-###### \main\java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
 /**
  * Sorts a the list of persons in ascending alphabetical order
@@ -301,7 +301,7 @@ public class SortCommand extends UndoableCommand {
     }
 }
 ```
-###### \main\java\seedu\address\logic\commands\UndoCommand.java
+###### /java/seedu/address/logic/commands/UndoCommand.java
 ``` java
     public UndoCommand(Index numUndo) {
         this.numUndo = numUndo;
@@ -336,7 +336,7 @@ public class SortCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 ```
-###### \main\java\seedu\address\logic\parser\AddCommandParser.java
+###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -471,7 +471,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
     }
 ```
-###### \main\java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
     /**
      * Parses user input into command for execution.
@@ -649,7 +649,7 @@ public class AddCommandParser implements Parser<AddCommand> {
 
 }
 ```
-###### \main\java\seedu\address\logic\parser\EmailCommandParser.java
+###### /java/seedu/address/logic/parser/EmailCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new EmailCommand object
@@ -672,6 +672,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
             if (messages.length < 3) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
             }
+
             String[] splitArgs = messages[0].trim().split(" ");
             index = ParserUtil.parseIndex(splitArgs[0]);
             subject = (messages[1]);
@@ -683,7 +684,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
     }
 }
 ```
-###### \main\java\seedu\address\logic\parser\FavouriteCommandParser.java
+###### /java/seedu/address/logic/parser/FavouriteCommandParser.java
 ``` java
 /**
  * Parses arguments and returns FavouriteCommand
@@ -712,7 +713,7 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
     }
 }
 ```
-###### \main\java\seedu\address\logic\parser\RedoCommandParser.java
+###### /java/seedu/address/logic/parser/RedoCommandParser.java
 ``` java
 /**
 * Parses input arguments and creates a new RedoCommand object
@@ -742,7 +743,7 @@ public class RedoCommandParser implements Parser<RedoCommand> {
 
 }
 ```
-###### \main\java\seedu\address\logic\parser\RemarkCommandParser.java
+###### /java/seedu/address/logic/parser/RemarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -770,7 +771,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 }
 ```
-###### \main\java\seedu\address\logic\parser\SortCommandParser.java
+###### /java/seedu/address/logic/parser/SortCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new SortCommand object
@@ -794,7 +795,7 @@ public class SortCommandParser implements Parser<SortCommand> {
     }
 }
 ```
-###### \main\java\seedu\address\logic\parser\UndoCommandParser.java
+###### /java/seedu/address/logic/parser/UndoCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new UndoCommand object
@@ -825,7 +826,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
 
 }
 ```
-###### \main\java\seedu\address\logic\UndoRedoStack.java
+###### /java/seedu/address/logic/UndoRedoStack.java
 ``` java
     /**
      * Gets number of undoable tasks in integer
@@ -842,7 +843,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     }
 
 ```
-###### \main\java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      *     Sort Persons according to sortType
@@ -852,12 +853,12 @@ public class UndoCommandParser implements Parser<UndoCommand> {
         syncMasterTagListWith(persons);
     }
 ```
-###### \main\java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /**Sorts all the people in the current database*/
     void sortPerson(String sortType);
 ```
-###### \main\java\seedu\address\model\person\Favourite.java
+###### /java/seedu/address/model/person/Favourite.java
 ``` java
 /**
  * Represents a person importance in the addressBook
@@ -924,7 +925,7 @@ public class Favourite {
     }
 }
 ```
-###### \main\java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Sorts the internalList as declared by the arguments
@@ -951,7 +952,7 @@ public class Favourite {
         }
     }
 ```
-###### \main\java\seedu\address\Sound.java
+###### /java/seedu/address/Sound.java
 ``` java
 /**
  * Plays the errorSound.
@@ -982,7 +983,7 @@ public class Sound {
     }
 }
 ```
-###### \main\java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -1025,7 +1026,7 @@ public class CommandBox extends UiPart<Region> {
         autocompletionbinding = TextFields.bindAutoCompletion(commandTextField, mainPossibleSuggestion);
     }
 ```
-###### \main\java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
 
     /**
@@ -1036,7 +1037,7 @@ public class CommandBox extends UiPart<Region> {
     public static void setAddSuggestion(String commandWord) throws CommandException {
         if (!mainPossibleSuggestion.contains(commandWord)) {
             try {
-                mainPossibleSuggestion.add(commandWord);
+                mainPossibleSuggestion.add(commandWord.trim());
                 XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(AUTOCOMPLETE_FILE_NAME)));
                 e.writeObject(mainPossibleSuggestion);
                 e.close();
@@ -1051,6 +1052,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 ```
+<<<<<<< HEAD:justintkj.md
 ###### \test\java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
@@ -1423,4 +1425,21 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
     }
 
 }
+=======
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     * Changes the color code of the person if favourite.
+     */
+    private void bindListeners(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        if (person.getFavourite().toString().equals("true")) {
+            name.setStyle("-fx-background-color : #ff0000");
+        } else if (person.getFavourite().toString().equals("false")) {
+            name.setStyle("-fx-background-color : transparent");
+        }
+    }
+>>>>>>> 5c89f878662ccedbb6e1d078a2db2105a3f8c98e:collated/main/justintkj.md
 ```

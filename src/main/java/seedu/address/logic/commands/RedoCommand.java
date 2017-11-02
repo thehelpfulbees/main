@@ -43,6 +43,7 @@ public class RedoCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireAllNonNull(model, undoRedoStack);
+
         checksStackNotEmpty();
         checksRedoSizeNotBiggerThanStack();
 
@@ -91,6 +92,7 @@ public class RedoCommand extends Command {
                 || (other instanceof RedoCommand // instanceof handles nulls
                 && this.numRedo == (((RedoCommand) other).numRedo)); // state check
     }
+
     //@@author
 
     @Override
