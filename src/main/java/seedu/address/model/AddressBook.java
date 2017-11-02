@@ -178,10 +178,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //@@author liliwei25
     public void removeTag(Tag t) throws UniqueTagList.TagNotFoundException {
         tags.remove(t);
     }
-
+    //@@author
     //// util methods
 
     @Override

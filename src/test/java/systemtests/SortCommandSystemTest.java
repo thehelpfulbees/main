@@ -26,21 +26,16 @@ public class SortCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = SortCommand.MESSAGE_SORT_SUCCESS + "name";
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: Sort all persons by null*/
-        command = SortCommand.COMMAND_WORD + "";
-        expectedResultMessage = SortCommand.MESSAGE_SORT_FAILURE + " \n" + SortCommand.MESSAGE_USAGE;
-        assertCommandFailure(command, expectedResultMessage);
-
-        /* Case: Sort all persons by name */
-        command = SortCommand.COMMAND_WORD + " name";
-        expectedResultMessage = SortCommand.MESSAGE_SORT_SUCCESS + "name";
-        assertCommandSuccess(command, model, expectedResultMessage);
-
         /* Case: Sort all persons by address */
         command = SortCommand.COMMAND_WORD + " address";
         expectedResultMessage = SortCommand.MESSAGE_SORT_SUCCESS + "address";
         model.sortPerson("address");
         assertCommandSuccess(command, model, expectedResultMessage);
+
+        /* Case: Sort all persons by null*/
+        command = SortCommand.COMMAND_WORD + "  ";
+        expectedResultMessage = SortCommand.MESSAGE_SORT_FAILURE + " \n" + SortCommand.MESSAGE_USAGE;
+        assertCommandFailure(command, expectedResultMessage);
 
         /* Case: Sort all persons by number */
         command = SortCommand.COMMAND_WORD + " number";
