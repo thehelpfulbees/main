@@ -1,15 +1,9 @@
 package seedu.address.ui;
 
-import java.awt.FileDialog;
-import java.awt.Frame;
 import java.io.File;
 import java.io.IOException;
 
 import java.util.logging.Logger;
-
-import javax.swing.JFileChooser;
-import javax.swing.UIManager;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -22,6 +16,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import seedu.address.commons.core.Config;
@@ -247,47 +242,18 @@ public class MainWindow extends UiPart<Region> {
      * Opens file browser.
      */
     private void handleImageEvent(ReadOnlyPerson person) {
-        String os = System.getProperty("os.name");
-        if (os.equals("Mac OS X")) {
-            FileDialog fileChooser = new FileDialog((Frame) null);
-            fileChooser.setAlwaysOnTop(true);
-            fileChooser.setAutoRequestFocus(true);
-            fileChooser.setFile("*.jpg;*.jpeg;*.png");
-            fileChooser.setDirectory(new File("data").getPath());
-            fileChooser.setVisible(true);
-            String filename = fileChooser.getDirectory() + fileChooser.getFile();
-            if (fileChooser.getFile() != null) {
-                File selectedFile = new File(filename);
-                try {
-                    imageStorage.saveImage(selectedFile, person.getName().toString());
-                } catch (IOException io) {
-                    logger.warning("failed to copy image");
-                }
-                person.setImage(person.getName().toString() + ".png");
-            }
-        } else {
+        Stage parent = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Any Image files", "*.jpg", "*.png", "*.jpeg");
+        fileChooser.getExtensionFilters().add(filter);
+        File result = fileChooser.showOpenDialog(parent);
+        if (result != null) {
             try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception e) {
-                logger.warning("Unable to open file chooser");
+                imageStorage.saveImage(result, person.getName().toString());
+            } catch (IOException io) {
+                logger.warning("failed to copy image");
             }
-            Frame parent = new Frame();
-            parent.setAlwaysOnTop(true);
-            parent.setAutoRequestFocus(true);
-            JFileChooser fileChooser = new JFileChooser();
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Any Image files", "jpg", "png", "jpeg");
-            fileChooser.setFileFilter(filter);
-            fileChooser.setCurrentDirectory(new File("data"));
-            int result = fileChooser.showDialog(parent, "Select Image");
-            if (result == JFileChooser.APPROVE_OPTION) {
-                File selectedFile = fileChooser.getSelectedFile();
-                try {
-                    imageStorage.saveImage(selectedFile, person.getName().toString());
-                } catch (IOException io) {
-                    logger.warning("failed to copy image");
-                }
-                person.setImage(person.getName().toString() + ".png");
-            }
+            person.setImage(person.getName().toString() + ".png");
         }
     }
     //@@author
