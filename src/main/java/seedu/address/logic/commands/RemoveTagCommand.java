@@ -31,6 +31,7 @@ public class RemoveTagCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     public static final String MESSAGE_TAG_NOT_FOUND = "Specified tag is not found";
+    public static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing";
 
     public final Tag target;
 
@@ -53,13 +54,12 @@ public class RemoveTagCommand extends UndoableCommand {
                 Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
                         person.getAddress(), person.getRemark(), person.getBirthday(), updatedTags,
                         person.getPicture(), person.getFavourite());
-
                 try {
                     model.updatePerson(person, editedPerson);
                 } catch (DuplicatePersonException dpe) {
                     throw new CommandException(MESSAGE_DUPLICATE_PERSON);
                 } catch (PersonNotFoundException pnfe) {
-                    throw new AssertionError("The target person cannot be missing");
+                    throw new AssertionError(MESSAGE_MISSING_PERSON);
                 }
             }
         }

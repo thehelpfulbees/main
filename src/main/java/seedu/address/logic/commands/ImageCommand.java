@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -26,13 +27,16 @@ public class ImageCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_IMAGE_SUCCESS = "Changed Profile Picture: %1$s";
-
+    public static final String MESSAGE_DUPLICATE_PERSON = "Duplicate person in addressbook";
     public static final String DEFAULT = "default";
+    private static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing";
 
     public final Index index;
     public final boolean remove;
 
     public ImageCommand(Index index, boolean remove) {
+        requireNonNull(index);
+
         this.index = index;
         this.remove = remove;
     }
@@ -45,23 +49,21 @@ public class ImageCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        if (remove) {
-            Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
-                    personToEdit.getTags(), new ProfilePicture(DEFAULT), personToEdit.getFavourite());
-            try {
+        try {
+            if (remove) {
+                Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                        personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
+                        personToEdit.getTags(), new ProfilePicture(DEFAULT), personToEdit.getFavourite());
                 model.updatePerson(personToEdit, editedPerson);
-            } catch (PersonNotFoundException | DuplicatePersonException pnfe) {
-                assert false : "The target person cannot be missing";
-            }
-        } else {
-            try {
+            } else {
                 model.changeImage(personToEdit);
                 ReadOnlyPerson edited = lastShownList.get(index.getZeroBased());
                 model.updatePerson(personToEdit, edited);
-            } catch (PersonNotFoundException | DuplicatePersonException pnfe) {
-                assert false : "The target person cannot be missing";
             }
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : MESSAGE_MISSING_PERSON;
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateListToShowAll();

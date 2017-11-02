@@ -19,6 +19,7 @@ public class MapCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1 ";
     public static final String MESSAGE_MAP_SHOWN_SUCCESS = "Map for Person: %1$s";
+    private static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing";
 
     public final Index index;
 
@@ -39,7 +40,7 @@ public class MapCommand extends UndoableCommand {
         try {
             model.mapPerson(personToShow);
         } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
+            assert false : MESSAGE_MISSING_PERSON;
         }
 
         return new CommandResult(String.format(MESSAGE_MAP_SHOWN_SUCCESS, personToShow));

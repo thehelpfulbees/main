@@ -25,6 +25,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeImageEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -244,7 +245,8 @@ public class MainWindow extends UiPart<Region> {
     private void handleImageEvent(ReadOnlyPerson person) {
         Stage parent = new Stage();
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Any Image files", "*.jpg", "*.png", "*.jpeg");
+        FileChooser.ExtensionFilter filter =
+                new FileChooser.ExtensionFilter("Any Image files", "*.jpg", "*.png", "*.jpeg");
         fileChooser.getExtensionFilters().add(filter);
         File result = fileChooser.showOpenDialog(parent);
         if (result != null) {
@@ -254,6 +256,8 @@ public class MainWindow extends UiPart<Region> {
                 logger.warning("failed to copy image");
             }
             person.setImage(person.getName().toString() + ".png");
+        } else {
+            raise(new NewResultAvailableEvent("Image Change Cancelled"));
         }
     }
     //@@author

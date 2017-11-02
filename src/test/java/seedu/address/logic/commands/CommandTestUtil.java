@@ -67,6 +67,7 @@ public class CommandTestUtil {
 
     public static final Birthday BIRTHDAY_AMY;
     public static final Birthday BIRTHDAY_BOB;
+    public static final Birthday BIRTHDAY_ALICE;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -78,6 +79,7 @@ public class CommandTestUtil {
         try {
             BIRTHDAY_AMY = new Birthday("");
             BIRTHDAY_BOB = new Birthday("30-03-2002");
+            BIRTHDAY_ALICE = new Birthday("03-05-1993");
         } catch (IllegalValueException ive) {
             throw new AssertionError("Test data cannot be invalid");
         }
