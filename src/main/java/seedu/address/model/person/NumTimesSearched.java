@@ -43,7 +43,9 @@ public class NumTimesSearched {
         return (value >= 0);
     }
 
-    public int getValue() { return value; }
+    public int getValue() {
+        return value;
+    }
 
     public void setValue (int newValue) throws IllegalValueException {
         if (!isValidValue(newValue)) {
