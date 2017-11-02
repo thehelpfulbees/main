@@ -18,7 +18,8 @@ public class CommandUtil {
      * @param lastShownList List of ReadOnlyPerson
      * @throws CommandException index is higher than total number of person.(zero based)
      */
-    public static void checksIndexSmallerThanList(List<ReadOnlyPerson> lastShownList, Index index) throws CommandException {
+    public static void checksIndexSmallerThanList(List<ReadOnlyPerson> lastShownList,
+                                                  Index index) throws CommandException {
         assert lastShownList != null;
         assert index != null;
         if (index.getZeroBased() >= lastShownList.size()) {

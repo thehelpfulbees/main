@@ -13,7 +13,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -142,7 +141,8 @@ public class EmailCommand extends Command {
      * @param msg Message to be sent out
      * @throws MessagingException Invalid parameters used
      */
-    private void sendsMessage(String host, String user, String pass, Session mailSession, Message msg) throws MessagingException {
+    private void sendsMessage(String host, String user, String pass, Session mailSession,
+                              Message msg) throws MessagingException {
         assert host == "smtp.gmail.com";
         assert user == "cs2103f09b3@gmail.com";
         assert pass == "pocketbook";
@@ -162,7 +162,8 @@ public class EmailCommand extends Command {
      * @return Message compressed into Message objet
      * @throws MessagingException Invalid parameters used in composing Email
      */
-    private Message composeMessage(String to, String from, String subject, String messageText, Session mailSession) throws MessagingException {
+    private Message composeMessage(String to, String from, String subject, String messageText,
+                                   Session mailSession) throws MessagingException {
         Message msg = new MimeMessage(mailSession);
         msg.setFrom(new InternetAddress(from));
         InternetAddress[] address = {new InternetAddress(to)};

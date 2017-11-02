@@ -14,8 +14,9 @@ import seedu.address.commons.core.LogsCenter;
  * Plays a beep Sound.
  */
 public class Sound {
-    private static final Logger logger = LogsCenter.getLogger("Error Sound");
     public static final String EMPTY = "";
+    private static final Logger logger = LogsCenter.getLogger("Error Sound");
+
     private static ArrayList<String> musicList = new ArrayList<String>(Arrays.asList("ErrorSound.mp3"));
     private static int curr = 0;
     private static String bip;
@@ -35,6 +36,10 @@ public class Sound {
         }
     }
 
+    /**
+     * Generates a new MediaPlayer
+     * @throws URISyntaxException if media file cannot be found
+     */
     private static void createsNewMediaPlayer() throws URISyntaxException {
         bip = musicList.get(curr);
         //must be a valid file name before begin searching

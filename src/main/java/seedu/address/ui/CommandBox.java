@@ -40,6 +40,7 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
     public static final String STORAGE_FILE_NAME = "Autocomplete.xml";
     public static final String ERROR_MESSAGE_CREATE_FILE_FAILED = "Unable to create file Autocomplete.xml";
+    public static final String EMPTY_STRING = "";
     private static String[] possibleSuggestion = {"add", "birthday", "clear", "list", "help", "removetag", "image",
         "edit", "find", "delete", "select", "favourite", "history", "undo", "redo", "email", "sort", "sort name", "map",
         "sort number", "sort email", "sort address", "sort remark", "sort birthday", "exit"};
@@ -73,22 +74,21 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    /**
+     * Reads the storage file to update mainpossiblesuggestion
+     * @throws FileNotFoundException storage file cannot be found
+     */
     private void updateAutocompleteWithStorageFile() throws FileNotFoundException {
         XMLDecoder e = readStorageFile();
         mainPossibleSuggestion = ((ArrayList<String>) e.readObject());
         e.close();
     }
 
-    private void createNewStorageFile(Exception ex)  {
-        try {
-            File file = new File(STORAGE_FILE_NAME);
-            file.createNewFile();
-            addNewDataInStorage("");
-        } catch (IOException ioe) {
-            raise(new DataSavingExceptionEvent(ex));
-        }
-    }
-
+    /**
+     *  Reads the storage file
+     * @return  an input stream for reading archive
+     * @throws FileNotFoundException storagefile cannot be found
+     */
     private XMLDecoder readStorageFile() throws FileNotFoundException {
         return new XMLDecoder(new FileInputStream(STORAGE_FILE_NAME));
     }
@@ -135,19 +135,41 @@ public class CommandBox extends UiPart<Region> {
 
     }
 
+    /**
+     * Creates a new storage file named Autocomplete.xml
+     * @param ex exception to be handled
+     */
+    private void createNewStorageFile(Exception ex)  {
+        try {
+            File file = new File(STORAGE_FILE_NAME);
+            file.createNewFile();
+            addNewDataInStorage(EMPTY_STRING);
+        } catch (IOException ioe) {
+            raise(new DataSavingExceptionEvent(ex));
+        }
+    }
+
+    /**
+     * Overloads the createNewStorageFile method
+     * @throws CommandException unable to create new file
+     */
     private static void createNewStorageFile() throws CommandException {
         try {
             File file = new File(STORAGE_FILE_NAME);
             file.createNewFile();
-            addNewDataInStorage("");
+            addNewDataInStorage(EMPTY_STRING);
         } catch (IOException ioe) {
             throw new CommandException(ERROR_MESSAGE_CREATE_FILE_FAILED);
         }
     }
 
-    //Updates Storagefile with new content, used as refresh if no content
+    /**
+     * Updates Storagefile with new content, used as refresh if no content
+     * @param commandWord input to be added to storage
+     * @throws FileNotFoundException file cannot be found
+     */
     private static void addNewDataInStorage(String commandWord) throws FileNotFoundException {
-        if(!commandWord.equals("")) {
+        if (!commandWord.equals(EMPTY_STRING)) {
             mainPossibleSuggestion.add(commandWord.trim());
         }
         XMLEncoder e = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(AUTOCOMPLETE_FILE_NAME)));

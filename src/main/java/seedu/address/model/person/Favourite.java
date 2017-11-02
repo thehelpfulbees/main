@@ -25,11 +25,15 @@ public class Favourite {
         String trimmedinput = input.trim();
         isValidInput(trimmedinput);
         //Confirms the input is legal, COLOR_SWITCH or COLOR_OFF
-        assert input.equals(COLOR_SWITCH)||input.equals(COLOR_OFF);
+        assert input.equals(COLOR_SWITCH) || input.equals(COLOR_OFF);
         updateColor(trimmedinput);
     }
 
-//Returns false if no input
+    /**
+     * Generates Color to be OFF if not input given
+     * @param input input given, true or false
+     * @return color to be on or off
+     */
     private String processNoInput(String input) {
         if (input == null) {
             input = COLOR_OFF;
@@ -37,7 +41,10 @@ public class Favourite {
         return input;
     }
 
-//Changes the colorOn state if input is true
+    /**
+     * Changes the colorOn state if input is true
+     * @param trimmedinput input given as true or false
+     */
     private void updateColor(String trimmedinput) {
         if (trimmedinput.equals(COLOR_SWITCH) && !colorOn) {
             this.colorOn = true;

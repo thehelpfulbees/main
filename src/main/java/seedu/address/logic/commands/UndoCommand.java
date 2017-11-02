@@ -37,7 +37,7 @@ public class UndoCommand extends Command {
     }
 
     public UndoCommand() throws IllegalValueException {
-            numUndo = ParserUtil.parseNumber(NUMBER_ONE);
+        numUndo = ParserUtil.parseNumber(NUMBER_ONE);
     }
 
     @Override

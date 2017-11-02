@@ -107,7 +107,9 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private Birthday getBirthdayFromString(String args, Birthday birthday) throws IllegalValueException {
         Matcher matcher;
-        boolean matchFound;Pattern birthpattern = Pattern.compile("\\d{1,2}-\\d{1,2}-\\d{4,4}", Pattern.CASE_INSENSITIVE);
+        boolean matchFound;
+        Pattern birthpattern = Pattern.compile("\\d{1,2}-\\d{1,2}-\\d{4,4}",
+                Pattern.CASE_INSENSITIVE);
         matcher = birthpattern.matcher(args);
         matchFound = matcher.find();
         if (matchFound) {
@@ -130,7 +132,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     private Phone getPhoneFromString(String args) throws IllegalValueException {
         Matcher matcher;
         boolean matchFound;
-        Phone phone;Pattern phonepattern = Pattern.compile("\\ {0,1}\\d{8}\\ {0,1}");
+        Phone phone;
+        Pattern phonepattern = Pattern.compile("\\ {0,1}\\d{8}\\ {0,1}");
         matcher = phonepattern.matcher(args);
         matchFound = matcher.find();
         if (!matchFound) {
@@ -156,7 +159,8 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private String getPostalFromString(String args, String postalnum) {
         Matcher matcher;
-        boolean matchFound;Pattern postal = Pattern.compile("singapore \\d{6,6}", Pattern.CASE_INSENSITIVE);
+        boolean matchFound;
+        Pattern postal = Pattern.compile("singapore \\d{6,6}", Pattern.CASE_INSENSITIVE);
         matcher = postal.matcher(args);
         matchFound = matcher.find();
         if (matchFound) {
@@ -175,7 +179,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     private String getUnitFromString(String args) throws IllegalValueException {
         Matcher matcher;
         boolean matchFound;
-        String unitnum;Pattern unit = Pattern.compile("#\\d\\d-\\d{1,3}[a-zA-Z]{0,1}", Pattern.CASE_INSENSITIVE);
+        String unitnum;
+        Pattern unit = Pattern.compile("#\\d\\d-\\d{1,3}[a-zA-Z]{0,1}", Pattern.CASE_INSENSITIVE);
         matcher = unit.matcher(args);
         matchFound = matcher.find();
         if (matchFound) {
@@ -197,7 +202,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     private String getStreetFromString(String args) throws IllegalValueException {
         Matcher matcher;
         boolean matchFound;
-        String streetnum;Pattern street = Pattern.compile("[a-zA-z]+ street \\d{1,2}", Pattern.CASE_INSENSITIVE);
+        String streetnum;
+        Pattern street = Pattern.compile("[a-zA-z]+ street \\d{1,2}", Pattern.CASE_INSENSITIVE);
         matcher = street.matcher(args);
         matchFound = matcher.find();
         if (matchFound) {
@@ -219,7 +225,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     private String getBlockFromString(String args) throws IllegalValueException {
         Matcher matcher;
         boolean matchFound;
-        String blocknum;Pattern block = Pattern.compile("block \\d{1,3}", Pattern.CASE_INSENSITIVE);
+        String blocknum;
+        Pattern block = Pattern.compile("block \\d{1,3}", Pattern.CASE_INSENSITIVE);
         matcher = block.matcher(args);
         Pattern blk = Pattern.compile("blk \\d{1,3}", Pattern.CASE_INSENSITIVE);
         Matcher blkmatcher = blk.matcher(args);
@@ -247,7 +254,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     private Email getEmailFromString(String args) throws IllegalValueException {
         Matcher matcher;
         boolean matchFound;
-        Email email;Pattern emailpattern = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+");
+        Email email;
+        Pattern emailpattern = Pattern.compile("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+");
         matcher = emailpattern.matcher(args);
         matchFound = matcher.find();
         if (matchFound) {
