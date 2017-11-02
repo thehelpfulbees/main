@@ -29,6 +29,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
@@ -44,6 +45,7 @@ public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
     //@@author justintkj
     //@Test
+    @Ignore
     public void parse_allFieldsPresentAlternative_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
@@ -71,6 +73,7 @@ public class AddCommandParserTest {
     }
     //@@author
     //@Test
+    @Ignore
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withRemark(VALID_REMARK_BOB)
