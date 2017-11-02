@@ -29,7 +29,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
@@ -45,7 +44,6 @@ public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
     //@@author justintkj
     //@Test
-    @Ignore
     /**
      * Needs testing
      */
@@ -76,7 +74,6 @@ public class AddCommandParserTest {
     }
     //@@author
     //@Test
-    @Ignore
     /**
      * Needs testing
      */

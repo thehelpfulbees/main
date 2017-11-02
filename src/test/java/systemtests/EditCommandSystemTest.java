@@ -32,8 +32,6 @@ import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
-import org.junit.Ignore;
-
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
@@ -55,7 +53,6 @@ import seedu.address.testutil.PersonUtil;
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
     //@Test
-    @Ignore
     /**
      * Needs testing
      */

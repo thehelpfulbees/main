@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -66,7 +65,6 @@ public class AddressBookParserTest {
     }
 
     //@Test
-    @Ignore
     /**
      * Needs testing
      */
