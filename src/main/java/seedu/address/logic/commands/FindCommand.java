@@ -58,7 +58,6 @@ public class FindCommand extends Command {
                 throw new AssertionError(MESSAGE_PERSON_NOT_FOUND_WHEN_UPDATING);
             }
         }
-        
         return new CommandResult(getMessageForPersonListShownSummary(filteredPersonList.size()));
     }
 
