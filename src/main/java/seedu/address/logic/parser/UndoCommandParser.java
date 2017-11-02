@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -21,18 +20,18 @@ public class UndoCommandParser implements Parser<UndoCommand> {
 
         String[] splitArgs = args.trim().split(" ");
 
-        Index index;
+        int numUndo;
         try {
             if (splitArgs[0].trim().equals("")) {
-                index = ParserUtil.parseIndex("1");
+                numUndo = 1;
             } else {
-                index = ParserUtil.parseIndex(splitArgs[0]);
+                numUndo = ParserUtil.parseNumber(splitArgs[0]);
             }
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE), ive);
         }
 
-        return new UndoCommand(index);
+        return new UndoCommand(numUndo);
     }
 
 }

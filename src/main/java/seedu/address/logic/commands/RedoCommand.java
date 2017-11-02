@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -27,14 +26,14 @@ public class RedoCommand extends Command {
             + "Example: " + COMMAND_WORD + ""
             + "Example: " + COMMAND_WORD + " 1";
 
-    private Index numRedo;
+    private int numRedo;
     //@@author justintkj
-    public RedoCommand(Index numRedo) {
+    public RedoCommand(int numRedo) {
         this.numRedo = numRedo;
     }
     public RedoCommand() {
         try {
-            numRedo = ParserUtil.parseIndex("1");
+            numRedo = ParserUtil.parseNumber("1");
         } catch (IllegalValueException ex) {
             System.out.println("Shouldn't reach here");
         }
@@ -46,11 +45,11 @@ public class RedoCommand extends Command {
         if (undoRedoStack.getRedoStackSize() == 0) {
             throw new CommandException("No more commands to redo!");
         }
-        if (numRedo.getOneBased() > undoRedoStack.getRedoStackSize()) {
+        if (numRedo > undoRedoStack.getRedoStackSize()) {
             throw new CommandException("Maximum redo size: " + undoRedoStack.getRedoStackSize());
         }
 
-        for (int i = 0; i < numRedo.getOneBased(); i++) {
+        for (int i = 0; i < numRedo; i++) {
             if (!undoRedoStack.canRedo()) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
@@ -59,6 +58,13 @@ public class RedoCommand extends Command {
         }
 
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RedoCommand // instanceof handles nulls
+                && this.numRedo == (((RedoCommand) other).numRedo)); // state check
     }
     //@@author
     @Override

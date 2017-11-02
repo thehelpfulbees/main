@@ -9,6 +9,9 @@ import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author justintkj
+/**
+ * Tests for all possible type of arguments possible for sortCommand.
+ */
 public class SortCommandParserTest {
     private SortCommandParser parser = new SortCommandParser();
 

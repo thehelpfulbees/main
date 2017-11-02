@@ -64,6 +64,7 @@ public class ImageCommand extends UndoableCommand {
             }
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateListToShowAll();
         return new CommandResult(String.format(MESSAGE_IMAGE_SUCCESS, personToEdit));
     }
 

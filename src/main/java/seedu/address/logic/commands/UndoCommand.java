@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -25,17 +24,21 @@ public class UndoCommand extends Command {
             + "Parameters: (POSITIVE INDEX)\n"
             + "Example: " + COMMAND_WORD + ""
             + "Example: " + COMMAND_WORD + " 1";
+    public static final String NUMBER_ONE = "1";
+    public static final String MESSAGE_INVALID_COMMAND = "Shouldn't reach here";
+    public static final String MESSAGE_EMPTYSTACK = "No more commands to undo!";
+    public static final String MESSAGE_TOO_MANY_UNDO = "Maximum undo size: ";
 
-    private Index numUndo;
+    private int numUndo;
     //@@author justintkj
-    public UndoCommand(Index numUndo) {
+    public UndoCommand(int numUndo) {
         this.numUndo = numUndo;
     }
     public UndoCommand() {
         try {
-            numUndo = ParserUtil.parseIndex("1");
+            numUndo = ParserUtil.parseNumber(NUMBER_ONE);
         } catch (IllegalValueException ex) {
-            System.out.println("Shouldn't reach here");
+            System.out.println(MESSAGE_INVALID_COMMAND);
         }
 
     }
@@ -45,13 +48,13 @@ public class UndoCommand extends Command {
         requireAllNonNull(model, undoRedoStack);
 
         if (undoRedoStack.getUndoStackSize() == 0) {
-            throw new CommandException("No more commands to undo!");
+            throw new CommandException(MESSAGE_EMPTYSTACK);
         }
-        if (numUndo.getOneBased() > undoRedoStack.getUndoStackSize()) {
-            throw new CommandException("Maximum undo size: " + undoRedoStack.getUndoStackSize());
+        if (numUndo > undoRedoStack.getUndoStackSize()) {
+            throw new CommandException(MESSAGE_TOO_MANY_UNDO + undoRedoStack.getUndoStackSize());
         }
 
-        for (int i = 0; i < numUndo.getOneBased(); i++) {
+        for (int i = 0; i < numUndo; i++) {
             if (!undoRedoStack.canUndo()) {
                 throw new CommandException(MESSAGE_FAILURE);
             }
@@ -59,6 +62,13 @@ public class UndoCommand extends Command {
             undoRedoStack.popUndo().undo();
         }
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UndoCommand // instanceof handles nulls
+                && this.numUndo == (((UndoCommand) other).numUndo)); // state check
     }
     //@@author
     @Override
