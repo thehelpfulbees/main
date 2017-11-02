@@ -2,9 +2,13 @@ package seedu.address.logic.commands;
 
 import java.util.function.Predicate;
 
+import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagsContainKeywordPredicate;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author thehelpfulbees
 
@@ -26,6 +30,10 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " alice bob charlie \n"
             + "Example: " + COMMAND_WORD + " t\\friend";
 
+    private static final String MESSAGE_DUPLICATE_PERSON_WHEN_UPDATING = "Duplicate person error when updating num times searched.";
+    private static final String MESSAGE_PERSON_NOT_FOUND_WHEN_UPDATING = "Person not found when updating num times searched.";
+
+
     private final Predicate<ReadOnlyPerson> predicate;
 
     public FindCommand(Predicate<ReadOnlyPerson> predicate) {
@@ -35,9 +43,23 @@ public class FindCommand extends Command {
 
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        ObservableList<ReadOnlyPerson> filteredPersonList = model.getFilteredPersonList();
+
+        for (ReadOnlyPerson personToEdit : filteredPersonList) {
+            ReadOnlyPerson editedPerson = personToEdit;
+            editedPerson.incrementNumTimesSearched();
+            try {
+                model.updatePerson(editedPerson, personToEdit);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON_WHEN_UPDATING);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError(MESSAGE_PERSON_NOT_FOUND_WHEN_UPDATING);
+            }
+        }
+
+        return new CommandResult(getMessageForPersonListShownSummary(filteredPersonList.size()));
     }
 
     @Override

@@ -27,13 +27,13 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<ProfilePicture> image;
     private ObjectProperty<Favourite> favourite;
-    private ObjectProperty<NumTimesSearched> searchHistory;
+    private ObjectProperty<NumTimesSearched> numTimesSearched;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Remark remark, Birthday birthday,
-                  Set<Tag> tags, ProfilePicture image, Favourite favourite) {
+                  Set<Tag> tags, ProfilePicture image, Favourite favourite, NumTimesSearched numTimesSearched) {
         requireAllNonNull(name, phone, email, address, remark, birthday, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -45,15 +45,21 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.image = new SimpleObjectProperty<>(image);
         this.favourite = new SimpleObjectProperty<>(favourite);
-        this.searchHistory = new SimpleObjectProperty<>();
+        this.numTimesSearched = new SimpleObjectProperty<>(numTimesSearched);
     }
+
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Birthday birthday,
+                  Set<Tag> tags, ProfilePicture image, Favourite favourite) {
+        this(name, phone, email, address, remark, birthday, tags, image, favourite, new NumTimesSearched());
+    }
+
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
                 source.getBirthday(), source.getTags(),
-                source.getPicture(), source.getFavourite());
+                source.getPicture(), source.getFavourite(), source.getNumTimesSearched());
     }
 
     public void setName(Name name) {
@@ -195,12 +201,17 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         image.set(new ProfilePicture(img));
     }
 
-    @Override
-    public NumTimesSearched getSearchHistory() {return searchHistory.get();};
+    //@@author thehelpfulbees
 
+    @Override
+    public NumTimesSearched getNumTimesSearched() {return numTimesSearched.get();};
+
+    @Override
     public void incrementNumTimesSearched() {
-        //todo
+        this.numTimesSearched.get().incrementValue();
     }
+
+    //@@author
 
     @Override
     public boolean equals(Object other) {

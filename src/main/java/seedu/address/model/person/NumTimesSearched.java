@@ -9,15 +9,26 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class NumTimesSearched {
 
-    public int value = 0; //num times searched
+    public static int STARTING_VALUE = 0;
+
+    public int value = STARTING_VALUE; //num times searched
 
     /**
      * Validates given Favourite.
      *
      * @throws IllegalValueException if given favourite string is invalid.
      */
-    public NumTimesSearched() throws IllegalValueException {
-        this.value = 0;
+    public NumTimesSearched(int initialValue) throws IllegalValueException {
+
+        this.value = initialValue;
+    }
+
+    public NumTimesSearched() {
+        this.value = STARTING_VALUE;
+    }
+
+    public void incrementValue() {
+        value ++;
     }
 
     @Override
