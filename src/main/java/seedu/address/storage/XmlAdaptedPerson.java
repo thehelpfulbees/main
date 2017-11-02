@@ -91,7 +91,7 @@ public class XmlAdaptedPerson {
         final ProfilePicture picture = new ProfilePicture(this.image);
         final Favourite favourite = new Favourite(this.favourite);
         final Set<Tag> tags = new HashSet<>(personTags);
-        final NumTimesSearched numTimesSearched = new NumTimesSearched(NumTimesSearched.STARTING_VALUE);
+        final NumTimesSearched numTimesSearched = new NumTimesSearched();
         return new Person(name, phone, email, address, remark, birthday, tags, picture, favourite, numTimesSearched);
     }
 }

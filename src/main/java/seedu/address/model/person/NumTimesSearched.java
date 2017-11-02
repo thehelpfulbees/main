@@ -12,9 +12,9 @@ public class NumTimesSearched {
     public static final String MESSAGE_NUM_TIMES_SEARCHED_CONSTRAINTS =
             "Initial value of NumTimesSearched should be >= 0";
 
-    public static int STARTING_VALUE = 0;
+    private static final int STARTING_VALUE = 0;
 
-    public int value = STARTING_VALUE; //num times searched
+    private int value = STARTING_VALUE; //num times searched
 
     /**
      * Validates given Favourite.
@@ -41,6 +41,15 @@ public class NumTimesSearched {
      */
     public static boolean isValidValue(int value) {
         return (value >= 0);
+    }
+
+    public int getValue() { return value; }
+
+    public void setValue (int newValue) throws IllegalValueException {
+        if (!isValidValue(newValue)) {
+            throw new IllegalValueException(MESSAGE_NUM_TIMES_SEARCHED_CONSTRAINTS);
+        }
+        this.value = newValue;
     }
 
     @Override
