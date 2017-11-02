@@ -51,9 +51,10 @@ public class ImageCommand extends UndoableCommand {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         try {
             if (remove) {
-                Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                        personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
-                        personToEdit.getTags(), new ProfilePicture(DEFAULT), personToEdit.getFavourite());
+                Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
+                        personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getRemark(),
+                        personToEdit.getBirthday(), personToEdit.getTags(), new ProfilePicture(DEFAULT),
+                        personToEdit.getFavourite());
                 model.updatePerson(personToEdit, editedPerson);
             } else {
                 model.changeImage(personToEdit);

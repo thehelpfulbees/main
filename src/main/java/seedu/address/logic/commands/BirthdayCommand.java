@@ -72,7 +72,7 @@ public class BirthdayCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof BirthdayCommand // instanceof handles nulls
-                && index.equals(((BirthdayCommand)other).index)
-                && birthday.equals(((BirthdayCommand)other).birthday));
+                && index.equals(((BirthdayCommand) other).index)
+                && birthday.equals(((BirthdayCommand) other).birthday));
     }
 }
