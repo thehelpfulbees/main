@@ -81,7 +81,7 @@ public class FindCommandTest {
     //@@author thehelpfulbees
 
     @Test
-    public void execute_searchByTag_noPersonFound() throws Exception{
+    public void execute_searchByTag_noPersonFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand("t\\worstEnemy");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
@@ -129,7 +129,8 @@ public class FindCommandTest {
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) throws Exception {
+    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList)
+            throws Exception {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 

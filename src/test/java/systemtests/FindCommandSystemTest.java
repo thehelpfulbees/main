@@ -172,7 +172,8 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
-        //assertStatusBarUnchanged(); //commented out since the numTimesSearched field means that the find command does now change the system
+        //assertStatusBarUnchanged(); //commented out since the numTimesSearched field means that the
+        // find command does now change the system
     }
 
     /**
