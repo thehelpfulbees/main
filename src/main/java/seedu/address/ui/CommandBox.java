@@ -127,7 +127,6 @@ public class CommandBox extends UiPart<Region> {
         if (mainPossibleSuggestion.contains(commandWord)) {
             return;
         }
-        assert mainPossibleSuggestion.contains(commandWord);
         try {
             addNewDataInStorage(commandWord);
         } catch (Exception ex) {
