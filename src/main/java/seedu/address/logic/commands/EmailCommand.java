@@ -104,7 +104,7 @@ public class EmailCommand extends Command {
             return true;
         }
         // instanceof handles nulls
-        if (!(other instanceof BirthdayCommand)) {
+        if (!(other instanceof EmailCommand)) {
             return false;
         }
 

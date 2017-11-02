@@ -26,7 +26,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
         String message;
         try {
             String[] messages = args.trim().split(",");
-            if (messages.length < 3) {
+            if (messages.length != 3) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
             }
             String[] splitArgs = messages[0].trim().split(" ");

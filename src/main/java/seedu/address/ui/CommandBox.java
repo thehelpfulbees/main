@@ -37,9 +37,9 @@ public class CommandBox extends UiPart<Region> {
     public static final String AUTOCOMPLETE_FILE_NAME = "Autocomplete.xml";
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static String[] possibleSuggestion = {"add", "clear", "list",
-        "edit", "find", "delete", "select", "history", "undo", "redo", "exit", "sort", "sort name",
-        "sort num", "sort email", "sort address", "sort remark", "exit"};
+    private static String[] possibleSuggestion = {"add", "birthday", "clear", "list", "help", "removetag", "image",
+        "edit", "find", "delete", "select", "favourite", "history", "undo", "redo", "email", "sort", "sort name", "map",
+        "sort number", "sort email", "sort address", "sort remark", "sort birthday", "exit"};
     private static ArrayList<String> mainPossibleSuggestion = new ArrayList<String>(Arrays.asList(possibleSuggestion));
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
