@@ -10,18 +10,16 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.logic.commands.ImageCommand.DEFAULT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.function.Predicate;
 
-import javafx.collections.ObservableList;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.junit.rules.ExpectedException;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -34,11 +32,12 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+
+import javafx.collections.ObservableList;
 
 //@@author liliwei25
 /**
@@ -203,7 +202,7 @@ public class BirthdayCommandTest {
 
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException , PersonNotFoundException{
+                throws DuplicatePersonException , PersonNotFoundException {
             fail("This method should not be called.");
         }
 
