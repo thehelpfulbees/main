@@ -48,23 +48,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
                         PREFIX_REMARK, PREFIX_BIRTHDAY);
         try {
-            Remark remark;
-            if (ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {
-                remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
-            } else {
-                remark = new Remark("");
-            }
-            Birthday birthday;
-            if (ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).isPresent()) {
-                birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
-            } else {
-                birthday = new Birthday("");
-            }
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Favourite favourite = new Favourite("false");
-            ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture,
-                    favourite);
-            return new AddCommand(person);
             if (containsAnyPrefix(args)) {
                 validatesAllPrefixPresent(argMultimap);
                 return createNewPerson(argMultimap);
