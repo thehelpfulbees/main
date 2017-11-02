@@ -19,6 +19,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class SortCommandSystemTest extends AddressBookSystemTest {
     //@Test
     @Ignore
+    /**
+     * Needs testing
+     */
     public void sort() throws Exception {
         Model model = getModel();
 
