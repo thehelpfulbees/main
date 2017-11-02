@@ -21,18 +21,6 @@ import seedu.address.model.person.Favourite;
  */
 public class FavouriteCommandParserTest {
 
-<<<<<<< HEAD
-    private FavouriteCommandParser parser = new FavouriteCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsFavouriteCommand() {
-        try {
-            assertParseSuccess(parser, "1", new FavouriteCommand(INDEX_FIRST_PERSON,
-                    new Favourite("1")));
-        } catch (IllegalValueException ive) {
-            System.out.println("Wouldn't reach here");
-        }
-=======
     public static final String FIRST_PERSON = "1";
     private FavouriteCommandParser parser = new FavouriteCommandParser();
 
@@ -40,7 +28,6 @@ public class FavouriteCommandParserTest {
     public void parse_validArgs_returnsFavouriteCommand() throws IllegalValueException {
             assertParseSuccess(parser, FIRST_PERSON, new FavouriteCommand(INDEX_FIRST_PERSON,
                     new Favourite("true")));
->>>>>>> 3e16a63a6a55a3278ed7615fb2fbc2d87bf5195a
     }
 
     @Test

@@ -115,7 +115,7 @@ public class EditCommandTest {
         showFirstPersonOnly(model);
 
         // edit person in filtered list into a duplicate in address book
-        ReadOnlyPerson personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        ReadOnlyPerson personInList = model.getAddressBook().getPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
 

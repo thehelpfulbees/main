@@ -9,6 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -45,47 +46,12 @@ public class RemoveTagCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
-        RemoveTagCommand removeTagCommand = prepareCommand(new Tag(VALID_TAG_FRIEND));
+    public void execute_notFoundTag_failure() throws Exception {
+        RemoveTagCommand removeTagCommand = prepareCommand(new Tag("a"));
 
-        assertCommandFailure(removeTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(removeTagCommand, model, RemoveTagCommand.MESSAGE_TAG_NOT_FOUND);
     }
 
-    /**
-     * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
-    @Test
-    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
-        showFirstPersonOnly(model);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        RemoveTagCommand removeTagCommand = prepareCommand(new Tag(VALID_TAG_FRIEND));
-
-        assertCommandFailure(removeTagCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void execute_duplicatePerson_failure() throws Exception {
-        RemoveTagCommand removeTagCommand = prepareCommandForDuplicateException(new Tag(VALID_TAG_FRIEND));
-
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(RemoveTagCommand.MESSAGE_DUPLICATE_PERSON);
-
-        removeTagCommand.execute();
-    }
-
-    @Test
-    public void execute_missingPerson_failure() throws Exception {
-        RemoveTagCommand removeTagCommand = prepareCommandForNotFoundException(new Tag(VALID_TAG_FRIEND));
-
-        thrown.expect(AssertionError.class);
-        thrown.expectMessage(RemoveTagCommand.MESSAGE_MISSING_PERSON);
-
-        removeTagCommand.execute();
-    }
 
     @Test
     public void equals() throws Exception {
@@ -115,137 +81,5 @@ public class RemoveTagCommandTest {
         RemoveTagCommand removeTagCommand = new RemoveTagCommand(target);
         removeTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return removeTagCommand;
-    }
-
-    /**
-     * Returns an {@code BirthdayCommand} with parameters {@code index} and {@code birthday}
-     * to test {@code DuplicatePersonException}
-     */
-    private RemoveTagCommand prepareCommandForDuplicateException(Tag target) {
-        RemoveTagCommand removeTagCommand = new RemoveTagCommand(target);
-        removeTagCommand.setData(new ModelStubThrowingDuplicatePersonException(), new CommandHistory(),
-                new UndoRedoStack());
-        return removeTagCommand;
-    }
-
-    /**
-     * Returns an {@code BirthdayCommand} with parameters {@code index} and {@code birthday}
-     * to test {@code PersonNotFoundException}
-     */
-    private RemoveTagCommand prepareCommandForNotFoundException(Tag target) {
-        RemoveTagCommand removeTagCommand = new RemoveTagCommand(target);
-        removeTagCommand.setData(new ModelStubThrowingPersonNotFoundException(), new CommandHistory(),
-                new UndoRedoStack());
-        return removeTagCommand;
-    }
-
-    /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateListToShowAll() {
-            fail("Thi method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void sortPerson(String target) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException , PersonNotFoundException{
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void removeTag(Tag tag) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void mapPerson(ReadOnlyPerson target) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void changeImage(ReadOnlyPerson target) {
-            fail("This method should not be called.");
-        }
-    }
-
-    /**
-     * A Model stub that always throw a DuplicatePersonException when trying to edit birthday.
-     */
-    private class ModelStubThrowingDuplicatePersonException extends RemoveTagCommandTest.ModelStub {
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            return model.getFilteredPersonList();
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
-     * A Model stub that always throw a DuplicatePersonException when trying to edit birthday.
-     */
-    private class ModelStubThrowingPersonNotFoundException extends RemoveTagCommandTest.ModelStub {
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            return model.getFilteredPersonList();
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws PersonNotFoundException {
-            throw new PersonNotFoundException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
     }
 }
