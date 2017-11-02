@@ -60,7 +60,7 @@ public class RedoCommandTest {
     public void alternative() throws Exception {
         UndoRedoStack undoRedoStack = prepareStack(
                 Collections.emptyList(), Arrays.asList(deleteCommandOne, deleteCommandOne));
-        RedoCommand redoCommand = new RedoCommand(INDEX_SECOND_PERSON);
+        RedoCommand redoCommand = new RedoCommand(2);
         redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 

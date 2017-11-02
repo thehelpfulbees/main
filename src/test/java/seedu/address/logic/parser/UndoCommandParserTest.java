@@ -23,7 +23,7 @@ public class UndoCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsUndoCommand() {
-        assertParseSuccess(parser, "1", new UndoCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "1", new UndoCommand(1));
     }
 
     @Test

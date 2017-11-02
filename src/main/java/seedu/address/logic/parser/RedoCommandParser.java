@@ -20,18 +20,18 @@ public class RedoCommandParser implements Parser<RedoCommand> {
     public RedoCommand parse(String args) throws ParseException {
         String[] splitArgs = args.trim().split(" ");
 
-        Index index;
+        int numRedo;
         try {
             if (splitArgs[0].trim().equals("")) {
-                index = ParserUtil.parseIndex("1");
+                numRedo = ParserUtil.parseNumber("1");
             } else {
-                index = ParserUtil.parseIndex(splitArgs[0]);
+                numRedo = ParserUtil.parseNumber(splitArgs[0]);
             }
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE), ive);
         }
 
-        return new RedoCommand(index);
+        return new RedoCommand(numRedo);
     }
 
 }

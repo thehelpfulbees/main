@@ -23,7 +23,7 @@ public class RedoCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsRedoCommand() {
-        assertParseSuccess(parser, "1", new RedoCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "1", new RedoCommand(1));
     }
 
     @Test
