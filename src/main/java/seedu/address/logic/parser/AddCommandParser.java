@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FAVOURITE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
@@ -46,25 +47,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
-                        PREFIX_REMARK, PREFIX_BIRTHDAY);
+                        PREFIX_REMARK, PREFIX_BIRTHDAY, PREFIX_FAVOURITE);
         try {
-            Remark remark;
-            if (ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {
-                remark = ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
-            } else {
-                remark = new Remark("");
-            }
-            Birthday birthday;
-            if (ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).isPresent()) {
-                birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
-            } else {
-                birthday = new Birthday("");
-            }
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Favourite favourite = new Favourite("false");
-            ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, tagList, picture,
-                    favourite);
-            return new AddCommand(person);
             if (containsAnyPrefix(args)) {
                 validatesAllPrefixPresent(argMultimap);
                 return createNewPerson(argMultimap);
@@ -335,7 +319,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         return args.contains(PREFIX_NAME.toString()) || args.contains(PREFIX_ADDRESS.toString())
             || args.contains(PREFIX_EMAIL.toString()) || args.contains(PREFIX_PHONE.toString())
             || args.contains(PREFIX_REMARK.toString()) || args.contains(PREFIX_TAG.toString())
-            || args.contains(PREFIX_BIRTHDAY.toString());
+            || args.contains(PREFIX_BIRTHDAY.toString()) || args.contains(PREFIX_FAVOURITE.toString());
     }
     //@@author
     /**

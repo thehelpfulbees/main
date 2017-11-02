@@ -7,8 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.testutil.TypicalPersons.AMY;
 
-import org.junit.Test;
-
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.Model;
@@ -17,7 +15,10 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 //@@author justintkj
 public class SortCommandSystemTest extends AddressBookSystemTest {
-    @Test
+    //@Test
+    /**
+     * Needs testing
+     */
     public void sort() throws Exception {
         Model model = getModel();
 
