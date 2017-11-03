@@ -27,7 +27,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_REMARK = "handsome";
     public static final String DEFAULT_TAGS = "friends";
-    public static final String DEFAULT_PICTURE = "profiles/default.png";
+    public static final String DEFAULT_PICTURE = "default";
     public static final String DEFAULT_BIRTHDAY = "";
     public static final String DEFAULT_FAVOURITE = "false";
     private Person person;

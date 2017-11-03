@@ -35,7 +35,6 @@ public class PersonUtil {
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_REMARK + person.getRemark().value + " ");
         sb.append(PREFIX_BIRTHDAY + person.getBirthday().value + " ");
-        sb.append(PREFIX_FAVOURITE + person.getFavourite().toString() + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
