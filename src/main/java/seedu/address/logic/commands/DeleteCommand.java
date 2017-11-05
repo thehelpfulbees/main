@@ -41,6 +41,12 @@ public class DeleteCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPersons.toString()));
     }
 
+    /**
+     * Deletes all the selected person from address book and returns a StringJoiner containing their names
+     *
+     * @return A {@code StringJoiner} that includes all the names that were deleted
+     * @throws CommandException when person selected is not found
+     */
     private StringJoiner deleteAllSelectedPersonFromAddressBook() throws CommandException {
         StringJoiner joiner = new StringJoiner(DELIMITER);
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -56,6 +62,12 @@ public class DeleteCommand extends UndoableCommand {
         return joiner;
     }
 
+    /**
+     * Delete selected person from address book
+     *
+     * @param joiner {@code StringJoiner} to join several names together if necessary
+     * @param personToDelete Selected person
+     */
     private void deletePersonFromAddressBook(StringJoiner joiner, ReadOnlyPerson personToDelete) {
         try {
             model.deletePerson(personToDelete);

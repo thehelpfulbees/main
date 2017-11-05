@@ -52,6 +52,13 @@ public class ImageCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_IMAGE_SUCCESS, personToEdit));
     }
 
+    /**
+     * Updates address book with new {@code Person} with new profile picture
+     *
+     * @param lastShownList List of all current {@code Person} in address book
+     * @return Edited {@code Person}
+     * @throws CommandException when a duplicate of the new person is found in the address book
+     */
     private ReadOnlyPerson updateAddressBook(List<ReadOnlyPerson> lastShownList) throws CommandException {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         ReadOnlyPerson editedPerson;
@@ -68,6 +75,14 @@ public class ImageCommand extends UndoableCommand {
         return personToEdit;
     }
 
+    /**
+     * Updates profile picture of {@code Person} according to selected mode (remove/ edit)
+     *
+     * @param lastShownList List of all current {@code Person} in address book
+     * @param personToEdit Selected {@code Person} to edit
+     * @return {@code Person} with new profile picture
+     * @throws PersonNotFoundException When selected person is not found in address book
+     */
     private ReadOnlyPerson updateDisplayPicture(List<ReadOnlyPerson> lastShownList, ReadOnlyPerson personToEdit)
             throws PersonNotFoundException {
         ReadOnlyPerson editedPerson;
@@ -79,6 +94,14 @@ public class ImageCommand extends UndoableCommand {
         return editedPerson;
     }
 
+    /**
+     * Opens file browser to choose new image
+     *
+     * @param lastShownList List of all current {@code Person} in address book
+     * @param personToEdit Selected {@code Person} to edit
+     * @return {@code Person} with new profile picture
+     * @throws PersonNotFoundException When selected person is not found in address book
+     */
     private ReadOnlyPerson selectDisplayPicture(List<ReadOnlyPerson> lastShownList, ReadOnlyPerson personToEdit)
             throws PersonNotFoundException {
         ReadOnlyPerson editedPerson;
@@ -87,6 +110,12 @@ public class ImageCommand extends UndoableCommand {
         return editedPerson;
     }
 
+    /**
+     * Removes profile picture of selected person and set it to default
+     *
+     * @param personToEdit Selected {@code Person} to edit
+     * @return {@code Person} with default profile picture
+     */
     private Person removeDisplayPicture(ReadOnlyPerson personToEdit) {
         return new Person(personToEdit.getName(), personToEdit.getPhone(),
                             personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getRemark(),

@@ -17,11 +17,8 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthdays can only contain numbers, and should be in the format dd-mm-yyyy";
-    private static final String BIRTHDAY_VALIDATION_REGEX = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1"
-            + "|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\"
-            + "/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468]"
-            + "[048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\"
-            + "4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+    public static final String MESSAGE_WRONG_DATE = "Date entered is in wrong";
+    private static final String DASH = "-";
     private static final int DEFAULT_VALUE = 0;
     private static final String NOT_SET = "Not Set";
     private static final String EMPTY = "";
@@ -30,11 +27,8 @@ public class Birthday {
     private static final int MIN_MONTHS = 1;
     private static final int MAX_MONTHS = 12;
     private static final int MIN_DAYS = 1;
-    public static final String MESSAGE_WRONG_DATE = "Date entered is in wrong";
-    public static final String DASH = "-";
     private static final int DAY_POS = 0;
     private static final int MONTH_POS = 1;
-    private static final int YEAR_POS = 2;
 
     public final String value;
     private final int day;
@@ -76,7 +70,10 @@ public class Birthday {
     }
 
     /**
-     * Determines if date entered by user is correct and ensures that it is not after current date
+     * Ensures that the date entered is before current date
+     *
+     * @param birthday {@code LocalDate} containing input by user
+     * @return True when birthday entered by user is before or on current date
      */
     private static boolean isDateCorrect(LocalDate birthday) {
         return birthday.isBefore(LocalDate.now()) || birthday.equals(LocalDate.now());
@@ -84,7 +81,11 @@ public class Birthday {
 
     /**
      * Returns true if a given string is a valid person birthday. Requires both the input string and the parsed date
-     * since the parsed date will be resolved to the correct values
+     * since the parsed date will be resolved to the correct values by {@code DateTimeFormatter}
+     *
+     * @param test Input birthday String by user
+     * @param testBirthday Parsed birthday from input by user (will be resolved to closest correct date)
+     * @return True when date entered by user is valid
      */
     public static boolean isValidBirthday(String[] test, LocalDate testBirthday) {
         int day = Integer.parseInt(test[DAY_POS]);
@@ -96,6 +97,12 @@ public class Birthday {
                 && day <= testBirthday.lengthOfMonth();
     }
 
+    /**
+     * Calls {@code isValidBirthday} with parsed values when input is only one String
+     *
+     * @param test Single String input
+     * @return True when {@code isValidBirthday} verifies date entered by user
+     */
     public static boolean isValidBirthday(String test) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String[] split = test.split(DASH);
@@ -107,6 +114,7 @@ public class Birthday {
         }
         return isValidBirthday(split, testBirthday);
     }
+
     @Override
     public String toString() {
         return value;

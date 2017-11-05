@@ -58,12 +58,25 @@ public class BirthdayCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_BIRTHDAY_PERSON_SUCCESS, editedPerson));
     }
 
+    /**
+     * Creates a new {@code Person} with new person data
+     *
+     * @param personToEdit {@code Person} with old data
+     * @return {@code Person} with new data
+     */
     private Person getEditedPerson(ReadOnlyPerson personToEdit) {
         return new Person(personToEdit.getName(), personToEdit.getPhone(),
                 personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getRemark(), birthday,
                 personToEdit.getTags(), personToEdit.getPicture(), personToEdit.getFavourite());
     }
 
+    /**
+     * Updates the model with the updated person
+     *
+     * @param personToEdit Old person data
+     * @param editedPerson New person data
+     * @throws CommandException when the new person already exists in the address book
+     */
     private void updateModel(ReadOnlyPerson personToEdit, ReadOnlyPerson editedPerson) throws CommandException {
         try {
             model.updatePerson(personToEdit, editedPerson);

@@ -28,8 +28,9 @@ public class RemoveTagCommand extends UndoableCommand {
             + "Parameters: TAG (must be a valid tag)\n"
             + "Example: " + COMMAND_WORD + " friends";
 
-    private static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag: %1$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "Specified tag is not found";
+
+    private static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag: %1$s";
 
     public final Tag target;
 
@@ -44,6 +45,11 @@ public class RemoveTagCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, target));
     }
 
+    /**
+     * Removes selected {@code Tag} from all {@code Person} in address book
+     *
+     * @throws CommandException When selected {@code Tag} is not found in address book
+     */
     private void removeTagFromAllPerson() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         for (ReadOnlyPerson person: lastShownList) {
@@ -59,6 +65,11 @@ public class RemoveTagCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Removes selected {@code Tag} from address book
+     *
+     * @throws CommandException When selected {@code Tag} is not found in address book
+     */
     private void removeTagFromModel() throws CommandException {
         try {
             model.removeTag(target);
@@ -67,6 +78,13 @@ public class RemoveTagCommand extends UndoableCommand {
         }
     }
 
+    /**
+     * Updates model with new {@code Person} after removing selected {@code Tag}
+     *
+     * @param person {@code Person} with old data
+     * @param editedPerson {@code Person} with new data
+     * @throws CommandException When there is duplicate of the new person found in the address book
+     */
     private void updateModel(ReadOnlyPerson person, Person editedPerson) throws CommandException {
         try {
             model.updatePerson(person, editedPerson);
@@ -78,6 +96,13 @@ public class RemoveTagCommand extends UndoableCommand {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
+    /**
+     * Creates a new person with the new list of {@code tag}
+     *
+     * @param person Selected {@code Person}
+     * @param updatedTags New list of {@code Tag}
+     * @return Updated {@code Person} with new list
+     */
     private Person getEditedPerson(ReadOnlyPerson person, Set<Tag> updatedTags) {
         return new Person(person.getName(), person.getPhone(), person.getEmail(),
                 person.getAddress(), person.getRemark(), person.getBirthday(), updatedTags,

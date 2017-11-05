@@ -25,7 +25,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeImageEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -44,9 +43,9 @@ public class MainWindow extends UiPart<Region> {
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
     private static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.jpeg"};
-    public static final String BUTTON_DESCRIPTION = "Any Image files";
-    public static final String MESSAGE_COPY_FAILURE = "Failed to copy image";
-    public static final String PNG = ".png";
+    private static final String BUTTON_DESCRIPTION = "Any Image files";
+    private static final String MESSAGE_COPY_FAILURE = "Failed to copy image";
+    private static final String PNG = ".png";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -260,6 +259,18 @@ public class MainWindow extends UiPart<Region> {
             person.setImage(person.getName().toString() + PNG);
         }
     }
+
+    @Subscribe
+    private void handleMapPanelEvent(MapPersonEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleMapEvent(event.getPerson());
+    }
+
+    @Subscribe
+    private void handleChangeImageEvent(ChangeImageEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleImageEvent(event.getPerson());
+    }
     //@@author
 
     public PersonListPanel getPersonListPanel() {
@@ -272,23 +283,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
-    //@@author liliwei25
-    @Subscribe
-    private void handleMapPanelEvent(MapPersonEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleMapEvent(event.getPerson());
-    }
-    //@@author
-
     void releaseResources() {
         browserPanel.freeResources();
     }
-
-    //@@author liliwei25
-    @Subscribe
-    private void handleChangeImageEvent(ChangeImageEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleImageEvent(event.getPerson());
-    }
-    //@@author
 }

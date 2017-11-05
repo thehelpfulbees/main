@@ -43,6 +43,11 @@ public class MapCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_MAP_SHOWN_SUCCESS, personToShow));
     }
 
+    /**
+     * Shows the address of the selected {@code Person} on GoogleMaps in a new browser window
+     *
+     * @param personToShow Selected {@code Person} to show
+     */
     private void mapPerson(ReadOnlyPerson personToShow) {
         try {
             model.mapPerson(personToShow);
