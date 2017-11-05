@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_MISSING_PERSON;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -19,7 +21,6 @@ public class MapCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1 ";
     public static final String MESSAGE_MAP_SHOWN_SUCCESS = "Map for Person: %1$s";
-    private static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing";
 
     public final Index index;
 
@@ -37,13 +38,22 @@ public class MapCommand extends UndoableCommand {
 
         ReadOnlyPerson personToShow = lastShownList.get(index.getZeroBased());
 
+        mapPerson(personToShow);
+
+        return new CommandResult(String.format(MESSAGE_MAP_SHOWN_SUCCESS, personToShow));
+    }
+
+    /**
+     * Shows the address of the selected {@code Person} on GoogleMaps in a new browser window
+     *
+     * @param personToShow Selected {@code Person} to show
+     */
+    private void mapPerson(ReadOnlyPerson personToShow) {
         try {
             model.mapPerson(personToShow);
         } catch (PersonNotFoundException pnfe) {
             assert false : MESSAGE_MISSING_PERSON;
         }
-
-        return new CommandResult(String.format(MESSAGE_MAP_SHOWN_SUCCESS, personToShow));
     }
 
     @Override

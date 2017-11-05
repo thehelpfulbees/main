@@ -25,7 +25,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeImageEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -43,6 +42,10 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.jpeg"};
+    private static final String BUTTON_DESCRIPTION = "Any Image files";
+    private static final String MESSAGE_COPY_FAILURE = "Failed to copy image";
+    private static final String PNG = ".png";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -51,7 +54,6 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonInfoPanel personInfoPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -145,7 +147,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        personInfoPanel = new PersonInfoPanel();
+        PersonInfoPanel personInfoPanel = new PersonInfoPanel();
         infoPlaceholder.getChildren().add(personInfoPanel.getRoot());
 
         browserPanel = new BrowserPanel();
@@ -213,7 +215,7 @@ public class MainWindow extends UiPart<Region> {
      * Opens the help window.
      */
     @FXML
-    public void handleHelp() {
+    private void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
@@ -245,20 +247,29 @@ public class MainWindow extends UiPart<Region> {
     private void handleImageEvent(ReadOnlyPerson person) {
         Stage parent = new Stage();
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter =
-                new FileChooser.ExtensionFilter("Any Image files", "*.jpg", "*.png", "*.jpeg");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter(BUTTON_DESCRIPTION, IMAGE_EXTENSIONS);
         fileChooser.getExtensionFilters().add(filter);
         File result = fileChooser.showOpenDialog(parent);
         if (result != null) {
             try {
                 imageStorage.saveImage(result, person.getName().toString());
             } catch (IOException io) {
-                logger.warning("failed to copy image");
+                logger.warning(MESSAGE_COPY_FAILURE);
             }
-            person.setImage(person.getName().toString() + ".png");
-        } else {
-            raise(new NewResultAvailableEvent("Image Change Cancelled"));
+            person.setImage(person.getName().toString() + PNG);
         }
+    }
+
+    @Subscribe
+    private void handleMapPanelEvent(MapPersonEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleMapEvent(event.getPerson());
+    }
+
+    @Subscribe
+    private void handleChangeImageEvent(ChangeImageEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleImageEvent(event.getPerson());
     }
     //@@author
 
@@ -272,23 +283,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
-    //@@author liliwei25
-    @Subscribe
-    private void handleMapPanelEvent(MapPersonEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleMapEvent(event.getPerson());
-    }
-    //@@author
-
     void releaseResources() {
         browserPanel.freeResources();
     }
-
-    //@@author liliwei25
-    @Subscribe
-    private void handleChangeImageEvent(ChangeImageEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleImageEvent(event.getPerson());
-    }
-    //@@author
 }
