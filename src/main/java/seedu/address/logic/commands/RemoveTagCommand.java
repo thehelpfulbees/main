@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_PERSON;
+import static seedu.address.commons.core.Messages.MESSAGE_MISSING_PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.HashSet;
@@ -26,12 +28,8 @@ public class RemoveTagCommand extends UndoableCommand {
             + "Parameters: TAG (must be a valid tag)\n"
             + "Example: " + COMMAND_WORD + " friends";
 
-    public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag: %1$s";
-
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-
+    private static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag: %1$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "Specified tag is not found";
-    public static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing";
 
     public final Tag target;
 
@@ -41,30 +39,49 @@ public class RemoveTagCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        removeTagFromAllPerson();
+        removeTagFromModel();
+        return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, target));
+    }
+
+    private void removeTagFromAllPerson() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        for (ReadOnlyPerson person: lastShownList) {
+            if (person.getTags().contains(target)) {
+                Set<Tag> updatedTags = new HashSet<>(person.getTags());
+
+                updatedTags.remove(target);
+
+                Person editedPerson = getEditedPerson(person, updatedTags);
+
+                updateModel(person, editedPerson);
+            }
+        }
+    }
+
+    private void removeTagFromModel() throws CommandException {
         try {
             model.removeTag(target);
         } catch (UniqueTagList.TagNotFoundException tnf) {
             throw new CommandException(MESSAGE_TAG_NOT_FOUND);
         }
-        for (ReadOnlyPerson person: lastShownList) {
-            if (person.getTags().contains(target)) {
-                Set<Tag> updatedTags = new HashSet<Tag>(person.getTags());
-                updatedTags.remove(target);
-                Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
-                        person.getAddress(), person.getRemark(), person.getBirthday(), updatedTags,
-                        person.getPicture(), person.getFavourite(), person.getNumTimesSearched());
-                try {
-                    model.updatePerson(person, editedPerson);
-                } catch (DuplicatePersonException dpe) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                } catch (PersonNotFoundException pnfe) {
-                    throw new AssertionError(MESSAGE_MISSING_PERSON);
-                }
-            }
+    }
+
+    private void updateModel(ReadOnlyPerson person, Person editedPerson) throws CommandException {
+        try {
+            model.updatePerson(person, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError(MESSAGE_MISSING_PERSON);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, target));
+    }
+
+    private Person getEditedPerson(ReadOnlyPerson person, Set<Tag> updatedTags) {
+        return new Person(person.getName(), person.getPhone(), person.getEmail(),
+                person.getAddress(), person.getRemark(), person.getBirthday(), updatedTags,
+                person.getPicture(), person.getFavourite(), person.getNumTimesSearched());
     }
 
     @Override

@@ -70,9 +70,9 @@ public interface ReadOnlyPerson {
                 .append(getRemark())
                 .append(" Birthday: ")
                 .append(getBirthday())
-                .append(" Tags: ")
                 .append(" Favourite: ")
-                .append(getFavourite());
+                .append(getFavourite().toString())
+                .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

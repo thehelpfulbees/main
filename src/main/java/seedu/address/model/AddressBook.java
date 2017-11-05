@@ -57,6 +57,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
     //@@author
+
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
@@ -181,6 +182,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.remove(t);
     }
     //@@author
+
     //// util methods
 
     @Override

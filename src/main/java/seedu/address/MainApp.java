@@ -1,10 +1,6 @@
 package seedu.address;
 
-import java.awt.AWTException;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,6 +9,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
+
+import javax.swing.*;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -52,9 +50,14 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 3, 0, true);
+    private static final Version VERSION = new Version(1, 3, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+    private static final String TRAY_ICON = "images/address_book_15.png";
+    private static final String MESSAGE_TRAY_UNSUPPORTED = "SystemTray is not supported";
+    private static final String APP_NAME = "PocketBook";
+    private static final String EXIT = "Exit";
+    private static final String MESSAGE_ADD_TRAY_ICON_FAIL = "TrayIcon could not be added.";
 
     protected Ui ui;
     protected Logic logic;
@@ -97,59 +100,38 @@ public class MainApp extends Application {
     private void startTray() {
         Platform.setImplicitExit(false);
         if (!SystemTray.isSupported()) {
-            System.out.println("SystemTray is not supported");
+            logger.warning(MESSAGE_TRAY_UNSUPPORTED);
             return;
         }
-        Image image = new Image("images/address_book_15.png");
+        Image image = new Image(TRAY_ICON);
 
         PopupMenu popup = new PopupMenu();
-        trayIcon = new TrayIcon(SwingFXUtils.fromFXImage(image, null), "PocketBook", popup);
+        trayIcon = new TrayIcon(SwingFXUtils.fromFXImage(image, null), APP_NAME, popup);
         tray = SystemTray.getSystemTray();
 
-        MenuItem exitItem = new MenuItem("Exit");
-        exitItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        stop();
-                    }
-                });
-            }
-        });
+        MenuItem exitItem = new MenuItem(EXIT);
+        exitItem.addActionListener(e -> Platform.runLater(this::stop));
 
         trayIcon.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 if (e.getClickCount() == 2 && !e.isConsumed()) {
                     e.consume();
                     if (ui.isShowing()) {
-                        Platform.runLater(new Runnable() {
-                            @Override public void run() {
-                                ui.hide();
-                            }
-                        });
+                        Platform.runLater(() -> ui.hide());
                     } else {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                ui.show();
-                            }
-                        });
+                        Platform.runLater(() -> ui.show());
                     }
                 }
             }
         });
         popup.add(exitItem);
-
         trayIcon.setPopupMenu(popup);
 
         try {
             tray.add(trayIcon);
         } catch (AWTException e) {
-            System.out.println("TrayIcon could not be added.");
+            logger.warning(MESSAGE_ADD_TRAY_ICON_FAIL);
         }
     }
     //@@author

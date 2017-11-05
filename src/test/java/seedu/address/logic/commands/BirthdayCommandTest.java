@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_PERSON;
+import static seedu.address.commons.core.Messages.MESSAGE_MISSING_PERSON;
 import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_ALICE;
 import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_BOB;
@@ -95,7 +97,7 @@ public class BirthdayCommandTest {
         BirthdayCommand birthdayCommand = prepareCommandForDuplicateException(Index.fromZeroBased(0), BIRTHDAY_ALICE);
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(BirthdayCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(MESSAGE_DUPLICATE_PERSON);
 
         birthdayCommand.execute();
     }
@@ -105,7 +107,7 @@ public class BirthdayCommandTest {
         BirthdayCommand birthdayCommand = prepareCommandForNotFoundException(Index.fromZeroBased(0), BIRTHDAY_ALICE);
 
         thrown.expect(AssertionError.class);
-        thrown.expectMessage(BirthdayCommand.MESSAGE_MISSING_PERSON);
+        thrown.expectMessage(MESSAGE_MISSING_PERSON);
 
         birthdayCommand.execute();
     }

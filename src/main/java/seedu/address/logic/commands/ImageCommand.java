@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_PERSON;
+import static seedu.address.commons.core.Messages.MESSAGE_MISSING_PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -22,14 +24,12 @@ public class ImageCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "image";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Changes the profile picture of the specified person in the addressbook.\n"
+            + ": Changes the profile picture of the specified person in the address book.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_IMAGE_SUCCESS = "Changed Profile Picture: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "Duplicate person in addressbook";
-    public static final String DEFAULT = "default";
-    private static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing";
+    static final String MESSAGE_IMAGE_SUCCESS = "Changed Profile Picture: %1$s";
+    static final String DEFAULT = "default";
 
     public final Index index;
     public final boolean remove;
@@ -48,19 +48,16 @@ public class ImageCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        ReadOnlyPerson personToEdit = updateAddressBook(lastShownList);
+        return new CommandResult(String.format(MESSAGE_IMAGE_SUCCESS, personToEdit));
+    }
+
+    private ReadOnlyPerson updateAddressBook(List<ReadOnlyPerson> lastShownList) throws CommandException {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        ReadOnlyPerson editedPerson;
         try {
-            if (remove) {
-                Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
-                        personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getRemark(),
-                        personToEdit.getBirthday(), personToEdit.getTags(), new ProfilePicture(DEFAULT),
-                        personToEdit.getFavourite());
-                model.updatePerson(personToEdit, editedPerson);
-            } else {
-                model.changeImage(personToEdit);
-                ReadOnlyPerson edited = lastShownList.get(index.getZeroBased());
-                model.updatePerson(personToEdit, edited);
-            }
+            editedPerson = updateDisplayPicture(lastShownList, personToEdit);
+            model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -68,7 +65,33 @@ public class ImageCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateListToShowAll();
-        return new CommandResult(String.format(MESSAGE_IMAGE_SUCCESS, personToEdit));
+        return personToEdit;
+    }
+
+    private ReadOnlyPerson updateDisplayPicture(List<ReadOnlyPerson> lastShownList, ReadOnlyPerson personToEdit)
+            throws PersonNotFoundException {
+        ReadOnlyPerson editedPerson;
+        if (remove) {
+            editedPerson = removeDisplayPicture(personToEdit);
+        } else {
+            editedPerson = selectDisplayPicture(lastShownList, personToEdit);
+        }
+        return editedPerson;
+    }
+
+    private ReadOnlyPerson selectDisplayPicture(List<ReadOnlyPerson> lastShownList, ReadOnlyPerson personToEdit)
+            throws PersonNotFoundException {
+        ReadOnlyPerson editedPerson;
+        model.changeImage(personToEdit);
+        editedPerson = lastShownList.get(index.getZeroBased());
+        return editedPerson;
+    }
+
+    private Person removeDisplayPicture(ReadOnlyPerson personToEdit) {
+        return new Person(personToEdit.getName(), personToEdit.getPhone(),
+                            personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getRemark(),
+                            personToEdit.getBirthday(), personToEdit.getTags(), new ProfilePicture(DEFAULT),
+                            personToEdit.getFavourite());
     }
 
     @Override
