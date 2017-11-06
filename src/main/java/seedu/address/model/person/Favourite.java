@@ -7,13 +7,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a person's Favourite/color on in the addressBook
  * Guarantees: immutable; is valid as declared in {@link #isValidInput(String)}
  */
-public class Favourite {
+public class Favourite implements Comparable {
 
     public static final String MESSAGE_FAVOURITE_CONSTRAINTS =
             "Person favourite should only be true or false, and it should not be blank";
     public static final String COLOR_SWITCH = "true";
     public static final String COLOR_OFF = "false";
-    private Boolean colorOn = false;
+    private Boolean isColorOn = false;
 
     /**
      * Validates given Favourite.
@@ -42,14 +42,14 @@ public class Favourite {
     }
 
     /**
-     * Changes the colorOn state if input is true
+     * Changes the isColorOn state if input is true
      * @param trimmedinput input given as true or false
      */
     private void updateColor(String trimmedinput) {
-        if (trimmedinput.equals(COLOR_SWITCH) && !colorOn) {
-            this.colorOn = true;
+        if (trimmedinput.equals(COLOR_SWITCH) && !isColorOn) {
+            this.isColorOn = true;
         } else {
-            this.colorOn = false;
+            this.isColorOn = false;
         }
     }
 
@@ -57,7 +57,7 @@ public class Favourite {
      * Inverses the current state of Favourite
      */
     public void inverse() {
-        colorOn = false;
+        isColorOn = false;
     }
 
     /**
@@ -74,7 +74,7 @@ public class Favourite {
 
     @Override
     public String toString() {
-        if (colorOn) {
+        if (isColorOn) {
             return COLOR_SWITCH;
         } else {
             return COLOR_OFF;
@@ -85,6 +85,12 @@ public class Favourite {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Favourite // instanceof handles nulls
-                && this.colorOn.equals(((Favourite) other).colorOn)); // state check
+                && this.isColorOn.equals(((Favourite) other).isColorOn)); // state check
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Favourite comparedFavourite = (Favourite) o;
+        return (comparedFavourite.toString()).compareTo(this.toString());
     }
 }
