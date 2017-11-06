@@ -20,7 +20,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 //@@author justintkj
 public class SortCommandSystemTest extends AddressBookSystemTest {
-
     public static final String PARAM_NAME_CAMELCASE = " NaMe";
     public static final String PARAM_NAME = " name";
     public static final String PARAM_ADDRESS = " address";

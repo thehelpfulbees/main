@@ -149,5 +149,4 @@ public class Birthday implements Comparable {
         Birthday comparedBirthday = (Birthday) o;
         return this.value.compareTo(comparedBirthday.toString());
     }
-
 }
