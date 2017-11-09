@@ -86,9 +86,4 @@ include::../DeveloperGuide.adoc[tag=numtimessearched]
 
 Users may wish to share their contacts with other users, or transfer data to another machine.
 Giving them the option to save all contacts to a file, and then import from such a file,
-provides this functionality.
-
-=== Other contributions
-
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+provides this functionality. Some functionality was implemented but is invisible to the user.
