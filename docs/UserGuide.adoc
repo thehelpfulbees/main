@@ -111,12 +111,10 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * `e 2 n/Donald Pua t/` +
 Edits the name of the 2nd person to be `Donald Pua` and clears all existing tags.
 
-=== Locating persons by name or tag: `find`
+=== Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
-Can also be used to find all members of a specified tag. +
-Format: `find (KEYWORD [MORE_KEYWORDS] | t/KEYWORD)`
-	`f KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -124,7 +122,6 @@ Format: `find (KEYWORD [MORE_KEYWORDS] | t/KEYWORD)`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* Only one tag may be searched for at a time e.g. `find t\friends t\colleagues` is invalid
 * The command cannot search by both tag and name simultaneously, e.g. `find John t\enemies` is invalid
 ****
 
@@ -134,10 +131,27 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
-* `find t/enemies`
-Returns all persons in the tag `enemies`
 * `f Alpha Bravo Charlie` +
 Returns any person having names `Alpha`, `Bravo`, or `Charlie`
+
+// tag::findbytag[]
+=== Locating persons by tag: `find`
+
+Finds all persons who are members of a specified tag. +
+Format: `find t/KEYWORD`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only one tag may be searched for at a time e.g. `find t\friends t\colleagues` is invalid
+* The command cannot search by both tag and name simultaneously, e.g. `find John t\enemies` is invalid
+****
+
+Examples:
+
+* `find t/enemies`
+Returns all persons in the tag `enemies`
+// end::findbytag[]
 
 === Deleting one or more person(s) : `delete` 'd'
 
@@ -185,6 +199,7 @@ Selects the 1st person in the results of the `find` command.
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::sort[]
 === Sort all persons : `sort`
 
 Sort all the persons according to their names in alphabetical order. +
@@ -218,6 +233,7 @@ Sorts all the persons by remark in alphabetical order.
 Sorts all the persons by birthday in alphabetical order.
 * `sort numtimessearched` +
 Sorts all the persons by the number of times they have been searched for with `find`.
+// end::sort[]
 
 === Favourite : `favourite`
 
