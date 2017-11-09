@@ -15,6 +15,8 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class Sound {
     public static final String EMPTY = "";
+    public static final String ERROR_SOUND_LOG_MESSAGE = "Error with playing sound.";
+
     private static final Logger logger = LogsCenter.getLogger("Error Sound");
 
     private static ArrayList<String> musicList = new ArrayList<String>(Arrays.asList("ErrorSound.mp3"));
@@ -31,7 +33,7 @@ public class Sound {
             createsNewMediaPlayer();
             mediaPlayer.play();
         } catch (Exception ex) {
-            logger.info("Error with playing sound.");
+            logger.info(ERROR_SOUND_LOG_MESSAGE);
             ex.printStackTrace();
         }
     }

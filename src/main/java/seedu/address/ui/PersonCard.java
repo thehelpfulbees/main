@@ -13,8 +13,11 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
+    public static final String TRUE_STRING = "true";
+    public static final String RED_COLOUR = "-fx-background-color : #ff0000";
+    public static final String NO_COLOUR = "-fx-background-color : transparent";
+    public static final String FALSE_STRING = "false";
     private static final String FXML = "PersonListCard.fxml";
-
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -48,10 +51,10 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        if (person.getFavourite().toString().equals("true")) {
-            name.setStyle("-fx-background-color : #ff0000");
-        } else if (person.getFavourite().toString().equals("false")) {
-            name.setStyle("-fx-background-color : transparent");
+        if (person.getFavourite().toString().equals(TRUE_STRING)) {
+            name.setStyle(RED_COLOUR);
+        } else if (person.getFavourite().toString().equals(FALSE_STRING)) {
+            name.setStyle(NO_COLOUR);
         }
     }
     //@@author
