@@ -803,7 +803,7 @@ image::BirthdayNotifierActivityDiagram.png[width = "200"]
 ---
 // end::BirthdayNotifier[]
 
-// tag::ShowCommand[]
+// tag::findbytag[]
 === Find command
 
 The 'find' command was originally used only to search for users by name. Now it can be used to display all members of a single tag. An example of its use is shown below:
@@ -844,7 +844,37 @@ image::FindCommandArchitecture.png[width="800"]
 
 ---
 
-// end::ShowCommand[]
+// end::findbytag[]
+
+
+// tag::numtimessearched[]
+=== Tracking and sorting by number of times searched
+
+Every person has an invisible numTimesSearched field that begins at 0 and is incremented by 1 every time they
+found by the `find` command.
+
+The `sort` command has been enhanced to allow for displayed users to be sorted by numTimesSearched,
+so that the most-searched persons appear at the top. An example of its use:
+
+    AddressBook contains: Malcolm (searched for 3 times), Tony (searched for 0 times), and Julia (searched 10 times).
+    User enters the command: 'sort numtimessearched'
+    ---------------------
+    The program returns by listing: Julia, Malcolm, Tony
+    ---------------------
+    User enters this command five times: 'find Tony'
+    User enters this command: 'sort numtimessearched'
+    ---------------------
+    The program returns by listing: Julia, Tony, Malcolm
+
+This field required the creation of the class numTimesSearched, which contains the integer value,
+and methods for incrementing and returning the value.
+
+ParserUtil.java was updated to implement the new sorting method: notably, while other fields are sorted lexicographically,
+this field had to be compared numerically
+(e.g. lexicographically, 5 would come after 10, which is not the intended way to sort).
+
+---
+// end::numtimessearched[]
 
 // tag::Fuzzyfinder[]
 === Fuzzyfinder
