@@ -72,7 +72,12 @@ public class ParserUtil {
      * @return True if it is contained, false otherwise
      */
     public static boolean stringContainsItemFromList(String inputStr, String[] items) {
-        return Arrays.stream(items).parallel().anyMatch(inputStr::contains);
+        for (String item:items) {
+            if (item.equals(inputStr)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
