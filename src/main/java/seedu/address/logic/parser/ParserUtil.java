@@ -39,8 +39,7 @@ public class ParserUtil {
     public static final String[] SORTEMAIL_ARGS = {"email", "e"};
     public static final String[] SORTREMARK_ARGS = {"remark", "r", "rem"};
     public static final String[] SORTBIRTHDAY_ARGS = {"birthday", "bday", "b"};
-    public static final String[] SORTNUMTIMESSEARCHED_ARGS = {"numtimessearched",
-            "timessearched", "numsearches", "searches", "s"};
+    public static final String[] SORTNUMTIMESSEARCHED_ARGS = {"numtimessearched", "timessearched", "searches", "s"};
     public static final String[] SORTFAVOURITE_ARGS = {"favourite"};
 
     public static final String EMPTY_STRING = "";
