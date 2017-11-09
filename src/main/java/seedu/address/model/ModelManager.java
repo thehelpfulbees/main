@@ -101,6 +101,12 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
+    //@@author justintkj
+    @Override
+    public void updateListToShowAll() {
+        filteredPersons.setPredicate(null);
+    }
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {

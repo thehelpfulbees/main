@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -12,6 +11,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
 * Parses input arguments and creates a new RedoCommand object
 */
 public class RedoCommandParser implements Parser<RedoCommand> {
+
+    public static final String NUMBER_ONE = "1";
+    public static final int FIRST_PART_MESSAGE = 0;
+
     /**
      * Parses the given {@code String} of arguments in the context of the UndoCommand
      * and returns an RedoCommand object for execution.
@@ -20,18 +23,29 @@ public class RedoCommandParser implements Parser<RedoCommand> {
     public RedoCommand parse(String args) throws ParseException {
         String[] splitArgs = args.trim().split(" ");
 
-        Index index;
+        int numRedo;
         try {
-            if (splitArgs[0].trim().equals("")) {
-                index = ParserUtil.parseIndex("1");
-            } else {
-                index = ParserUtil.parseIndex(splitArgs[0]);
-            }
+            numRedo = getNumberRedoToBeDone(splitArgs[FIRST_PART_MESSAGE]);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE), ive);
         }
 
-        return new RedoCommand(index);
+        return new RedoCommand(numRedo);
+    }
+    /**
+     * Generates number of redo to be done
+     * @param splitArg Message given by user
+     * @return Number of redo to be done
+     * @throws IllegalValueException invalid number of redo to be done
+     */
+    private int getNumberRedoToBeDone(String splitArg) throws IllegalValueException {
+        int numRedo;
+        if (splitArg.trim().equals("")) {
+            numRedo = ParserUtil.parseNumber(NUMBER_ONE);
+        } else {
+            numRedo = ParserUtil.parseNumber(splitArg);
+        }
+        return numRedo;
     }
 
 }

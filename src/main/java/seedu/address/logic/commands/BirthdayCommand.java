@@ -9,6 +9,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Birthday;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -27,8 +28,9 @@ public class BirthdayCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + "12-05-2016";
 
-    private static final String MESSAGE_BIRTHDAY_PERSON_SUCCESS = "Birthday Updated success!";
-    private static final String MESSAGE_DUPLICATE_PERSON = "Duplicate person in addressbook";
+    public static final String MESSAGE_BIRTHDAY_PERSON_SUCCESS = "Birthday Updated success: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "Duplicate person in addressbook";
+    public static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing";
 
     private final Index index;
     private final Birthday birthday;
@@ -50,33 +52,27 @@ public class BirthdayCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        ReadOnlyPerson editedPerson = personToEdit;
-        editedPerson.setBirthday(birthday);
+        ReadOnlyPerson editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(),
+                personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getRemark(), birthday,
+                personToEdit.getTags(), personToEdit.getPicture(), personToEdit.getFavourite());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError(MESSAGE_MISSING_PERSON);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateListToShowAll();
         return new CommandResult(String.format(MESSAGE_BIRTHDAY_PERSON_SUCCESS, editedPerson));
     }
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-        // instanceof handles nulls
-        if (!(other instanceof BirthdayCommand)) {
-            return false;
-        }
-
-        // state check
-        BirthdayCommand e = (BirthdayCommand) other;
-        return index.equals(e.index) && birthday.equals(e.birthday);
+        return other == this // short circuit if same object
+                || (other instanceof BirthdayCommand // instanceof handles nulls
+                && index.equals(((BirthdayCommand) other).index)
+                && birthday.equals(((BirthdayCommand) other).birthday));
     }
 }

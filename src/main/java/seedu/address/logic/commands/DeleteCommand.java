@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -22,6 +24,7 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s): %1$s";
+    private static final String MESSAGE_MISSING_PERSON = "The target person cannot be missing";
 
     public final Index[] targetIndex;
 
@@ -33,8 +36,7 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        String personsDeleted = "";
-
+        StringJoiner joiner = new StringJoiner(", ");
         for (int i = targetIndex.length - 1; i >= 0; i--) {
             if (targetIndex[i].getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -44,20 +46,19 @@ public class DeleteCommand extends UndoableCommand {
 
             try {
                 model.deletePerson(personToDelete);
-                personsDeleted = " ," + personToDelete.getName() + personsDeleted;
+                joiner.add(personToDelete.getName().toString());
             } catch (PersonNotFoundException pnfe) {
-                assert false : "The target person cannot be missing";
+                assert false : MESSAGE_MISSING_PERSON;
             }
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS,
-                personsDeleted.substring(2, personsDeleted.length())));
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, joiner.toString()));
     }
     //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+                && Arrays.equals(this.targetIndex, ((DeleteCommand) other).targetIndex)); // state check
     }
 }

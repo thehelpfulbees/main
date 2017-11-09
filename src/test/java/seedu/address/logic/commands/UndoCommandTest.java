@@ -50,6 +50,28 @@ public class UndoCommandTest {
         // single command in undoStack
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+    //@@author justintkj
+    @Test
+    public void alternative() throws Exception {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
+        UndoCommand undoCommand = new UndoCommand(2);
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        deleteCommandOne.execute();
+        deleteCommandTwo.execute();
 
+        // multiple commands in undoStack
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());;
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // single command in undoStack
+        undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne), Collections.emptyList());
+        undoCommand = new UndoCommand();
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        deleteCommandOne.execute();
+        expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

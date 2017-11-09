@@ -52,6 +52,19 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+    //@@author justintkj
+    /**
+     * Parses {@code number} into an {@code Integer} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified number is invalid (not non-zero unsigned integer).
+     */
+    public static int parseNumber(String number) throws IllegalValueException {
+        String trimmedNumber = number.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedNumber)) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return Integer.parseInt(trimmedNumber);
+    }
 
     /**
      * Parses {@code sortType}returns it. Leading and trailing whitespaces will be
@@ -67,6 +80,7 @@ public class ParserUtil {
         }
         return toSort;
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<remark>} if {@code remark} is present.
@@ -104,13 +118,14 @@ public class ParserUtil {
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
     }
 
+    //@@author bokwoon95
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<remark>} if {@code remark} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
         requireNonNull(remark);
-        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.of(new Remark(""));
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
     }
 
     /**
@@ -119,8 +134,9 @@ public class ParserUtil {
      */
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.of(new Birthday(""));
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
