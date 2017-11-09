@@ -191,8 +191,15 @@ Sort all the persons according to their names in alphabetical order. +
 Format: `sort ARG`
 ****
 * Sorts the storage list of all persons in ascending order
-* Valid Arguments are: 'name', 'number', 'address', 'email', 'remark', 'birthday'.
-* CamelCase arguments are allowed 'NamE', 'NuMbEr', 'AddResS, 'EmAIL', 'REMARK', 'BiRtHDAY'
+* Valid Arguments are:
+** `name` (alt: `n`)
+** `number` (alt: `num`, `no`)
+** `address` (alt: `addr`, `add`, `a`)
+** `email` (alt: `e`)
+** `remark` (alt: `r`)
+** `birthday` (alt: `bday`, `b`)
+** `numtimessearched` (alt: `timessearched`, `numsearches`, `searches`, `s`)
+* Arguments are case insensitive, e.g. valid examples include 'NamE', 'NuMbEr', 'AddResS, 'EmAIL', 'REMARK', 'BiRtHDAY'
 ****
 
 Examples:
@@ -209,6 +216,8 @@ Sorts all the persons by email in alphabetical order.
 Sorts all the persons by remark in alphabetical order.
 * `sort birthday` +
 Sorts all the persons by birthday in alphabetical order.
+* `sort numtimessearched` +
+Sorts all the persons by the number of times they have been searched for with `find`.
 
 === Favourite : `favourite`
 

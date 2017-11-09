@@ -1,13 +1,14 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.ParserUtil.SORTADD_ARG;
-import static seedu.address.logic.parser.ParserUtil.SORTBIRTHDAY_ARG;
-import static seedu.address.logic.parser.ParserUtil.SORTEMAIL_ARG;
-import static seedu.address.logic.parser.ParserUtil.SORTNAME_ARG;
-import static seedu.address.logic.parser.ParserUtil.SORTNUM_ARG;
-import static seedu.address.logic.parser.ParserUtil.SORTNUMTIMESSEARCHED_ARG;
-import static seedu.address.logic.parser.ParserUtil.SORTREMARK_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTADD_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTBIRTHDAY_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTEMAIL_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTNAME_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTNUM_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTNUMTIMESSEARCHED_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTREMARK_ARGS;
+import static seedu.address.logic.parser.ParserUtil.stringContainsItemFromList;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,25 +47,25 @@ public class UniquePersonList implements Iterable<Person> {
      * Sorts the internalList as declared by the arguments
      */
     public void sort(String sortType) {
-        if (sortType.equals(SORTNAME_ARG)) {
+        if (stringContainsItemFromList(sortType, SORTNAME_ARGS)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
                 p1.getName().toString().compareTo(p2.getName().toString()));
-        } else if (sortType.equals(SORTNUM_ARG)) {
+        } else if (stringContainsItemFromList(sortType, SORTNUM_ARGS)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
                 p1.getPhone().toString().compareTo(p2.getPhone().toString()));
-        } else if (sortType.equals(SORTADD_ARG)) {
+        } else if (stringContainsItemFromList(sortType, SORTADD_ARGS)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
                 p1.getAddress().toString().compareTo(p2.getAddress().toString()));
-        } else if (sortType.equals(SORTEMAIL_ARG)) {
+        } else if (stringContainsItemFromList(sortType, SORTEMAIL_ARGS)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
                 p1.getEmail().toString().compareTo(p2.getEmail().toString()));
-        } else if (sortType.equals(SORTREMARK_ARG)) {
+        } else if (stringContainsItemFromList(sortType, SORTREMARK_ARGS)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
                 p1.getRemark().toString().compareTo(p2.getRemark().toString()));
-        } else if (sortType.equals(SORTBIRTHDAY_ARG)) {
+        } else if (stringContainsItemFromList(sortType, SORTBIRTHDAY_ARGS)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
                 p1.getBirthday().toString().compareTo(p2.getBirthday().toString()));
-        } else if (sortType.equals(SORTNUMTIMESSEARCHED_ARG)) {
+        } else if (stringContainsItemFromList(sortType, SORTNUMTIMESSEARCHED_ARGS)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
                     p2.getNumTimesSearched().getValue() - p1.getNumTimesSearched().getValue());
         }
