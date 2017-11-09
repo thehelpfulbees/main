@@ -2,6 +2,11 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -13,11 +18,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -39,8 +39,8 @@ public class ParserUtil {
     public static final String[] SORTEMAIL_ARGS = {"email", "e"};
     public static final String[] SORTREMARK_ARGS = {"remark", "r", "rem"};
     public static final String[] SORTBIRTHDAY_ARGS = {"birthday", "bday", "b"};
-    public static final String[] SORTNUMTIMESSEARCHED_ARGS = {
-            "numtimessearched", "timessearched", "numsearches", "searches", "s"};
+    public static final String[] SORTNUMTIMESSEARCHED_ARGS = {"numtimessearched",
+            "timessearched", "numsearches", "searches", "s"};
     public static final String[] SORTFAVOURITE_ARGS = {"favourite"};
 
     public static final String EMPTY_STRING = "";
