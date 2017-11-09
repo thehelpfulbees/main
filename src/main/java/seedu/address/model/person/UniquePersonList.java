@@ -4,11 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.ParserUtil.SORTADD_ARGS;
 import static seedu.address.logic.parser.ParserUtil.SORTBIRTHDAY_ARGS;
 import static seedu.address.logic.parser.ParserUtil.SORTEMAIL_ARGS;
-import static seedu.address.logic.parser.ParserUtil.SORTNAME_ARGS;
-import static seedu.address.logic.parser.ParserUtil.SORTNUM_ARGS;
-import static seedu.address.logic.parser.ParserUtil.SORTNUMTIMESSEARCHED_ARGS;
-import static seedu.address.logic.parser.ParserUtil.SORTREMARK_ARGS;
 import static seedu.address.logic.parser.ParserUtil.SORTFAVOURITE_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTNAME_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTNUMTIMESSEARCHED_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTNUM_ARGS;
+import static seedu.address.logic.parser.ParserUtil.SORTREMARK_ARGS;
 import static seedu.address.logic.parser.ParserUtil.stringContainsItemFromList;
 
 import java.util.Collections;
@@ -46,13 +46,27 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public UniquePersonList () {
         comparatorMap = new HashMap<String, Comparator<Person>>();
-        for (String arg:SORTNAME_ARGS) comparatorMap.put(arg, Comparator.comparing(Person::getName));
-        for (String arg:SORTNUM_ARGS) comparatorMap.put(arg, Comparator.comparing(Person::getPhone));
-        for (String arg:SORTADD_ARGS) comparatorMap.put(arg, Comparator.comparing(Person::getAddress));
-        for (String arg:SORTEMAIL_ARGS) comparatorMap.put(arg, Comparator.comparing(Person::getEmail));
-        for (String arg:SORTREMARK_ARGS) comparatorMap.put(arg, Comparator.comparing(Person::getRemark));
-        for (String arg:SORTBIRTHDAY_ARGS) comparatorMap.put(arg, Comparator.comparing(Person::getBirthday));
-        for (String arg:SORTFAVOURITE_ARGS) comparatorMap.put(arg, Comparator.comparing(Person::getFavourite));
+        for (String arg:SORTNAME_ARGS) {
+            comparatorMap.put(arg, Comparator.comparing(Person::getName));
+        }
+        for (String arg:SORTNUM_ARGS) {
+            comparatorMap.put(arg, Comparator.comparing(Person::getPhone));
+        }
+        for (String arg:SORTADD_ARGS) {
+            comparatorMap.put(arg, Comparator.comparing(Person::getAddress));
+        }
+        for (String arg:SORTEMAIL_ARGS) {
+            comparatorMap.put(arg, Comparator.comparing(Person::getEmail));
+        }
+        for (String arg:SORTREMARK_ARGS) {
+            comparatorMap.put(arg, Comparator.comparing(Person::getRemark));
+        }
+        for (String arg:SORTBIRTHDAY_ARGS) {
+            comparatorMap.put(arg, Comparator.comparing(Person::getBirthday));
+        }
+        for (String arg:SORTFAVOURITE_ARGS) {
+            comparatorMap.put(arg, Comparator.comparing(Person::getFavourite));
+        }
     }
     //@@author
 

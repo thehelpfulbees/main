@@ -2,8 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.*;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -15,6 +13,11 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -94,15 +97,15 @@ public class ParserUtil {
      */
     public static String parseSortType(String sortType) throws IllegalValueException {
         String toSort = sortType.trim().toLowerCase();
-        if (!stringContainsItemFromList(toSort, SORTNAME_ARGS) &&
-                !stringContainsItemFromList(toSort, SORTNUM_ARGS) &&
-                !stringContainsItemFromList(toSort, SORTADD_ARGS) &&
-                !stringContainsItemFromList(toSort, SORTEMAIL_ARGS) &&
-                !stringContainsItemFromList(toSort, SORTREMARK_ARGS) &&
-                !stringContainsItemFromList(toSort, SORTBIRTHDAY_ARGS) &&
-                !stringContainsItemFromList(toSort, SORTREMARK_ARGS) &&
-                !stringContainsItemFromList(toSort, SORTFAVOURITE_ARGS) &&
-                !stringContainsItemFromList(toSort, SORTNUMTIMESSEARCHED_ARGS)) {
+        if (!stringContainsItemFromList(toSort, SORTNAME_ARGS)
+                && !stringContainsItemFromList(toSort, SORTNUM_ARGS)
+                && !stringContainsItemFromList(toSort, SORTADD_ARGS)
+                && !stringContainsItemFromList(toSort, SORTEMAIL_ARGS)
+                && !stringContainsItemFromList(toSort, SORTREMARK_ARGS)
+                && !stringContainsItemFromList(toSort, SORTBIRTHDAY_ARGS)
+                && !stringContainsItemFromList(toSort, SORTREMARK_ARGS)
+                && !stringContainsItemFromList(toSort, SORTFAVOURITE_ARGS)
+                && !stringContainsItemFromList(toSort, SORTNUMTIMESSEARCHED_ARGS)) {
             throw new IllegalValueException(MESSAGE_INVALID_SORT);
         }
         return toSort;
