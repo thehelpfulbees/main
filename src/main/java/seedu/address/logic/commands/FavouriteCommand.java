@@ -1,7 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DUPLICATE_PERSON;
+import static seedu.address.commons.core.Messages.MESSAGE_DUPLICATE_PERSON;
+import static seedu.address.commons.core.Messages.MESSAGE_MISSING_PERSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class FavouriteCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError(MESSAGE_MISSING_PERSON);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_FAVOURITE_SUCCESS, editedPerson));
@@ -63,10 +64,11 @@ public class FavouriteCommand extends UndoableCommand {
 
     /**
      * Toggles the current color state of the person selected
+     *
      * @param editedPerson selected person to edit
      */
     private void toggleColor(ReadOnlyPerson editedPerson) {
-        if (editedPerson.getFavourite().toString().equals("true")) {
+        if (editedPerson.getFavourite().toString().equals(Favourite.COLOR_SWITCH)) {
             favourite.inverse();
         }
     }

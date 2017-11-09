@@ -38,6 +38,13 @@ public class ParserUtil {
     public static final String[] SORTBIRTHDAY_ARGS = {"birthday", "bday", "b"};
     public static final String[] SORTNUMTIMESSEARCHED_ARGS = {
             "numtimessearched", "timessearched", "numsearches", "searches", "s"};
+    public static final String[] SORTFAVOURITE_ARGS = {"favourite"};
+
+    public static final String EMPTY_STRING = "";
+    public static final String SPACE_STRING = " ";
+    public static final String COMMA_STRING = ",";
+    public static final String COMMA_SPACE_STRING = ", ";
+    public static final int INDEX_ZERO = 0;
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -94,6 +101,7 @@ public class ParserUtil {
                 !stringContainsItemFromList(toSort, SORTREMARK_ARGS) &&
                 !stringContainsItemFromList(toSort, SORTBIRTHDAY_ARGS) &&
                 !stringContainsItemFromList(toSort, SORTREMARK_ARGS) &&
+                !stringContainsItemFromList(toSort, SORTFAVOURITE_ARGS) &&
                 !stringContainsItemFromList(toSort, SORTNUMTIMESSEARCHED_ARGS)) {
             throw new IllegalValueException(MESSAGE_INVALID_SORT);
         }

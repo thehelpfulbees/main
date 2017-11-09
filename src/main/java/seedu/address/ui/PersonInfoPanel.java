@@ -23,7 +23,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonInfoPanel extends UiPart<Region> {
 
     private static final String FXML = "PersonInfoPanel.fxml";
+    private static final String EMPTY = "";
+    private static final String DEFAULT = "profiles/default.png";
+    private static final String DEFAULT_TEXT = "default";
     private final Logger logger = LogsCenter.getLogger(PersonInfoPanel.class);
+    private final ReadOnlyPerson person;
 
     @FXML
     private ImageView profileImage;
@@ -45,12 +49,14 @@ public class PersonInfoPanel extends UiPart<Region> {
     public PersonInfoPanel(ReadOnlyPerson person) {
         super(FXML);
         setConnections(person);
+        this.person = person;
         registerAsAnEventHandler(this);
     }
 
     public PersonInfoPanel() {
         super(FXML);
         setDefaultConnections();
+        person = null;
         registerAsAnEventHandler(this);
     }
 
@@ -59,14 +65,14 @@ public class PersonInfoPanel extends UiPart<Region> {
     }
 
     private void setDefaultConnections() {
-        name.setText("");
-        phone.setText("");
-        address.setText("");
-        email.setText("");
-        birthday.setText("");
-        remark.setText("");
-        tags.setAccessibleText("");
-        profileImage.setImage(new Image("profiles/default.png"));
+        name.setText(EMPTY);
+        phone.setText(EMPTY);
+        address.setText(EMPTY);
+        email.setText(EMPTY);
+        birthday.setText(EMPTY);
+        remark.setText(EMPTY);
+        tags.setAccessibleText(EMPTY);
+        profileImage.setImage(new Image(DEFAULT));
     }
 
     private void setConnections(ReadOnlyPerson person) {
@@ -81,15 +87,15 @@ public class PersonInfoPanel extends UiPart<Region> {
         try {
             String loc = person.getPicture().getLocation();
             Image image;
-            if (loc.equals("default")) {
-                image = new Image("profiles/default.png");
+            if (loc.equals(DEFAULT_TEXT)) {
+                image = new Image(DEFAULT);
             } else {
                 File img = new File(loc);
                 image = new Image(img.toURI().toString());
             }
             profileImage.setImage(image);
         } catch (IllegalArgumentException iae) {
-            profileImage.setImage(new Image("profiles/default.png"));
+            profileImage.setImage(new Image(DEFAULT));
         }
     }
 
@@ -97,5 +103,28 @@ public class PersonInfoPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setConnections(event.getNewSelection().person);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonInfoPanel)) {
+            return false;
+        }
+
+        // state check
+        PersonInfoPanel card = (PersonInfoPanel) other;
+        return name.getText().equals(card.name.getText())
+                && phone.getText().equals(card.phone.getText())
+                && address.getText().equals(card.address.getText())
+                && email.getText().equals(card.email.getText())
+                && birthday.getText().equals(card.birthday.getText())
+                && remark.getText().equals(card.remark.getText())
+                && person.equals(card.person);
     }
 }
