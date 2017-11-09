@@ -6,9 +6,11 @@ import static seedu.address.logic.parser.ParserUtil.SORTBIRTHDAY_ARG;
 import static seedu.address.logic.parser.ParserUtil.SORTEMAIL_ARG;
 import static seedu.address.logic.parser.ParserUtil.SORTNAME_ARG;
 import static seedu.address.logic.parser.ParserUtil.SORTNUM_ARG;
+import static seedu.address.logic.parser.ParserUtil.SORTNUMTIMESSEARCHED_ARG;
 import static seedu.address.logic.parser.ParserUtil.SORTREMARK_ARG;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -62,6 +64,9 @@ public class UniquePersonList implements Iterable<Person> {
         } else if (sortType.equals(SORTBIRTHDAY_ARG)) {
             Collections.sort(internalList, (Person p1, Person p2) ->
                 p1.getBirthday().toString().compareTo(p2.getBirthday().toString()));
+        } else if (sortType.equals(SORTNUMTIMESSEARCHED_ARG)) {
+            Collections.sort(internalList, (Person p1, Person p2) ->
+                    p2.getNumTimesSearched().getValue() - p1.getNumTimesSearched().getValue());
         }
     }
     //@@author
